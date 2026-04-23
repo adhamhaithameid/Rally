@@ -1,0 +1,143 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
+import { Button } from "../components/ui/button";
+import { Checkbox } from "../components/ui/checkbox";
+import { Mail, Lock, User, ArrowRight } from "lucide-react";
+
+export function Signup() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Mock signup - in real app, create account with backend
+    navigate("/team-selection");
+  };
+
+  return (
+    <div className="min-h-full bg-muted/30 flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <Link to="/" className="inline-flex items-center gap-2 mb-4">
+            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xl">P</span>
+            </div>
+            <span className="text-2xl font-bold text-foreground">Rally</span>
+          </Link>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Create Account</h1>
+          <p className="text-muted-foreground">Start your free 14-day trial today</p>
+        </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Sign Up</CardTitle>
+            <CardDescription>Create your Rally account</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSignup} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="fullName">Full Name</Label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                  <Input
+                    id="fullName"
+                    type="text"
+                    placeholder="John Doe"
+                    value={formData.fullName}
+                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                    className="pl-10"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="john.doe@example.com"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="pl-10"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="••••••••"
+                    value={formData.password}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    className="pl-10"
+                    required
+                  />
+                </div>
+                <p className="text-xs text-muted-foreground">Must be at least 8 characters</p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                  <Input
+                    id="confirmPassword"
+                    type="password"
+                    placeholder="••••••••"
+                    value={formData.confirmPassword}
+                    onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                    className="pl-10"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-start gap-2">
+                <Checkbox id="terms" required />
+                <Label htmlFor="terms" className="text-sm font-normal leading-relaxed cursor-pointer">
+                  I agree to the{" "}
+                  <a href="#" className="text-blue-600 hover:underline">Terms of Service</a>
+                  {" "}and{" "}
+                  <a href="#" className="text-blue-600 hover:underline">Privacy Policy</a>
+                </Label>
+              </div>
+
+              <Button type="submit" className="w-full">
+                Create Account
+                <ArrowRight className="ml-2 size-4" />
+              </Button>
+            </form>
+
+            <div className="mt-6 text-center text-sm">
+              <span className="text-muted-foreground">Already have an account? </span>
+              <Link to="/login" className="text-blue-600 hover:underline font-medium">
+                Sign in
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+
+        <p className="text-center text-xs text-muted-foreground mt-6">
+          No credit card required • Cancel anytime
+        </p>
+      </div>
+    </div>
+  );
+}

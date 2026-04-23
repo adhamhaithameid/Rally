@@ -1,0 +1,273 @@
+For Rally, the **Files page** should feel like a **work library + shared desk**, not a raw server explorer. Since V1 already includes folders, upload/download, create, rename/move, delete, preview, version history, and folder-level permissions, the first screen should help users **resume work fast, see what changed, and jump into the right files**, while the deeper folder browser handles organization. 
+
+The page should answer these quickly:
+
+* What files matter right now?
+* What changed since I last checked?
+* Where do I continue working?
+* How do I upload, create, or find something fast?
+
+## Best entry model
+
+I would not drop users into the root folder tree every time.
+
+Use this structure:
+
+* **Files Home** = default first page
+* **Browse** = full folder explorer
+* **Recents** = fast recovery surface
+* **Starred / Pinned** = important folders and files
+
+And if a user opens Files from a task, chat, or calendar event, Rally should open a **contextual file view** instead of the generic home.
+
+So the idea is:
+
+* **Home** for awareness and continuation
+* **Browse** for structure
+* **Context view** for focused work
+
+## Best V1 layout
+
+```text
+Header: Search | Upload | New | Sort/Filter | Ask AI
+
+Left rail:
+- Home
+- Browse
+- Recents
+- Starred
+- Folder tree
+
+Main:
+- Continue Working
+- Pinned Folders / Team Spaces
+- Recently Updated
+- Quick Upload / Create
+- Linked to Work
+- AI file actions
+
+Right panel:
+- Preview
+- File details
+- Version history
+- Permissions
+- Related chat / tasks / events
+```
+
+## What should be on the first page
+
+### 1. Continue Working
+
+This should be one of the first things users see.
+
+Show:
+
+* recently opened files
+* recently edited files
+* recently downloaded files
+* maybe “last touched by you” items
+
+This is one of the most useful sections because it removes friction immediately. A user should be able to reopen yesterday’s work in one click.
+
+### 2. Pinned folders / Team spaces
+
+Instead of forcing users to scan the whole tree, surface the main team folders clearly.
+
+Show a small set of top-level spaces such as:
+
+* Product
+* Design
+* Marketing
+* Ops
+* Sprint Docs
+* Launch Files
+
+Each folder tile should show:
+
+* folder name
+* small icon
+* last updated time
+* maybe number of recent changes
+
+This gives the Files page structure without making it feel cold.
+
+### 3. Recently Updated
+
+This is the most important “team awareness” area.
+
+Show:
+
+* files changed by teammates
+* who changed them
+* when
+* version update indicator
+* short preview or file type
+
+This makes the page feel alive and collaborative. It is especially important because Rally is a shared workspace, not a personal drive.
+
+### 4. Quick Upload / Create
+
+This needs to be obvious.
+
+Users should be able to:
+
+* upload file
+* drag and drop
+* create folder
+* create file
+
+Do not bury these behind menus. File work should feel fast and direct in Rally. The foundation already makes file creation and management a core V1 capability, so this action cluster should be prominent. 
+
+### 5. Linked to Work
+
+This is where Rally becomes more than a normal storage app.
+
+Show files connected to:
+
+* tasks
+* chat discussions
+* calendar events
+* AI threads
+
+Examples:
+
+* “Attached to Sprint Planning”
+* “Shared in #design”
+* “Referenced in Launch Task”
+* “Used by AI in yesterday’s summary”
+
+This makes files feel like part of the team’s real workflow, not just objects in folders.
+
+### 6. AI file actions
+
+AI should be helpful here, but not overpower the page.
+
+Useful file actions:
+
+* find the latest version of a file
+* summarize this document
+* compare two versions
+* find files related to a topic
+* find files mentioned in chat
+* extract tasks from a document
+
+This fits Rally’s AI role well because the AI can assist across files, tasks, calendar, and chat, while still requiring confirmation before taking actions. 
+
+### 7. Preview + details panel
+
+When a user clicks a file, open a right-side detail panel instead of always navigating away.
+
+That panel should show:
+
+* file preview
+* file name and type
+* folder path
+* last edited by
+* last updated time
+* version history
+* permissions
+* related chat/task/event links
+* download / open / rename / move actions when allowed
+
+This is one of the biggest opportunities for Rally. Files should carry their work context with them.
+
+## What makes the Files page engaging
+
+For Rally, engaging should mean **alive, useful, and easy to continue from**.
+
+The most engaging parts will be:
+
+* strong recent file previews
+* teammate update activity
+* drag-and-drop upload
+* visible version history
+* AI file help
+* linked context from tasks, chat, and calendar
+
+A file system becomes engaging when it helps users feel momentum, not when it looks decorative.
+
+## What each file card or row should show
+
+Keep file items compact, but make them meaningful.
+
+At minimum:
+
+* file icon or thumbnail
+* name
+* file type
+* last updated time
+* last editor
+* quick context chips if linked to work
+
+Helpful chips:
+
+* chat
+* task
+* event
+* version updated
+* pinned/starred
+
+That is enough to make each item feel connected without becoming noisy.
+
+## What absolutely needs to be above the fold
+
+When the user opens Files, they should immediately see:
+
+* search
+* upload / new
+* continue working
+* pinned folders
+* recently updated files
+* one preview or detail area
+
+That is the real first page.
+
+## Role behavior
+
+Keep the structure the same for everyone, but change actions by permission:
+
+* **Owners/Admins:** can see more folder-permission controls and broader file-management actions
+* **Members:** can upload, create, rename, move, delete, and edit where allowed
+* **Viewers:** should get a clean read-only experience with preview/download only, and clear disabled states for restricted actions
+
+That matches the shared file system and permission direction already defined in your foundation. 
+
+## Empty and setup states
+
+Do not let a new team land on an empty file browser.
+
+For new teams, show a setup-first state:
+
+* create first folder
+* upload first files
+* create shared structure
+* ask AI to help organize the file space
+
+For regular users with no recent activity:
+
+* show pinned folders first
+* then suggest upload/create/open team folders
+
+## What not to do
+
+Avoid these in V1:
+
+* opening to a blank root folder tree every time
+* making the page a dense spreadsheet by default
+* hiding upload/create actions
+* forcing full-page navigation for every file click
+* separating files from chat/tasks/calendar context
+* stuffing too much metadata into every row
+
+## My strongest recommendation
+
+Make Rally Files work like this:
+
+**Default = Files Home**
+**Secondary = Browse**
+**Main content = Continue Working + Pinned Folders + Recently Updated + Quick Upload/Create + Linked to Work**
+**Selected file = right-side preview/details panel**
+
+That will make the Files page feel calm, practical, and much more like a real team workspace than just a basic drive clone.
+
+The next useful step is turning this into an exact desktop wireframe with the Home state, Browse state, file row/card contents, and the right-side details panel.

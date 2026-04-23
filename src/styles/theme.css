@@ -1,0 +1,290 @@
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   RALLY DESIGN SYSTEM — THEME TOKENS
+   Brand: Rally Workspace
+   Primary color: #ff4615 (Rally Orange-Red)
+   ============================================================ */
+
+:root {
+  --font-size: 16px;
+
+  /* ── Brand ─────────────────────────────────────── */
+  --rally-brand:          #ff4615;
+  --rally-brand-hover:    #fe3511;
+  --rally-brand-pressed:  #ef1b07;
+  --rally-brand-soft-light: #fff2ed;
+  --rally-brand-soft-dark:  #440608;
+  --rally-brand-on-light: #c60f08;
+  --rally-brand-on-dark:  #ff9571;
+
+  /* ── Base Layer ─────────────────────────────────── */
+  --canvas:     #ffe1d2;
+  --surface:    #fff7f3;
+  --elevated:   #ffffff;
+  --border-color: #d1aa99;
+  --text-primary:   #231d1a;
+  --text-secondary: #5f514b;
+
+  /* ── Semantic: Neutral ──────────────────────────── */
+  --neutral-solid:       #5f514b;
+  --neutral-soft-light:  #f4ece8;
+  --neutral-soft-dark:   #262322;
+  --neutral-on-light:    #5f514b;
+  --neutral-on-dark:     #c7b8b2;
+
+  /* ── Semantic: Error ────────────────────────────── */
+  --error-solid:       #d90000;
+  --error-hover:       #b00000;
+  --error-pressed:     #8e0000;
+  --error-soft-light:  #fdecec;
+  --error-soft-dark:   #341111;
+  --error-on-light:    #b00000;
+  --error-on-dark:     #ff8a8a;
+
+  /* ── Semantic: Info ─────────────────────────────── */
+  --info-solid:       #0f5fd7;
+  --info-soft-light:  #eef4ff;
+  --info-soft-dark:   #101d36;
+  --info-on-light:    #0f5fd7;
+  --info-on-dark:     #a9cbff;
+
+  /* ── Semantic: Warning ──────────────────────────── */
+  --warning-solid:       #8a4f00;
+  --warning-soft-light:  #fff4e5;
+  --warning-soft-dark:   #33210a;
+  --warning-on-light:    #8a4f00;
+  --warning-on-dark:     #ffd08a;
+
+  /* ── Semantic: Success ──────────────────────────── */
+  --success-solid:       #0f6a43;
+  --success-soft-light:  #eaf7f0;
+  --success-soft-dark:   #10261c;
+  --success-on-light:    #0f6a43;
+  --success-on-dark:     #7ad6a7;
+
+  /* ── Interaction States ─────────────────────────── */
+  --disabled-bg:       #fff2ed;
+  --disabled-border:   #ff5931;
+  --disabled-text:     #70635d;
+  --focus-ring:        #ff9571;
+  --selected-bg:       #ffe2d4;
+  --selected-border:   #ff5931;
+  --selected-text:     #c60f08;
+
+  /* ── Radii ──────────────────────────────────────── */
+  --radius-xs:  2px;
+  --radius-sm:  4px;
+  --radius:     8px;
+  --radius-md:  10px;
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ────────────────────────────────────── */
+  --shadow-sm:  0 1px 2px 0 rgba(35,29,26,0.06);
+  --shadow:     0 2px 8px 0 rgba(35,29,26,0.10);
+  --shadow-md:  0 4px 16px 0 rgba(35,29,26,0.13);
+  --shadow-lg:  0 8px 32px 0 rgba(35,29,26,0.16);
+  --shadow-xl:  0 16px 48px 0 rgba(35,29,26,0.20);
+
+  /* ── Tailwind semantic mappings ─────────────────── */
+  --background: var(--surface);
+  --foreground: var(--text-primary);
+  --card: var(--elevated);
+  --card-foreground: var(--text-primary);
+  --popover: var(--elevated);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--rally-brand);
+  --primary-foreground: #ffffff;
+  --secondary: var(--canvas);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--neutral-soft-light);
+  --muted-foreground: var(--neutral-on-light);
+  --accent: #ffe1d2;
+  --accent-foreground: var(--text-primary);
+  --destructive: var(--error-solid);
+  --destructive-foreground: #ffffff;
+  --border: var(--border-color);
+  --input: transparent;
+  --input-background: var(--neutral-soft-light);
+  --switch-background: #d1aa99;
+  --ring: var(--focus-ring);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+
+  /* Charts */
+  --chart-1: #ff4615;
+  --chart-2: #0f5fd7;
+  --chart-3: #0f6a43;
+  --chart-4: #8a4f00;
+  --chart-5: #d90000;
+
+  /* Sidebar */
+  --sidebar: var(--elevated);
+  --sidebar-foreground: var(--text-primary);
+  --sidebar-primary: var(--rally-brand);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--canvas);
+  --sidebar-accent-foreground: var(--text-primary);
+  --sidebar-border: var(--border-color);
+  --sidebar-ring: var(--focus-ring);
+}
+
+.dark {
+  /* ── Base Layer dark overrides ──────────────────── */
+  --canvas:     #191919;
+  --surface:    #232323;
+  --elevated:   #2c2c2c;
+  --border-color: #4a403c;
+  --text-primary:   #fff2ed;
+  --text-secondary: #c7b8b2;
+
+  /* ── Interaction States dark ────────────────────── */
+  --disabled-bg:       #262322;
+  --disabled-border:   #70635d;
+  --disabled-text:     #8a807c;
+  --selected-bg:       #440608;
+  --selected-border:   #ff5931;
+  --selected-text:     #ff9571;
+
+  /* ── Tailwind semantic mappings dark ────────────── */
+  --background: var(--surface);
+  --foreground: var(--text-primary);
+  --card: var(--elevated);
+  --card-foreground: var(--text-primary);
+  --popover: var(--elevated);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--rally-brand);
+  --primary-foreground: #ffffff;
+  --secondary: var(--canvas);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--neutral-soft-dark);
+  --muted-foreground: var(--neutral-on-dark);
+  --accent: var(--rally-brand-soft-dark);
+  --accent-foreground: var(--text-primary);
+  --destructive: var(--error-hover);
+  --destructive-foreground: var(--error-on-dark);
+  --border: var(--border-color);
+  --input: var(--elevated);
+  --input-background: var(--neutral-soft-dark);
+  --switch-background: #5f514b;
+  --ring: var(--focus-ring);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+
+  /* Charts */
+  --chart-1: #ff9571;
+  --chart-2: #a9cbff;
+  --chart-3: #7ad6a7;
+  --chart-4: #ffd08a;
+  --chart-5: #ff8a8a;
+
+  /* Sidebar */
+  --sidebar: var(--elevated);
+  --sidebar-foreground: var(--text-primary);
+  --sidebar-primary: var(--rally-brand);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--canvas);
+  --sidebar-accent-foreground: var(--text-primary);
+  --sidebar-border: var(--border-color);
+  --sidebar-ring: var(--focus-ring);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  html {
+    font-size: var(--font-size);
+  }
+
+  h1 {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  h2 {
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  h3 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  h4 {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  label {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  button {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  input {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+  }
+}
