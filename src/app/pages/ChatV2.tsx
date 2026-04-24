@@ -165,7 +165,7 @@ function Av({ name, size = 28, online }: { name: string; size?: number; online?:
 function UnreadBadge({ count }: { count: number }) {
   if (!count) return null;
   return (
-    <span className="ml-auto flex-shrink-0 min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center text-white text-[10px] font-bold"
+    <span className="ml-auto flex-shrink-0 min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center text-white text-[10px] font-medium"
       style={{ background: "var(--rally-brand)" }}>
       {count > 9 ? "9+" : count}
     </span>
@@ -246,7 +246,7 @@ function ChatSidebar({
           </button>
         </div>
 
-        <div className="mx-3 my-1 border-t border-border" />
+        <div className="mx-3 my-1 border-t border-[var(--border-subtle)]" />
 
         {/* Direct Messages */}
         <div className="px-2 mt-2">
@@ -272,7 +272,7 @@ function ChatSidebar({
           )}
         </div>
 
-        <div className="mx-3 my-2 border-t border-border" />
+        <div className="mx-3 my-2 border-t border-[var(--border-subtle)]" />
 
         {/* Text Channels */}
         <div className="px-2 mt-1">
@@ -303,7 +303,7 @@ function ChatSidebar({
           )}
         </div>
 
-        <div className="mx-3 my-2 border-t border-border" />
+        <div className="mx-3 my-2 border-t border-[var(--border-subtle)]" />
 
         {/* Voice Rooms */}
         <div className="px-2 mt-1">
@@ -431,7 +431,7 @@ function InboxView({
 
       {/* Need Reply */}
       <section>
-        <h2 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">Need Reply</h2>
+        <h2 className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Need Reply</h2>
         <div className="space-y-2">
           {needReply.map(item => (
             <div key={item.id}
@@ -460,7 +460,7 @@ function InboxView({
 
       {/* Live Now */}
       <section>
-        <h2 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">Live Now</h2>
+        <h2 className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Live Now</h2>
         <div className="grid grid-cols-2 gap-3">
           {voiceRooms.map(room => (
             <div key={room.id} className="p-3 rounded-[12px] border border-border bg-card">
@@ -500,7 +500,7 @@ function InboxView({
 
       {/* Jump Back In */}
       <section>
-        <h2 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">Jump Back In</h2>
+        <h2 className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Jump Back In</h2>
         <div className="space-y-1">
           {jumpBack.map(ch => {
             const lastMsg = mockMessages.filter(m => m.channelId === ch.id).at(-1);
@@ -531,7 +531,7 @@ function InboxView({
 
       {/* Important / Pinned */}
       <section>
-        <h2 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">Important & Pinned</h2>
+        <h2 className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Important & Pinned</h2>
         <div className="p-3 rounded-[12px] border border-border bg-card">
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0" style={{ background:"var(--rally-brand-soft-light)" }}>
@@ -554,12 +554,12 @@ function InboxView({
         <section>
           <div className="flex items-center gap-2 mb-3">
             <Sparkles className="size-3.5" style={{ color:"var(--rally-brand)" }} />
-            <h2 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest">AI Catch-up</h2>
+            <h2 className="text-[11px] font-medium uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>AI Catch-up</h2>
             <span className="text-[10px] px-1.5 py-0.5 rounded-full" style={{ background:"#fff2ed", color:"#c60f08" }}>Beta</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {aiActions.filter(a => !aiDismissed.includes(a)).map(action => (
-              <div key={action} className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-full border border-border bg-card hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-colors group cursor-pointer">
+              <div key={action} className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-full border border-border bg-card hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors group cursor-pointer">
                 <span className="text-[12px] text-foreground">{action}</span>
                 <button onClick={e => { e.stopPropagation(); setAiDismissed(d => [...d, action]); }}
                   className="text-muted-foreground hover:text-foreground opacity-0 group-hover:opacity-100 transition-opacity">
@@ -574,7 +574,7 @@ function InboxView({
 
       {/* Shared in Chat */}
       <section>
-        <h2 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">Shared in Chat</h2>
+        <h2 className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Shared in Chat</h2>
         <div className="space-y-2">
           {sharedItems.map(item => {
             const iconMap = { file: FileText, task: CheckSquare, event: Calendar };
@@ -793,7 +793,7 @@ function ChannelView({
       {/* Messages */}
       <div className="flex-1 overflow-y-auto py-3">
         {/* Channel intro */}
-        <div className="px-4 pb-4 mb-2 border-b border-border">
+        <div className="px-4 pb-4 mb-2 border-b border-[var(--border-subtle)]">
           {channel.type === "dm"
             ? <div className="flex flex-col items-start gap-2">
                 <Av name={channel.name} size={48} />
@@ -906,7 +906,7 @@ function ChannelView({
             </div>
           </div>
           <p className="text-[10px] text-muted-foreground mt-1.5 px-1">
-            <kbd className="px-1 py-0.5 rounded border border-border text-[9px]">Enter</kbd> to send · <kbd className="px-1 py-0.5 rounded border border-border text-[9px]">Shift+Enter</kbd> for new line
+            <kbd className="px-1 py-0.5 rounded border border-border text-[10px]">Enter</kbd> to send · <kbd className="px-1 py-0.5 rounded border border-border text-[10px]">Shift+Enter</kbd> for new line
           </p>
         </div>
       ) : (
@@ -932,8 +932,8 @@ function RightPanel({ selectedChannelId }: { selectedChannelId: string | null })
     <aside className="h-full flex flex-col bg-card border-l border-border overflow-y-auto" style={{ width: 240, flexShrink: 0 }}>
 
       {/* Online now */}
-      <div className="p-4 border-b border-border">
-        <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">Online now</p>
+      <div className="p-4 border-b border-[var(--border-subtle)]">
+        <p className="text-[10px] font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Online now</p>
         <div className="space-y-2">
           {onlineMembers.map(m => (
             <div key={m.name} className="flex items-center gap-2">
@@ -953,8 +953,8 @@ function RightPanel({ selectedChannelId }: { selectedChannelId: string | null })
 
       {/* Pinned in channel */}
       {channelPins.length > 0 && (
-        <div className="p-4 border-b border-border">
-          <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">Pinned</p>
+        <div className="p-4 border-b border-[var(--border-subtle)]">
+          <p className="text-[10px] font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Pinned</p>
           <div className="space-y-2">
             {channelPins.map(m => (
               <div key={m.id} className="flex items-start gap-2 p-2.5 rounded-[8px] border border-border bg-background">
@@ -972,7 +972,7 @@ function RightPanel({ selectedChannelId }: { selectedChannelId: string | null })
       {/* Files shared here */}
       {channelFiles.length > 0 && (
         <div className="p-4">
-          <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">Files shared here</p>
+          <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Files shared here</p>
           <div className="space-y-2">
             {channelFiles.map(f => (
               <div key={f.id} className="flex items-center gap-2 p-2.5 rounded-[8px] border border-border bg-background hover:bg-muted transition-colors cursor-pointer">
@@ -988,8 +988,8 @@ function RightPanel({ selectedChannelId }: { selectedChannelId: string | null })
       )}
 
       {/* Related work shortcut */}
-      <div className="p-4 mt-auto border-t border-border">
-        <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">Related work</p>
+      <div className="p-4 mt-auto border-t border-[var(--border-subtle)]">
+        <p className="text-[10px] font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Related work</p>
         <div className="space-y-1.5">
           <Link to="/app/todo" className="flex items-center gap-2 px-2.5 py-2 rounded-[8px] hover:bg-muted transition-colors text-muted-foreground hover:text-foreground">
             <CheckSquare className="size-4" />

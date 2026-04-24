@@ -14,6 +14,9 @@
   --rally-brand-hover:    #fe3511;
   --rally-brand-pressed:  #ef1b07;
   --rally-brand-soft-light: #fff2ed;
+  --rally-brand-subtle:     #fff8f5;
+  --rally-brand-200:        #ffd0be;
+  --rally-brand-mid-dark:   #2a100e;
   --rally-brand-soft-dark:  #440608;
   --rally-brand-on-light: #c60f08;
   --rally-brand-on-dark:  #ff9571;
@@ -23,8 +26,12 @@
   --surface:    #fff7f3;
   --elevated:   #ffffff;
   --border-color: #d1aa99;
+  --border-subtle: rgba(209, 170, 153, 0.5);
+  --border-color-dark: rgba(255, 255, 255, 0.10);
   --text-primary:   #231d1a;
   --text-secondary: #5f514b;
+  --text-tertiary:  #8c7b74;
+  --text-placeholder: #b09e98;
 
   /* ── Semantic: Neutral ──────────────────────────── */
   --neutral-solid:       #5f514b;
@@ -65,8 +72,8 @@
 
   /* ── Interaction States ─────────────────────────── */
   --disabled-bg:       #fff2ed;
-  --disabled-border:   #ff5931;
-  --disabled-text:     #70635d;
+  --disabled-border:   #c9b8b2;
+  --disabled-text:     #b09e98;
   --focus-ring:        #ff9571;
   --selected-bg:       #ffe2d4;
   --selected-border:   #ff5931;
@@ -137,9 +144,15 @@
   --canvas:     #191919;
   --surface:    #232323;
   --elevated:   #2c2c2c;
-  --border-color: #4a403c;
+  --border-color: rgba(255, 255, 255, 0.10);
   --text-primary:   #fff2ed;
   --text-secondary: #c7b8b2;
+
+  /* ── Dark mode extended tokens ──────────────────── */
+  --rally-brand-mid-dark: #2a100e;
+  --text-tertiary:    #8a807c;
+  --text-placeholder: #5f514b;
+  --border-subtle:    rgba(255, 255, 255, 0.06);
 
   /* ── Interaction States dark ────────────────────── */
   --disabled-bg:       #262322;
@@ -286,5 +299,9 @@
     font-size: var(--text-base);
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
+  }
+
+  ::placeholder {
+    color: var(--text-placeholder);
   }
 }

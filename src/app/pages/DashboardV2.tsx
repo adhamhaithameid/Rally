@@ -61,7 +61,7 @@ function CardHeader({ title, icon: Icon, action, iconColor }: {
   title: string; icon?: React.ElementType; action?: React.ReactNode; iconColor?: string;
 }) {
   return (
-    <div className="flex items-center gap-2 px-4 pt-4 pb-3 border-b border-border">
+    <div className="flex items-center gap-2 px-4 pt-4 pb-3 border-b border-[var(--border-subtle)]">
       {Icon && <Icon className="size-4 flex-shrink-0" style={{ color: iconColor ?? "var(--text-muted)" }} />}
       <span className="text-[13px] font-medium text-foreground flex-1">{title}</span>
       {action}
@@ -204,12 +204,12 @@ function TopNav() {
 
         {teamOpen && (
           <div className="absolute top-full left-0 mt-1.5 w-60 bg-card border border-border rounded-[12px] shadow-lg z-50 py-1 overflow-hidden">
-            <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest px-3 py-2">Your teams</p>
+            <p className="text-[10px] font-medium uppercase tracking-widest px-3 py-2" style={{ color: "var(--text-tertiary)" }}>Your teams</p>
             {teams.map((t) => (
               <button key={t.teamId}
                 className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-muted transition-colors text-left"
                 onClick={() => { setTeamOpen(false); }}>
-                <div className="w-7 h-7 rounded-[6px] flex items-center justify-center text-white text-[11px] font-bold" style={{ background: "var(--rally-brand)" }}>
+                <div className="w-7 h-7 rounded-[6px] flex items-center justify-center text-white text-[11px] font-medium" style={{ background: "var(--rally-brand)" }}>
                   {t.teamName.charAt(0)}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -219,7 +219,7 @@ function TopNav() {
                 <Badge label={t.role} variant={t.role === "owner" ? "brand" : t.role === "admin" ? "info" : t.role === "member" ? "success" : "neutral"} />
               </button>
             ))}
-            <div className="border-t border-border mt-1 pt-1">
+            <div className="border-t border-[var(--border-subtle)] mt-1 pt-1">
               <button className="w-full flex items-center gap-2 px-3 py-2 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors text-[13px]">
                 <Plus className="size-4" /> Create or join team
               </button>
@@ -286,7 +286,7 @@ function TopNav() {
           >
             <Bell className="size-4 text-foreground" />
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[16px] h-4 flex items-center justify-center rounded-full text-white text-[9px] font-bold px-1" style={{ background: "var(--rally-brand)" }}>
+              <span className="absolute -top-1 -right-1 min-w-[16px] h-4 flex items-center justify-center rounded-full text-white text-[10px] font-medium px-1" style={{ background: "var(--rally-brand)" }}>
                 {unreadCount}
               </span>
             )}
@@ -294,12 +294,12 @@ function TopNav() {
 
           {notifOpen && (
             <div className="absolute top-full right-0 mt-1.5 w-80 bg-card border border-border rounded-[12px] shadow-lg z-50 overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+              <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-subtle)]">
                 <span className="text-[13px] font-medium text-foreground">Notifications</span>
                 <button className="text-[11px] text-muted-foreground hover:text-foreground transition-colors">Mark all read</button>
               </div>
               {mentions.map((m) => (
-                <div key={m.id} className={`flex gap-3 px-4 py-3 border-b border-border last:border-none hover:bg-muted transition-colors cursor-pointer ${m.unread ? "bg-[#fff2ed]/40 dark:bg-[#440608]/20" : ""}`}>
+                <div key={m.id} className={`flex gap-3 px-4 py-3 border-b border-[var(--border-subtle)] last:border-none hover:bg-muted transition-colors cursor-pointer ${m.unread ? "bg-[#fff2ed]/40 dark:bg-[#440608]/20" : ""}`}>
                   <Avatar name={m.user} size={32} />
                   <div className="flex-1 min-w-0">
                     <p className="text-[12px] text-foreground"><span className="font-medium">{m.user}</span> {m.type === "mention" ? `mentioned you in ${m.channel}` : "sent you a DM"}</p>
@@ -377,10 +377,10 @@ function AIDailyBrief() {
 
         {/* Suggested actions */}
         <div>
-          <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Suggested actions</p>
+          <p className="text-[11px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>Suggested actions</p>
           <div className="flex flex-wrap gap-2">
             {aiSuggestions.filter((s) => !dismissed.includes(s.id)).map((s) => (
-              <div key={s.id} className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-full border border-border bg-background hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-colors group cursor-pointer">
+              <div key={s.id} className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-full border border-border bg-background hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors group cursor-pointer">
                 <span className="text-[12px] text-foreground">{s.label}</span>
                 <button
                   onClick={(e) => { e.stopPropagation(); setDismissed((d) => [...d, s.id]); }}
@@ -451,7 +451,7 @@ function MyWorkNow() {
       <div className="p-4 space-y-4 flex-1 overflow-y-auto" style={{ maxHeight: 340 }}>
         {groups.map((g) => (
           <div key={g.key}>
-            <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">{g.label}</p>
+            <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>{g.label}</p>
             <div className="space-y-1.5">
               {g.items.filter((t) => !done.includes(t.id)).map((task) => (
                 <div key={task.id} className="group flex items-start gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background hover:border-[#d1aa99] transition-colors">
@@ -575,7 +575,7 @@ function MentionsChats() {
           const isRead = read.includes(m.id);
           return (
             <div key={m.id}
-              className={`flex gap-3 px-4 py-3 border-b border-border last:border-none hover:bg-muted transition-colors cursor-pointer ${(!isRead && m.unread) ? "bg-[#fff2ed]/30 dark:bg-[#440608]/10" : ""}`}>
+              className={`flex gap-3 px-4 py-3 border-b border-[var(--border-subtle)] last:border-none hover:bg-muted transition-colors cursor-pointer ${(!isRead && m.unread) ? "bg-[#fff2ed]/30 dark:bg-[#440608]/10" : ""}`}>
               <Avatar name={m.user} size={34} />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5">
@@ -629,7 +629,7 @@ function ContinueWorking() {
         }
       />
       <div className="p-4 space-y-2 flex-1">
-        <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-3">Recent files</p>
+        <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Recent files</p>
         {recentFiles.map((f) => (
           <div key={f.id} className="flex items-center gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background hover:bg-muted transition-colors cursor-pointer group">
             <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0 border border-border bg-card">
@@ -646,8 +646,8 @@ function ContinueWorking() {
           </div>
         ))}
 
-        <div className="pt-2 border-t border-border">
-          <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Last active</p>
+        <div className="pt-2 border-t border-[var(--border-subtle)]">
+          <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>Last active</p>
           <Link to="/app/chat" className="flex items-center gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background hover:bg-muted transition-colors cursor-pointer">
             <div className="w-8 h-8 rounded-[8px] flex items-center justify-center bg-[#eef4ff] border border-border flex-shrink-0">
               <Hash className="size-4" style={{ color: "#0f5fd7" }} />
@@ -689,7 +689,7 @@ function TeamPulse() {
 
         {/* Voice rooms */}
         <div>
-          <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Voice rooms</p>
+          <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>Voice rooms</p>
           <div className="space-y-2">
             {voiceRooms.map((room) => (
               <div key={room.id} className="flex items-center gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background">
@@ -717,7 +717,7 @@ function TeamPulse() {
 
         {/* Online members */}
         <div>
-          <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Members</p>
+          <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>Members</p>
           <div className="space-y-1.5">
             {onlineMembers.map((m) => (
               <div key={m.name} className="flex items-center gap-2.5 py-1.5">

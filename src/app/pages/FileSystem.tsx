@@ -577,7 +577,7 @@ export function FileSystem() {
       <div className="min-h-full bg-background p-4 lg:p-8">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Files</h1>
+            <h1 className="text-3xl font-medium text-foreground mb-2">Files</h1>
             <p className="text-muted-foreground">Browse team files and folders</p>
             <Badge variant="outline" className="mt-2">
               Your Role: Viewer (Read-only)
@@ -595,7 +595,7 @@ export function FileSystem() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">File System</h1>
+          <h1 className="text-3xl font-medium text-foreground mb-2">File System</h1>
           <p className="text-muted-foreground">Manage team files and folders</p>
           <Badge variant="outline" className="mt-2">
             Your Role: {userRole?.charAt(0).toUpperCase()}{userRole?.slice(1)}

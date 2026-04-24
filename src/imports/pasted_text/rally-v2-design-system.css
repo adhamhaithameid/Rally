@@ -1,0 +1,245 @@
+You are implementing the Rally V2 Design System update. Apply ALL of the following changes exactly as specified. Do not change anything not listed here. Do not introduce new tokens beyond what is listed. Preserve all existing tokens unless explicitly told to modify them.
+
+---
+
+## CONTEXT
+
+Rally is a warm-chromatic design system built on Nunito Sans and a single brand color (#ff4615 orange-red). It uses CSS custom properties (variables) for all colors and tokens. The system is gradient-free. All depth is achieved through surface layering, warm box shadows, and tinted soft backgrounds.
+
+The codebase uses CSS variables defined on :root, with a dark mode override block (either prefers-color-scheme: dark or a .dark class — match whatever pattern already exists in the codebase).
+
+---
+
+## LAYER 1 — ADD THESE NEW TOKENS TO :root (light mode)
+
+Add immediately after the existing --rally-brand-soft-light token:
+
+  --rally-brand-subtle: #fff8f5;
+  --rally-brand-200: #ffd0be;
+  --rally-brand-mid-dark: #2a100e;
+
+Add immediately after the existing --text-secondary token:
+
+  --text-tertiary: #8c7b74;
+  --text-placeholder: #b09e98;
+
+Add immediately after the existing --border-color token:
+
+  --border-subtle: rgba(209, 170, 153, 0.5);
+  --border-color-dark: rgba(255, 255, 255, 0.10);
+
+---
+
+## LAYER 2 — MODIFY THESE EXISTING TOKENS
+
+### In :root (light mode)
+
+Find and replace:
+  --disabled-border: #ff5931;
+Replace with:
+  --disabled-border: #c9b8b2;
+
+Find and replace:
+  --disabled-text: #70635d;
+Replace with:
+  --disabled-text: #b09e98;
+
+### In dark mode override block
+
+Find and replace the dark mode border-color override:
+  --border-color: #4a403c;
+Replace with:
+  --border-color: rgba(255, 255, 255, 0.10);
+
+If --border-color is used specifically for card borders in dark mode and a separate token exists, replace that token instead. The goal is: elevated card borders in dark mode must use rgba(255,255,255,0.10), not a flat hex value.
+
+Add inside the dark mode override block:
+
+  --rally-brand-mid-dark: #2a100e;
+  --text-tertiary: #8a807c;
+  --text-placeholder: #5f514b;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+
+---
+
+## LAYER 3 — UPDATE COMPONENT STYLES
+
+### Input / field placeholders
+
+Find all input, textarea, select placeholder styles. They may look like:
+  ::placeholder { color: var(--muted-foreground); }
+  or
+  ::placeholder { color: var(--text-secondary); }
+
+Replace all placeholder color values with:
+  ::placeholder { color: var(--text-placeholder); }
+
+### Disabled state borders
+
+Find all component disabled border styles. They may look like:
+  border-color: var(--disabled-border);
+  or
+  border: 1px solid var(--rally-brand);  /* on disabled state */
+  or
+  border: 1px solid #ff5931;
+
+On any disabled element, ensure the border uses var(--disabled-border) and nothing else. The token value is now #c9b8b2 (corrected in Layer 2 above — no hardcoded changes needed here if tokens are used correctly).
+
+### AI Assist panel border
+
+Find the AI Assist panel component. It currently has:
+  border: 1px solid var(--rally-brand-soft-light);
+  or
+  border: 1px solid #fff2ed;
+
+Replace with:
+  border: 1px solid var(--rally-brand-200);
+
+This applies to the panel container only, not to chips or inner elements inside the panel.
+
+### Ghost button brand variant hover
+
+Find the brand ghost button hover state. It may look like:
+  .btn-brand-ghost:hover { background: var(--rally-brand-soft-light); }
+  or similar.
+
+Replace the hover background with:
+  background: var(--rally-brand-200);
+
+### Card borders in dark mode
+
+Find all card components that use a flat border in dark mode. They may look like:
+  border: 1px solid var(--border-color);
+  or
+  border: 1px solid #4a403c;
+
+In dark mode contexts (inside .dark, [data-theme="dark"], or @media (prefers-color-scheme: dark)), ensure all card, modal, popover, dropdown, and elevated surface borders use:
+  border: 1px solid var(--border-color);
+
+Since --border-color is now overridden to rgba(255,255,255,0.10) in dark mode (done in Layer 2), this change is automatic if the token is used correctly. Audit for any hardcoded #4a403c values and replace them with var(--border-color).
+
+---
+
+## LAYER 4 — APPLY NEW TOKENS IN COMPONENTS
+
+### --text-tertiary usage
+
+Apply var(--text-tertiary) to the following elements across all components:
+- Timestamps (e.g. "2 hours ago", "Last updated")
+- Helper text / hint text below input fields
+- Empty state supporting text (the smaller line below the heading)
+- Sub-captions in cards (the third line of a card when three text levels are present)
+- Nav rail labels (the 9-10px text beneath icons in the 72px sidebar)
+- Section overline / category labels (if currently using --text-secondary, downgrade to --text-tertiary)
+- Breadcrumb separators and inactive breadcrumb steps
+- Table row secondary metadata columns
+- File size labels, member count labels, date labels in list rows
+
+Do NOT apply --text-tertiary to:
+- Interactive labels
+- Form labels
+- Button text
+- Badge text
+- Any text that communicates a primary action or state
+
+### --border-subtle usage
+
+Apply var(--border-subtle) to the following:
+- Section dividers inside cards (horizontal rules that separate card header from card body)
+- Inner list item separators in dense lists
+- Tab bar bottom borders
+- Sidebar section dividers (between nav groups)
+- Table row bottom borders (tr borders inside cards)
+
+Keep var(--border-color) (full opacity) on:
+- Card outer borders
+- Input field borders
+- Modal outer borders
+- Dropdown outer borders
+
+### --rally-brand-subtle usage
+
+Apply var(--rally-brand-subtle) as hover background on:
+- Ghost list rows (rows with no background at rest that highlight on hover)
+- Alternating row banding where a subtle brand-warm tint is needed (use sparingly — only one or the other, not both)
+- Sidebar nav item hover (if currently using --neutral-soft-light, you may keep that — only switch to --rally-brand-subtle if the design calls for warm-tinted hover)
+
+### --rally-brand-200 usage
+
+Apply var(--rally-brand-200) to:
+- Progress bar fill tracks (the unfilled/background portion — the filled portion stays --rally-brand)
+- Skeleton loader shimmer base color (brand-tinted skeletons)
+- Avatar ring / border on brand-highlighted avatars
+- AI Assist panel border (already handled in Layer 3)
+- Brand ghost button hover (already handled in Layer 3)
+
+### --rally-brand-mid-dark usage (dark mode only)
+
+In dark mode, apply var(--rally-brand-mid-dark) as:
+- The hover background for selected/active list rows (between transparent and --rally-brand-soft-dark)
+- The hover tint on nav items that are near-active but not confirmed active
+- Background for "pre-selected" or "hovered-while-selected" states in lists, dropdowns, and nav
+
+---
+
+## LAYER 5 — TYPOGRAPHY ENFORCEMENT
+
+These are not new rules — they enforce existing Rally rules that may have drifted.
+
+1. Ensure all text using --text-secondary is truly secondary content. Audit for any timestamp, helper, or subtext currently using --text-secondary and downgrade to --text-tertiary.
+
+2. Ensure font-weight: 700 (bold) is not used on any heading, label, or button. Replace all font-weight: 700 with font-weight: 500 in UI components. Bold (700) is reserved for maximum-emphasis moments only and should not appear in routine headings.
+
+3. Ensure all elements ≤ 12px use font-weight: 500 (medium). Specifically: nav labels at 9-10px must be 500, overline labels at 11px must be 500, badge text at 11px must be 500.
+
+4. Ensure no text in the system uses font-size below 10px. If any element is currently at 9px or below, raise it to 10px minimum.
+
+---
+
+## LAYER 6 — AUDIT CHECKLIST (verify after changes)
+
+Run through these checks after implementation:
+
+[ ] --text-tertiary is defined in :root and dark mode override
+[ ] --text-placeholder is defined in :root and dark mode override
+[ ] --rally-brand-subtle is defined in :root
+[ ] --rally-brand-200 is defined in :root
+[ ] --rally-brand-mid-dark is defined in :root and dark mode override
+[ ] --border-subtle is defined in :root and dark mode override
+[ ] --border-color-dark is defined (for documentation — used via --border-color dark override)
+[ ] --disabled-border in light mode is #c9b8b2 (not #ff5931)
+[ ] --disabled-text is #b09e98
+[ ] Dark mode --border-color is rgba(255,255,255,0.10)
+[ ] No hardcoded #4a403c in dark mode card/modal/popover borders
+[ ] No hardcoded #ff5931 in disabled state borders anywhere
+[ ] All ::placeholder uses var(--text-placeholder)
+[ ] AI Assist panel border uses var(--rally-brand-200)
+[ ] Brand ghost button hover uses var(--rally-brand-200)
+[ ] Timestamps use var(--text-tertiary)
+[ ] Helper text uses var(--text-tertiary)
+[ ] Nav rail labels use var(--text-tertiary)
+[ ] Section dividers inside cards use var(--border-subtle)
+[ ] No font-weight: 700 on headings, labels, or buttons in component files
+[ ] All text ≤ 12px is font-weight: 500
+
+---
+
+## DO NOT CHANGE
+
+- --rally-brand (#ff4615)
+- --rally-brand-hover (#fe3511)
+- --rally-brand-pressed (#ef1b07)
+- --rally-brand-on-light (#c60f08)
+- --rally-brand-on-dark (#ff9571)
+- --rally-brand-soft-light (#fff2ed)
+- --rally-brand-soft-dark (#440608)
+- --canvas / --surface / --elevated (all surface tokens)
+- --text-primary (#231d1a light / #fff2ed dark)
+- --text-secondary (#5f514b light / #c7b8b2 dark)
+- --focus-ring (#ff9571)
+- --selected-bg / --selected-border / --selected-text
+- All semantic tokens (--error-*, --success-*, --warning-*, --info-*)
+- All shadow tokens (--shadow-sm through --shadow-xl)
+- All border-radius tokens
+- Font family (Nunito Sans — do not change)
+- Gradient rule (none — do not introduce any gradients)

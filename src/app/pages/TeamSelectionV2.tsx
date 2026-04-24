@@ -129,7 +129,7 @@ function TeamCard({ team, onSelect }: { team: MockTeam; onSelect: (id: number) =
       {/* Header row */}
       <div className="flex items-start gap-3 mb-3">
         {/* Icon */}
-        <div className="w-11 h-11 rounded-[12px] flex items-center justify-center text-white flex-shrink-0 text-[18px] font-bold"
+        <div className="w-11 h-11 rounded-[12px] flex items-center justify-center text-white flex-shrink-0 text-[18px] font-medium"
           style={{ background: iconColor }}>
           {team.name.charAt(0).toUpperCase()}
         </div>
@@ -157,7 +157,7 @@ function TeamCard({ team, onSelect }: { team: MockTeam; onSelect: (id: number) =
       </div>
 
       {/* Footer row */}
-      <div className="flex items-center justify-between mt-auto pt-3 border-t border-border">
+      <div className="flex items-center justify-between mt-auto pt-3 border-t border-[var(--border-subtle)]">
         <div className="flex items-center gap-3">
           {/* Stacked avatars */}
           <div className="flex items-center" style={{ marginLeft: 4 }}>
@@ -167,7 +167,7 @@ function TeamCard({ team, onSelect }: { team: MockTeam; onSelect: (id: number) =
               </div>
             ))}
             {team.members > 3 && (
-              <div className="w-[22px] h-[22px] rounded-full bg-muted border-2 border-card flex items-center justify-center text-[9px] text-muted-foreground font-medium"
+              <div className="w-[22px] h-[22px] rounded-full bg-muted border-2 border-card flex items-center justify-center text-[10px] text-muted-foreground font-medium"
                 style={{ marginLeft: -8, zIndex: 0 }}>
                 +{team.members - 3}
               </div>
@@ -228,7 +228,7 @@ function CreatePanel({ onClose, onDone }: { onClose: () => void; onDone: () => v
   return (
     <div className="rounded-[16px] border border-border bg-card overflow-hidden">
       {/* Header */}
-      <div className="flex items-center gap-3 px-5 py-4 border-b border-border">
+      <div className="flex items-center gap-3 px-5 py-4 border-b border-[var(--border-subtle)]">
         <button onClick={onClose}
           className="w-7 h-7 flex items-center justify-center rounded-[7px] hover:bg-muted text-muted-foreground transition-colors flex-shrink-0">
           <ArrowLeft className="size-4" />
@@ -394,7 +394,7 @@ function JoinPanel({ onClose, onDone }: { onClose: () => void; onDone: () => voi
 
   return (
     <div className="rounded-[16px] border border-border bg-card overflow-hidden">
-      <div className="flex items-center gap-3 px-5 py-4 border-b border-border">
+      <div className="flex items-center gap-3 px-5 py-4 border-b border-[var(--border-subtle)]">
         <button onClick={onClose}
           className="w-7 h-7 flex items-center justify-center rounded-[7px] hover:bg-muted text-muted-foreground transition-colors flex-shrink-0">
           <ArrowLeft className="size-4" />
@@ -493,7 +493,7 @@ export function TeamSelectionV2() {
           <svg viewBox="27 26 133 127" width="24" height="24" fill="none">
             <path d={svgPaths.p6b466c0} fill="var(--rally-brand)" />
           </svg>
-          <span className="text-[16px] font-bold text-foreground">Rally</span>
+          <span className="text-[16px] font-medium text-foreground">Rally</span>
           <span className="text-[10px] px-2 py-0.5 rounded-full text-white ml-1" style={{ background: "var(--rally-brand)" }}>
             V2
           </span>
@@ -510,7 +510,7 @@ export function TeamSelectionV2() {
 
           {/* Greeting */}
           <div className="mb-7">
-            <h1 className="text-[22px] font-bold text-foreground mb-1">Welcome back, John.</h1>
+            <h1 className="text-[22px] font-medium text-foreground mb-1">Welcome back, John.</h1>
             <p className="text-[13px] text-muted-foreground">Pick a workspace to continue, or start a new one.</p>
           </div>
 
@@ -559,7 +559,7 @@ export function TeamSelectionV2() {
                   {/* Create card — always last */}
                   <div
                     onClick={() => setPanel("create")}
-                    className="flex flex-col items-center justify-center rounded-[16px] border-2 border-dashed border-border bg-background cursor-pointer hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-all group min-h-[220px]">
+                    className="flex flex-col items-center justify-center rounded-[16px] border-2 border-dashed border-border bg-background cursor-pointer hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-all group min-h-[220px]">
                     <div className="w-11 h-11 rounded-full flex items-center justify-center mb-3 transition-colors"
                       style={{ background: "var(--rally-brand-soft-light)" }}>
                       <Plus className="size-5" style={{ color: "var(--rally-brand)" }} />
@@ -576,7 +576,7 @@ export function TeamSelectionV2() {
               )}
 
               {/* Stats bar */}
-              <div className="flex items-center gap-5 mt-6 pt-5 border-t border-border text-[11px] text-muted-foreground flex-wrap">
+              <div className="flex items-center gap-5 mt-6 pt-5 border-t border-[var(--border-subtle)] text-[11px] text-muted-foreground flex-wrap">
                 <span className="flex items-center gap-1.5">
                   <Briefcase className="size-3.5" />
                   {MOCK_TEAMS.length} workspaces

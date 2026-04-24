@@ -410,7 +410,7 @@ function MiniCalendar({
       {/* Day-of-week headers */}
       <div className="grid grid-cols-7 mb-1">
         {["M","T","W","T","F","S","S"].map((d, i) => (
-          <div key={i} className="text-center text-[9px] text-muted-foreground py-0.5">{d}</div>
+          <div key={i} className="text-center text-[10px] text-muted-foreground py-0.5">{d}</div>
         ))}
       </div>
 
@@ -479,7 +479,7 @@ function UpNextCard({ events, lists }: { events: CalEvent[]; lists: CalList[] })
 
   return (
     <div className="mx-3 mb-3">
-      <p className="text-[9px] font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 px-1">
+      <p className="text-[10px] font-medium uppercase tracking-widest mb-1.5 px-1" style={{ color: "var(--text-tertiary)" }}>
         {inProgress ? "Happening Now" : "Up Next"}
       </p>
       <div className="rounded-[10px] border overflow-hidden" style={{ borderColor: `${color}40` }}>
@@ -528,7 +528,7 @@ function UpNextCard({ events, lists }: { events: CalEvent[]; lists: CalList[] })
               {featured!.links.map((lk, i) => (
                 <div key={i} className="flex items-center gap-1">
                   {linkIcon(lk.type)}
-                  <span className="text-[9px] text-muted-foreground truncate max-w-[80px]">{lk.label}</span>
+                  <span className="text-[10px] text-muted-foreground truncate max-w-[80px]">{lk.label}</span>
                 </div>
               ))}
             </div>
@@ -539,7 +539,7 @@ function UpNextCard({ events, lists }: { events: CalEvent[]; lists: CalList[] })
       {/* Later today */}
       {laterToday.length > 0 && (
         <div className="mt-1.5 space-y-0.5">
-          <p className="text-[9px] font-semibold uppercase tracking-widest text-muted-foreground mb-1 px-1">Later Today</p>
+          <p className="text-[10px] font-medium uppercase tracking-widest mb-1 px-1" style={{ color: "var(--text-tertiary)" }}>Later Today</p>
           {laterToday.map(e => (
             <div key={e.id} className="flex items-center gap-2 px-2 py-1.5 rounded-[7px] hover:bg-muted transition-colors">
               <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: getColor(e.calendarId) }} />
@@ -589,7 +589,7 @@ function LeftRail({
 
       {/* Calendar lists */}
       <div className="px-3 pb-3">
-        <p className="text-[9px] font-semibold uppercase tracking-widest text-muted-foreground mb-2">
+        <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>
           Calendars
         </p>
         <div className="space-y-1">
@@ -610,7 +610,7 @@ function LeftRail({
       {/* Quick create */}
       <div className="px-3 pb-3">
         <button onClick={onNewEvent}
-          className="w-full flex items-center justify-center gap-1.5 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[var(--rally-brand)] hover:text-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-colors text-[11px]">
+          className="w-full flex items-center justify-center gap-1.5 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[var(--rally-brand)] hover:text-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors text-[11px]">
           <Plus className="size-3.5" /> Quick Create
         </button>
       </div>
@@ -633,7 +633,7 @@ function LeftRail({
               <div key={c.id} className="flex items-start gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1" style={{ background: c.dot }} />
                 <p className="text-[10px] text-muted-foreground flex-1 leading-snug">{c.text}</p>
-                <span className="text-[9px] text-muted-foreground flex-shrink-0">{c.time}</span>
+                <span className="text-[10px] text-muted-foreground flex-shrink-0">{c.time}</span>
               </div>
             ))}
           </div>
@@ -671,7 +671,7 @@ function EventBlock({
         {event.title}
       </p>
       {showDetails && (
-        <p className="text-[9px] opacity-70 leading-tight" style={{ color }}>
+        <p className="text-[10px] opacity-70 leading-tight" style={{ color }}>
           {formatTime(event.startTime!)}
         </p>
       )}
@@ -747,9 +747,9 @@ function WeekView({
         </div>
 
         {/* All-day row */}
-        <div className="flex border-t border-border/20">
+        <div className="flex border-t border-[var(--border-subtle)]">
           <div className="w-[52px] flex-shrink-0 flex items-center justify-end pr-2 py-1">
-            <span className="text-[9px] text-muted-foreground">all-day</span>
+            <span className="text-[10px] text-muted-foreground">all-day</span>
           </div>
           {weekDays.map(d => {
             const allD = allDayForDay(d);
@@ -759,7 +759,7 @@ function WeekView({
                   const color = getColor(e.calendarId);
                   return (
                     <div key={e.id} onClick={() => onEventClick(e)}
-                      className="text-[9px] px-1.5 py-0.5 rounded-[4px] truncate cursor-pointer"
+                      className="text-[10px] px-1.5 py-0.5 rounded-[4px] truncate cursor-pointer"
                       style={{ background: `${color}20`, color }}>
                       {e.title}
                     </div>
@@ -777,7 +777,7 @@ function WeekView({
           {/* Time gutter */}
           <div className="w-[52px] flex-shrink-0 relative" style={{ height: TOTAL_GRID_H }}>
             {HOURS.map(h => (
-              <div key={h} className="absolute right-2 text-[9px] text-muted-foreground -translate-y-2"
+              <div key={h} className="absolute right-2 text-[10px] text-muted-foreground -translate-y-2"
                 style={{ top: (h - START_HOUR) * HOUR_HEIGHT }}>
                 {h === 12 ? "12pm" : h > 12 ? `${h-12}pm` : `${h}am`}
               </div>
@@ -801,12 +801,12 @@ function WeekView({
 
                 {/* Hour lines */}
                 {HOURS.map(h => (
-                  <div key={h} className="absolute w-full border-b border-border/25"
+                  <div key={h} className="absolute w-full border-b border-[var(--border-subtle)]"
                     style={{ top: (h - START_HOUR) * HOUR_HEIGHT }} />
                 ))}
                 {/* Half-hour lines */}
                 {HOURS.map(h => (
-                  <div key={`h${h}`} className="absolute w-full border-b border-border/12"
+                  <div key={`h${h}`} className="absolute w-full border-b border-[var(--border-subtle)]/40"
                     style={{ top: (h - START_HOUR) * HOUR_HEIGHT + HOUR_HEIGHT / 2 }} />
                 ))}
 
@@ -963,7 +963,7 @@ function MonthView({
                   const color = getColor(e.calendarId);
                   return (
                     <div key={e.id} onClick={ev => { ev.stopPropagation(); onEventClick(e); }}
-                      className={`text-[9px] px-1.5 py-0.5 rounded-[3px] truncate leading-tight transition-opacity ${
+                      className={`text-[10px] px-1.5 py-0.5 rounded-[3px] truncate leading-tight transition-opacity ${
                         selectedEventId === e.id ? "opacity-100" : "opacity-90 hover:opacity-100"
                       }`}
                       style={{ background: `${color}22`, color }}>
@@ -972,7 +972,7 @@ function MonthView({
                   );
                 })}
                 {moreCount > 0 && (
-                  <p className="text-[9px] text-muted-foreground pl-1">+{moreCount} more</p>
+                  <p className="text-[10px] text-muted-foreground pl-1">+{moreCount} more</p>
                 )}
               </div>
             </div>
@@ -1022,7 +1022,7 @@ function EventDetailPanel({
       <div className="h-1 flex-shrink-0" style={{ background: color }} />
 
       {/* Header */}
-      <div className="flex-shrink-0 flex items-center gap-2 px-4 py-3 border-b border-border">
+      <div className="flex-shrink-0 flex items-center gap-2 px-4 py-3 border-b border-[var(--border-subtle)]">
         <span className="flex-1 text-[12px] font-medium text-muted-foreground">Event detail</span>
         <button onClick={() => setShowAI(v => !v)} title="AI Assist"
           className={`w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors ${showAI ? "bg-[var(--rally-brand-soft-light)]" : "hover:bg-muted text-muted-foreground"}`}
@@ -1038,14 +1038,14 @@ function EventDetailPanel({
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
         {/* AI Assist */}
         {showAI && (
-          <div className="p-3 rounded-[10px] border" style={{ borderColor: "var(--rally-brand-soft-light)", background: "var(--rally-brand-soft-light)" }}>
+          <div className="p-3 rounded-[10px] border" style={{ borderColor: "var(--rally-brand-200)", background: "var(--rally-brand-soft-light)" }}>
             <div className="flex items-center gap-1.5 mb-2">
               <Sparkles className="size-3.5" style={{ color: "var(--rally-brand)" }} />
               <span className="text-[11px] font-medium" style={{ color: "var(--rally-brand)" }}>AI Assist</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {aiActions.map(a => (
-                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-colors">
+                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors">
                   {a}
                 </button>
               ))}
@@ -1110,7 +1110,7 @@ function EventDetailPanel({
               <div className="flex items-center gap-2">
                 <Av name="John Doe" size={22} />
                 <span className="text-[12px] text-foreground flex-1">John Doe</span>
-                <span className="text-[9px] text-muted-foreground bg-muted px-1.5 py-0.5 rounded-full">You · Organizer</span>
+                <span className="text-[10px] text-muted-foreground bg-muted px-1.5 py-0.5 rounded-full">You · Organizer</span>
               </div>
               {event.attendees.map(a => (
                 <div key={a} className="flex items-center gap-2">
@@ -1190,7 +1190,7 @@ function EventDetailPanel({
 
       {/* Footer */}
       {canEdit && (
-        <div className="flex-shrink-0 border-t border-border px-4 py-3 flex gap-2">
+        <div className="flex-shrink-0 border-t border-[var(--border-subtle)] px-4 py-3 flex gap-2">
           <button onClick={() => { onDelete(event.id); onClose(); }}
             className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-[8px] border border-border bg-background text-muted-foreground hover:text-foreground hover:bg-muted transition-colors text-[12px]">
             Delete

@@ -336,7 +336,7 @@ export function AIChat() {
       <div className="min-h-full bg-background p-4 lg:p-8">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2">AI Assistant</h1>
+            <h1 className="text-3xl font-medium text-foreground mb-2">AI Assistant</h1>
             <p className="text-muted-foreground">AI chat not available for viewers</p>
           </div>
           <div className="rounded-xl border border-border p-12 text-center bg-card">

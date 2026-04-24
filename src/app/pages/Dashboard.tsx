@@ -82,7 +82,7 @@ export function Dashboard() {
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8" id="user-profile-menu">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Home</h1>
+            <h1 className="text-3xl font-medium text-foreground mb-2">Home</h1>
             <p className="text-muted-foreground">
               Welcome back, {user?.name}! Here's what's happening in{" "}
               <span className="font-medium text-blue-600 dark:text-blue-400">{currentTeam?.projectName}</span>.
@@ -234,7 +234,7 @@ export function Dashboard() {
                     <div className="flex items-center justify-between pt-4 border-t border-border">
                       <div>
                         <p className="text-sm font-medium text-foreground">Team Members</p>
-                        <p className="text-2xl font-bold text-foreground">{currentTeam?.members.length}</p>
+                        <p className="text-2xl font-medium text-foreground">{currentTeam?.members.length}</p>
                       </div>
                       <Button variant="outline" asChild>
                         <Link to="/app/team">
@@ -259,7 +259,7 @@ export function Dashboard() {
                     <div className="flex items-center justify-between pt-4 border-t border-border">
                       <div>
                         <p className="text-sm font-medium text-foreground">Team Members</p>
-                        <p className="text-2xl font-bold text-foreground">{currentTeam?.members.length}</p>
+                        <p className="text-2xl font-medium text-foreground">{currentTeam?.members.length}</p>
                       </div>
                       <Badge variant="outline">
                         <Users className="size-3 mr-1" />

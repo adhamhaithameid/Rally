@@ -273,7 +273,7 @@ function OverviewSection({
               </>
             ) : (
               <button onClick={() => { setStatusDraft(customStatus); setEditStatus(true); }}
-                className="flex-1 text-left px-2.5 py-1.5 rounded-[7px] border border-dashed border-border hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] text-[12px] transition-colors"
+                className="flex-1 text-left px-2.5 py-1.5 rounded-[7px] border border-dashed border-border hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] text-[12px] transition-colors"
                 style={{ color: customStatus ? "var(--text-foreground)" : "var(--text-muted)" }}>
                 {customStatus || "Set a custom status…"}
               </button>
@@ -497,7 +497,7 @@ function PreferencesSection({
             </div>
             <p className="text-[10px] text-muted-foreground mt-1">Comma-separated — helps teammates know your expertise</p>
           </div>
-          <div className="pt-2 border-t border-border flex justify-end">
+          <div className="pt-2 border-t border-[var(--border-subtle)] flex justify-end">
             <button onClick={handleSave}
               className="flex items-center gap-1.5 px-4 py-2 rounded-[8px] text-white text-[12px] font-medium transition-colors"
               style={{ background: saved ? "#0f6a43" : "var(--rally-brand)" }}>
@@ -600,7 +600,7 @@ function PreferencesSection({
   );
 }
 
-// ── Access & Teams ───────────────────────────────────────────────────────────
+// ── Access & Teams ��──────────────────────────────────────────────────────────
 
 function TeamsSection({
   user, userRole, currentTeamId,
@@ -631,14 +631,14 @@ function TeamsSection({
                   onClick={() => setExpandedTeam(expanded ? null : team.teamId)}
                   className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-muted/30 transition-colors">
                   {/* Team icon */}
-                  <div className="w-9 h-9 rounded-[9px] flex items-center justify-center text-white text-[14px] font-bold flex-shrink-0"
+                  <div className="w-9 h-9 rounded-[9px] flex items-center justify-center text-white text-[14px] font-medium flex-shrink-0"
                     style={{ background: active ? "var(--rally-brand)" : avatarBg(team.teamName) }}>
                     {team.teamName.charAt(0).toUpperCase()}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <p className="text-[13px] font-medium text-foreground truncate">{team.teamName}</p>
-                      {active && <span className="text-[9px] px-1.5 py-0.5 rounded-full text-white flex-shrink-0" style={{ background: "var(--rally-brand)" }}>Current</span>}
+                      {active && <span className="text-[10px] px-1.5 py-0.5 rounded-full text-white flex-shrink-0" style={{ background: "var(--rally-brand)" }}>Current</span>}
                     </div>
                     <p className="text-[11px] text-muted-foreground truncate">{team.projectName}</p>
                   </div>
@@ -648,8 +648,8 @@ function TeamsSection({
 
                 {/* Expanded permission summary */}
                 {expanded && (
-                  <div className="border-t border-border px-4 py-3 bg-muted/20">
-                    <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                  <div className="border-t border-[var(--border-subtle)] px-4 py-3 bg-muted/20">
+                    <p className="text-[10px] font-medium uppercase tracking-wider mb-2" style={{ color: "var(--text-tertiary)" }}>
                       As {ROLE_CFG[team.role].label} — what you can do:
                     </p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
@@ -676,7 +676,7 @@ function TeamsSection({
 
       {/* Create / join another team */}
       <div className="flex items-center gap-2">
-        <button className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[var(--rally-brand)] hover:text-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-colors text-[12px]">
+        <button className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[var(--rally-brand)] hover:text-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors text-[12px]">
           <Users className="size-3.5" /> Create another team
         </button>
         <button className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[#0f5fd7] hover:text-[#0f5fd7] hover:bg-[#eef4ff] transition-colors text-[12px]">
@@ -795,7 +795,7 @@ function SecuritySection({ onLogout }: { onLogout: () => void }) {
                   <div className="flex items-center gap-2">
                     <p className="text-[12px] text-foreground">{sess.device}</p>
                     {sess.active && (
-                      <span className="text-[9px] px-1.5 py-0.5 rounded-full" style={{ background: "#eaf7f0", color: "#0f6a43" }}>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded-full" style={{ background: "#eaf7f0", color: "#0f6a43" }}>
                         Active now
                       </span>
                     )}

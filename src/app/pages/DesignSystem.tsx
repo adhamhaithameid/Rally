@@ -280,7 +280,7 @@ function Swatch({ s }: { s: ColorSwatch }) {
         <p className="text-[11px] font-medium text-foreground truncate">{s.name}</p>
         <p className="text-[10px] text-muted-foreground truncate font-mono">{s.value}</p>
         {s.token && (
-          <p className="text-[9px] text-muted-foreground/70 truncate font-mono">{s.token}</p>
+          <p className="text-[10px] text-muted-foreground/70 truncate font-mono">{s.token}</p>
         )}
       </div>
     </button>
@@ -292,7 +292,7 @@ function Swatch({ s }: { s: ColorSwatch }) {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="space-y-3">
-      <h3 className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest border-b border-border pb-2">
+      <h3 className="text-[11px] font-medium uppercase tracking-widest border-b border-[var(--border-subtle)] pb-2" style={{ color: "var(--text-tertiary)" }}>
         {title}
       </h3>
       {children}
@@ -491,7 +491,7 @@ export function DesignSystem() {
                     {[16, 24, 32, 48, 64].map((s) => (
                       <div key={s} className="flex flex-col items-center gap-1">
                         <LogoMark bg="#191919" iconColor="#ff4615" size={s} />
-                        <span className="text-[9px] font-mono text-muted-foreground">{s}px</span>
+                        <span className="text-[10px] font-mono text-muted-foreground">{s}px</span>
                       </div>
                     ))}
                   </div>
@@ -741,7 +741,7 @@ export function DesignSystem() {
                       }}
                     />
                     <span className="text-[10px] font-mono text-muted-foreground">{r.label}</span>
-                    <span className="text-[9px] font-mono text-muted-foreground/60">{r.value}</span>
+                    <span className="text-[10px] font-mono text-muted-foreground/60">{r.value}</span>
                   </div>
                 ))}
               </div>
@@ -763,7 +763,7 @@ export function DesignSystem() {
                     </div>
                     <div className="text-center">
                       <p className="text-[10px] font-mono text-muted-foreground">{s.token}</p>
-                      <p className="text-[9px] text-muted-foreground/60">{s.desc}</p>
+                      <p className="text-[10px] text-muted-foreground/60">{s.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -951,7 +951,7 @@ export function DesignSystem() {
                     >
                       <span className="text-white font-medium" style={{ fontSize: size * 0.35 }}>{initials}</span>
                     </div>
-                    <span className="text-[9px] font-mono text-muted-foreground">{label}</span>
+                    <span className="text-[10px] font-mono text-muted-foreground">{label}</span>
                   </div>
                 ))}
               </div>
@@ -1089,7 +1089,7 @@ export function DesignSystem() {
                     </div>
                     <div className="px-2 py-1.5 bg-card border-t border-border">
                       <p className="text-[10px] font-medium text-foreground">{palette.emoji} {palette.name}</p>
-                      <code className="text-[9px] font-mono text-muted-foreground">{palette.dark['--canvas'] ?? '#191919'}</code>
+                      <code className="text-[10px] font-mono text-muted-foreground">{palette.dark['--canvas'] ?? '#191919'}</code>
                     </div>
                   </div>
                 ))}

@@ -137,7 +137,7 @@ function AppMockup() {
                   {[["12", "Tasks"], ["3", "Events"], ["5", "Online"]].map(([n, l]) => (
                     <div key={l} className="rounded-[8px] bg-card border border-border px-2 py-1.5">
                       <p className="text-[13px] font-bold text-foreground">{n}</p>
-                      <p className="text-[9px] text-muted-foreground">{l}</p>
+                      <p className="text-[10px] text-muted-foreground">{l}</p>
                     </div>
                   ))}
                 </div>
@@ -151,7 +151,7 @@ function AppMockup() {
                     <div key={a.text} className="flex items-start gap-2 py-1">
                       <span className="w-1.5 h-1.5 rounded-full mt-1 flex-shrink-0" style={{ background: a.color }} />
                       <span className="text-[10px] text-muted-foreground flex-1 leading-tight">{a.text}</span>
-                      <span className="text-[9px] text-muted-foreground">{a.time}</span>
+                      <span className="text-[10px] text-muted-foreground">{a.time}</span>
                     </div>
                   ))}
                 </div>
@@ -199,9 +199,9 @@ function AppMockup() {
                 <div className="rounded-[8px] bg-card border border-border p-2">
                   <p className="text-[10px] font-medium text-foreground mb-1">AI Assistant</p>
                   <div className="rounded-[5px] p-1.5 mb-1" style={{ background: "var(--rally-brand-soft-light)" }}>
-                    <p className="text-[9px]" style={{ color: "var(--rally-brand)" }}>3 tasks overdue this sprint</p>
+                    <p className="text-[10px]" style={{ color: "var(--rally-brand)" }}>3 tasks overdue this sprint</p>
                   </div>
-                  <button className="w-full text-[9px] rounded-[5px] py-1 text-white"
+                  <button className="w-full text-[10px] rounded-[5px] py-1 text-white"
                     style={{ background: "var(--rally-brand)" }}>
                     Ask AI
                   </button>
@@ -459,7 +459,7 @@ function FeatureSpotlight() {
             { name: "You",     color: "var(--rally-brand)", msg: "Great work everyone 🙌",     time: "10:18" },
           ].map(m => (
             <div key={m.name} className="flex items-start gap-2.5">
-              <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-[9px] font-bold flex-shrink-0"
+              <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-[10px] font-medium flex-shrink-0"
                 style={{ background: m.color }}>
                 {m.name.split(" ").map(n => n[0]).join("")}
               </div>
@@ -512,8 +512,8 @@ function FeatureSpotlight() {
                   {t.done && <Check className="size-2.5 text-white" />}
                 </div>
                 <span className={`flex-1 text-[11px] ${t.done ? "line-through text-muted-foreground" : "text-foreground"}`}>{t.label}</span>
-                <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-muted text-muted-foreground">{t.tag}</span>
-                <span className="text-[9px] font-medium" style={{ color: pc[t.priority] }}>{t.priority}</span>
+                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-muted text-muted-foreground">{t.tag}</span>
+                <span className="text-[10px] font-medium" style={{ color: pc[t.priority] }}>{t.priority}</span>
               </div>
             );
           })}

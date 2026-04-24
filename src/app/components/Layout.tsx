@@ -357,7 +357,7 @@ function LayoutInner() {
 
   function renderNavLabel(label: string) {
     return (
-      <span className="text-[9px] leading-tight font-medium text-center truncate w-full">
+      <span className="text-[10px] leading-tight font-medium text-center truncate w-full" style={{ color: "var(--text-tertiary)" }}>
         {label}
       </span>
     );
@@ -369,7 +369,7 @@ function LayoutInner() {
     <div className={`h-full flex flex-col flex-shrink-0 ${primaryNavWidth}`}>
 
       {/* Logo — click to open version switcher */}
-      <div className="flex items-center justify-center border-b border-border px-2 py-4 flex-shrink-0">
+      <div className="flex items-center justify-center border-b border-[var(--border-subtle)] px-2 py-4 flex-shrink-0">
         <button
           onClick={() => setVersionPopoverOpen((o) => !o)}
           className="relative flex items-center justify-center w-10 h-10 rounded-[10px] hover:bg-muted transition-colors group"
@@ -420,7 +420,7 @@ function LayoutInner() {
       </nav>
 
       {/* Bottom: theme + profile */}
-      <div className="flex-shrink-0 border-t border-border px-2 py-3 space-y-1">
+      <div className="flex-shrink-0 border-t border-[var(--border-subtle)] px-2 py-3 space-y-1">
 
         {/* Theme toggle */}
         <button
@@ -433,7 +433,7 @@ function LayoutInner() {
           ) : (
             <Sun className="size-5 flex-shrink-0" />
           )}
-          <span className="text-[9px] leading-tight font-medium text-center">Theme</span>
+          <span className="text-[10px] leading-tight font-medium text-center" style={{ color: "var(--text-tertiary)" }}>Theme</span>
         </button>
 
         {/* Profile */}
@@ -451,7 +451,7 @@ function LayoutInner() {
             </div>
             {shortcutMode && <ShortcutCornerBadge letter={profileNavItem.shortcut} />}
           </div>
-          <span className="text-[9px] leading-tight font-medium text-center truncate w-full">
+          <span className="text-[10px] leading-tight font-medium text-center truncate w-full" style={{ color: "var(--text-tertiary)" }}>
             Profile
           </span>
         </Link>

@@ -287,7 +287,7 @@ function RenderResultCard({
   };
   return (
     <div className="mt-2 rounded-[10px] border border-border bg-background overflow-hidden">
-      <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-muted/40">
+      <div className="flex items-center gap-2 px-3 py-2 border-b border-[var(--border-subtle)] bg-muted/40">
         {iconMap[card.type]}
         <span className="text-[12px] font-medium text-foreground">{card.title}</span>
       </div>
@@ -334,7 +334,7 @@ function ActionPreviewCard({
   };
   return (
     <div className="flex items-start gap-3 p-3 rounded-[10px] border bg-card"
-      style={{ borderColor: "var(--rally-brand-soft-light)", background: "var(--rally-brand-soft-light)" }}>
+      style={{ borderColor: "var(--rally-brand-200)", background: "var(--rally-brand-soft-light)" }}>
       <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0" style={{ background: "var(--rally-brand-soft-light)" }}>
         {iconMap[action.type]}
       </div>
@@ -399,7 +399,7 @@ function AISidebar({
     if (!items.length) return null;
     return (
       <div className="mb-3">
-        <p className="px-2.5 py-1 text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">{label}</p>
+        <p className="px-2.5 py-1 text-[10px] font-medium uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>{label}</p>
         <div className="space-y-0.5">
           {items.map(t => <ThreadRow key={t.id} thread={t} />)}
         </div>
@@ -432,7 +432,7 @@ function AISidebar({
       </div>
 
       {/* Inbox button */}
-      <div className="px-2 py-2 border-b border-border flex-shrink-0">
+      <div className="px-2 py-2 border-b border-[var(--border-subtle)] flex-shrink-0">
         <button onClick={() => onSelect(null)}
           className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[9px] transition-colors ${selectedId === null ? "bg-[var(--rally-brand-soft-light)] text-[var(--rally-brand)]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}>
           <Bot className="size-4 flex-shrink-0" />
@@ -459,7 +459,7 @@ function AISidebar({
       </div>
 
       {/* Footer */}
-      <div className="flex-shrink-0 border-t border-border px-3 py-2.5 flex items-center justify-between">
+      <div className="flex-shrink-0 border-t border-[var(--border-subtle)] px-3 py-2.5 flex items-center justify-between">
         <span className="text-[11px] text-muted-foreground">{threads.length} threads</span>
         <button className="text-[11px] text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
           <Bookmark className="size-3.5" /> Saved
@@ -491,8 +491,8 @@ function ContextPanel({
   return (
     <aside className="h-full flex flex-col bg-card border-l border-border overflow-y-auto" style={{ width: 228, flexShrink: 0 }}>
       {/* Current context */}
-      <div className="p-4 border-b border-border">
-        <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">Current Context</p>
+      <div className="p-4 border-b border-[var(--border-subtle)]">
+        <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Current Context</p>
         <div className="space-y-2.5">
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-[7px] flex items-center justify-center flex-shrink-0" style={{ background:"#eef4ff" }}>
@@ -516,8 +516,8 @@ function ContextPanel({
       </div>
 
       {/* Source access */}
-      <div className="p-4 border-b border-border">
-        <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">Source Access</p>
+      <div className="p-4 border-b border-[var(--border-subtle)]">
+        <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Source Access</p>
         <div className="space-y-2">
           {sourceStatus.map(s => {
             const isOn = enabledSources.includes(s.key);
@@ -539,10 +539,10 @@ function ContextPanel({
 
       {/* Pending actions */}
       {pendingActions.length > 0 && (
-        <div className="p-4 border-b border-border">
+        <div className="p-4 border-b border-[var(--border-subtle)]">
           <div className="flex items-center gap-2 mb-3">
-            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">Pending Actions</p>
-            <span className="w-4 h-4 rounded-full flex items-center justify-center text-white text-[9px]"
+            <p className="text-[10px] font-medium uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>Pending Actions</p>
+            <span className="w-4 h-4 rounded-full flex items-center justify-center text-white text-[10px]"
               style={{ background:"var(--rally-brand)" }}>{pendingActions.length}</span>
           </div>
           <div className="space-y-2">
@@ -568,7 +568,7 @@ function ContextPanel({
 
       {/* Related work */}
       <div className="p-4 mt-auto">
-        <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">Related Work</p>
+        <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Related Work</p>
         <div className="space-y-1.5">
           {[
             { to: "/app/todo",     icon: <CheckSquare className="size-3.5" />, label: "Open tasks" },
@@ -712,7 +712,7 @@ function AIHome({
 
         {/* Today with AI strip */}
         <section>
-          <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">Today with AI</p>
+          <p className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Today with AI</p>
           <div className="grid grid-cols-2 gap-2">
             {todayStrip.map((item, i) => (
               <button key={i}
@@ -733,11 +733,11 @@ function AIHome({
 
         {/* Starter prompts */}
         <section>
-          <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">Starter Prompts</p>
+          <p className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Starter Prompts</p>
           <div className="grid grid-cols-2 gap-3">
             {starterGroups.map(group => (
               <div key={group.label} className="rounded-[12px] border border-border bg-card overflow-hidden">
-                <div className="px-3 py-2 border-b border-border"
+                <div className="px-3 py-2 border-b border-[var(--border-subtle)]"
                   style={{ background: group.bg }}>
                   <span className="text-[11px] font-semibold" style={{ color: group.color }}>{group.label}</span>
                 </div>
@@ -757,7 +757,7 @@ function AIHome({
 
         {/* Quick action cards */}
         <section>
-          <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">Quick Actions</p>
+          <p className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Quick Actions</p>
           <div className="grid grid-cols-2 gap-2">
             {quickActions.map((action, i) => (
               <button key={i} onClick={() => onPrompt(action.prompt)}
@@ -874,7 +874,7 @@ function ThreadView({
                   <div className="flex flex-wrap gap-1.5 mt-3">
                     {msg.followUps.map((fu, i) => (
                       <button key={i} onClick={() => onFollowUp(fu.prompt)}
-                        className="flex items-center gap-1 px-3 py-1 rounded-full border border-border bg-card hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] text-[11px] text-foreground transition-colors">
+                        className="flex items-center gap-1 px-3 py-1 rounded-full border border-border bg-card hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] text-[11px] text-foreground transition-colors">
                         {fu.label} <ChevronRight className="size-3 text-muted-foreground" />
                       </button>
                     ))}
@@ -919,7 +919,7 @@ function ThreadView({
           placeholder={`Ask about "${thread.title}"…`}
         />
         <p className="text-[10px] text-muted-foreground mt-1.5 px-1">
-          <kbd className="px-1 py-0.5 rounded border border-border text-[9px]">Enter</kbd> to send · <kbd className="px-1 py-0.5 rounded border border-border text-[9px]">Shift+Enter</kbd> for new line
+          <kbd className="px-1 py-0.5 rounded border border-border text-[10px]">Enter</kbd> to send · <kbd className="px-1 py-0.5 rounded border border-border text-[10px]">Shift+Enter</kbd> for new line
         </p>
       </div>
     </div>

@@ -147,7 +147,7 @@ const initialTasks: Task[] = [
     status: "done", priority: "high", dueDate: "2026-04-21",
     labels: ["engineering"], assignees: ["Mike Chen"],
     createdBy: "Mike Chen", createdAt: "2026-04-21T08:00:00", updatedAt: "2026-04-21T11:00:00",
-    completedAt: "2026-04-21T11:00:00",
+    completedAt: "2026-00-21T11:00:00",
   },
 ];
 
@@ -281,7 +281,7 @@ function QuickAdd({ onAdd, disabled }: { onAdd: (t: Partial<Task>) => void; disa
         )}
       </div>
       {open && !disabled && (
-        <div className="flex items-center gap-2 px-3 py-2 border-t border-border bg-muted/30 flex-wrap">
+        <div className="flex items-center gap-2 px-3 py-2 border-t border-[var(--border-subtle)] bg-muted/30 flex-wrap">
           <span className="text-[11px] text-muted-foreground">Priority:</span>
           {(["urgent","high","medium","low"] as Priority[]).map(p => (
             <button key={p} onClick={() => setPriority(p)}
@@ -439,7 +439,7 @@ function DetailPanel({
   return (
     <aside className="h-full flex flex-col bg-card border-l border-border overflow-hidden" style={{ width: 320, flexShrink: 0 }}>
       {/* Header */}
-      <div className="flex-shrink-0 flex items-center gap-2 px-4 py-3 border-b border-border">
+      <div className="flex-shrink-0 flex items-center gap-2 px-4 py-3 border-b border-[var(--border-subtle)]">
         <span className="flex-1 text-[12px] font-medium text-muted-foreground">Task detail</span>
         <button onClick={() => setShowAI(v => !v)} title="AI assist"
           className={`w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors ${showAI ? "bg-[var(--rally-brand-soft-light)]" : "hover:bg-muted text-muted-foreground"}`}
@@ -454,14 +454,14 @@ function DetailPanel({
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
         {/* AI assist */}
         {showAI && (
-          <div className="p-3 rounded-[10px] border" style={{ borderColor: "var(--rally-brand-soft-light)", background: "var(--rally-brand-soft-light)" }}>
+          <div className="p-3 rounded-[10px] border" style={{ borderColor: "var(--rally-brand-200)", background: "var(--rally-brand-soft-light)" }}>
             <div className="flex items-center gap-1.5 mb-2">
               <Sparkles className="size-3.5" style={{ color: "var(--rally-brand)" }} />
               <span className="text-[11px] font-medium" style={{ color: "var(--rally-brand)" }}>AI Assist</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {aiActions.map(a => (
-                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-colors">
+                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors">
                   {a}
                 </button>
               ))}
@@ -606,7 +606,7 @@ function DetailPanel({
 
         {/* AI badge */}
         {task.aiGenerated && (
-          <div className="flex items-center gap-2 px-2.5 py-2 rounded-[8px]" style={{ background:"var(--rally-brand-soft-light)", border:"1px solid var(--rally-brand-soft-light)" }}>
+          <div className="flex items-center gap-2 px-2.5 py-2 rounded-[8px]" style={{ background:"var(--rally-brand-soft-light)", border:"1px solid var(--rally-brand-200)" }}>
             <Sparkles className="size-3.5 flex-shrink-0" style={{ color:"var(--rally-brand)" }} />
             <span className="text-[11px]" style={{ color:"var(--rally-brand)" }}>Created by Rally AI</span>
           </div>
@@ -615,7 +615,7 @@ function DetailPanel({
 
       {/* Footer actions */}
       {canEdit && (
-        <div className="flex-shrink-0 border-t border-border px-4 py-3 flex gap-2">
+        <div className="flex-shrink-0 border-t border-[var(--border-subtle)] px-4 py-3 flex gap-2">
           <button
             onClick={() => onUpdate(task.id, { status: task.status === "done" ? "todo" : "done", completedAt: task.status === "done" ? undefined : new Date().toISOString() })}
             className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-[8px] text-white text-[12px] font-medium transition-colors"
@@ -642,7 +642,7 @@ function BoardCard({ task, selected, onSelect }: { task: Task; selected: boolean
       </div>
       <div className="flex items-center gap-1.5 flex-wrap">
         {task.labels.slice(0, 2).map(l => (
-          <span key={l} className="px-1.5 py-0.5 rounded-full text-[9px]"
+          <span key={l} className="px-1.5 py-0.5 rounded-full text-[10px]"
             style={{ background: LABEL[l].bg, color: LABEL[l].color }}>{l}</span>
         ))}
         <div className="flex-1" />
@@ -744,7 +744,7 @@ function NeedsAttention({ tasks }: { tasks: Task[] }) {
         {open ? <ChevronUp className="size-4 text-muted-foreground" /> : <ChevronDown className="size-4 text-muted-foreground" />}
       </button>
       {open && (
-        <div className="border-t border-border divide-y divide-border">
+        <div className="border-t border-[var(--border-subtle)] divide-y divide-[var(--border-subtle)]">
           {changed.map(t => (
             <div key={t.id} className="flex items-center gap-3 px-4 py-2.5">
               <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: PRIORITY[t.priority].dot }} />

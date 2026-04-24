@@ -129,7 +129,7 @@ function RoleBadge({ role, size = "sm" }: { role: UserRole; size?: "xs" | "sm" }
   const cfg = ROLE_CFG[role];
   const Icon = cfg.Icon;
   return (
-    <span className={`inline-flex items-center gap-1 rounded-full font-medium ${size === "xs" ? "px-1.5 py-0.5 text-[9px]" : "px-2 py-0.5 text-[10px]"}`}
+    <span className={`inline-flex items-center gap-1 rounded-full font-medium ${size === "xs" ? "px-1.5 py-0.5 text-[10px]" : "px-2 py-0.5 text-[10px]"}`}
       style={{ background: cfg.bg, color: cfg.color }}>
       <Icon className={size === "xs" ? "size-2" : "size-2.5"} />
       {cfg.label}
@@ -240,10 +240,10 @@ function MemberRow({
         <div className="flex items-center gap-2">
           <span className="text-[13px] text-foreground truncate">{member.name}</span>
           {isCurrentUser && (
-            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-muted text-muted-foreground flex-shrink-0">You</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-muted text-muted-foreground flex-shrink-0">You</span>
           )}
           {recent && (
-            <span className="text-[9px] px-1.5 py-0.5 rounded-full flex-shrink-0"
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full flex-shrink-0"
               style={{ background: "#eaf7f0", color: "#0f6a43" }}>New</span>
           )}
         </div>
@@ -315,7 +315,7 @@ function MemberDetailPanel({
   return (
     <aside className="h-full flex flex-col bg-card border-l border-border" style={{ width: 288, flexShrink: 0 }}>
       {/* Header */}
-      <div className="flex-shrink-0 flex items-center gap-2 px-4 py-3 border-b border-border">
+      <div className="flex-shrink-0 flex items-center gap-2 px-4 py-3 border-b border-[var(--border-subtle)]">
         <span className="flex-1 text-[12px] font-medium text-muted-foreground">Member details</span>
         <button onClick={onClose}
           className="w-7 h-7 flex items-center justify-center rounded-[7px] hover:bg-muted text-muted-foreground transition-colors">
@@ -415,7 +415,7 @@ function MemberDetailPanel({
 
       {/* Footer */}
       {canManage && (
-        <div className="flex-shrink-0 border-t border-border px-4 py-3 flex gap-2">
+        <div className="flex-shrink-0 border-t border-[var(--border-subtle)] px-4 py-3 flex gap-2">
           {!showRolePicker && (
             <button onClick={() => setShowRolePicker(true)}
               className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-[8px] border border-border bg-background text-foreground text-[12px] hover:bg-muted transition-colors">
@@ -487,7 +487,7 @@ function TeamHome({
       <div className="rounded-[14px] border border-border bg-card p-5">
         <div className="flex items-start gap-4">
           {/* Logo */}
-          <div className="w-14 h-14 rounded-[14px] flex items-center justify-center flex-shrink-0 text-white text-[22px] font-bold"
+          <div className="w-14 h-14 rounded-[14px] flex items-center justify-center flex-shrink-0 text-white text-[22px] font-medium"
             style={{ background: "var(--rally-brand)" }}>
             {teamName.charAt(0).toUpperCase()}
           </div>
@@ -507,7 +507,7 @@ function TeamHome({
         </div>
 
         {/* Stats row */}
-        <div className="flex items-center gap-5 mt-4 pt-4 border-t border-border flex-wrap">
+        <div className="flex items-center gap-5 mt-4 pt-4 border-t border-[var(--border-subtle)] flex-wrap">
           <div>
             <span className="text-[20px] font-semibold text-foreground">{members.length}</span>
             <span className="text-[11px] text-muted-foreground ml-1">members</span>
@@ -644,7 +644,7 @@ function TeamHome({
               </div>
             ))}
             <button onClick={onInvite}
-              className="w-full flex items-center justify-center gap-1.5 py-2 rounded-[10px] border border-dashed border-border text-muted-foreground hover:border-[var(--rally-brand)] hover:text-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-colors text-[11px]">
+              className="w-full flex items-center justify-center gap-1.5 py-2 rounded-[10px] border border-dashed border-border text-muted-foreground hover:border-[var(--rally-brand)] hover:text-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors text-[11px]">
               <Plus className="size-3.5" /> Send new invite
             </button>
           </div>
@@ -779,7 +779,7 @@ function SettingsView({
         <div>
           <p className="text-[11px] font-medium text-muted-foreground mb-2">Team Icon</p>
           <div className="flex items-center gap-3">
-            <div className="w-14 h-14 rounded-[14px] flex items-center justify-center text-white text-[22px] font-bold"
+            <div className="w-14 h-14 rounded-[14px] flex items-center justify-center text-white text-[22px] font-medium"
               style={{ background: "var(--rally-brand)" }}>
               {name.charAt(0).toUpperCase() || "?"}
             </div>
@@ -851,7 +851,7 @@ function PermissionsView({ userRole }: { userRole: UserRole }) {
         {/* Role matrix table */}
         <div className="rounded-[12px] border border-border overflow-hidden">
           {/* Header */}
-          <div className="grid grid-cols-5 bg-muted/60 border-b border-border">
+          <div className="grid grid-cols-5 bg-muted/60 border-b border-[var(--border-subtle)]">
             <div className="px-4 py-2.5 text-[11px] font-semibold text-muted-foreground col-span-1">Feature</div>
             {ROLE_ORDER.map(r => {
               const cfg = ROLE_CFG[r];
@@ -871,9 +871,9 @@ function PermissionsView({ userRole }: { userRole: UserRole }) {
           {PERMISSION_GROUPS.map((group, gi) => (
             <div key={group.group}>
               {/* Group header */}
-              <div className="grid grid-cols-5 bg-muted/30 border-t border-border">
+              <div className="grid grid-cols-5 bg-muted/30 border-t border-[var(--border-subtle)]">
                 <div className="col-span-5 px-4 py-1.5">
-                  <span className="text-[9px] font-semibold uppercase tracking-widest text-muted-foreground">{group.group}</span>
+                  <span className="text-[10px] font-medium uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>{group.group}</span>
                 </div>
               </div>
               {/* Rows */}
@@ -939,7 +939,7 @@ function DangerZone({ teamName }: { teamName: string }) {
               </button>
             </div>
             {confirmTransfer && (
-              <div className="mt-3 pt-3 border-t border-border">
+              <div className="mt-3 pt-3 border-t border-[var(--border-subtle)]">
                 <p className="text-[11px] text-muted-foreground mb-2">Choose a new owner from your admins:</p>
                 <select className="w-full px-3 py-2 rounded-[7px] border border-border bg-background text-[12px] text-foreground outline-none mb-2">
                   <option>Sarah Johnson (Admin)</option>

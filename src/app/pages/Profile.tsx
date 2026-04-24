@@ -81,7 +81,7 @@ export function Profile() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">Profile Settings</h1>
+          <h1 className="text-3xl font-medium text-foreground mb-2">Profile Settings</h1>
           <p className="text-muted-foreground">Manage your personal information and preferences</p>
         </div>
 
@@ -105,7 +105,7 @@ export function Profile() {
               </div>
               
               <div className="flex-1 text-center md:text-left">
-                <h2 className="text-2xl font-bold mb-1">{user.name}</h2>
+                <h2 className="text-2xl font-medium mb-1">{user.name}</h2>
                 <p className="text-muted-foreground mb-2">{user.email}</p>
                 {user.job && <p className="text-sm text-muted-foreground mb-3">{user.job}</p>}
                 

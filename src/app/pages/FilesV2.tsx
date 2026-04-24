@@ -205,7 +205,7 @@ function FileTypeIcon({ ext, size = 34 }: { ext: string; size?: number }) {
   return (
     <div className="flex-shrink-0 rounded-[8px] flex items-center justify-center"
       style={{ width: size, height: size, background: cfg.bg }}>
-      <span className="font-bold" style={{ color: cfg.color, fontSize: size * 0.26 }}>{label}</span>
+      <span className="font-medium" style={{ color: cfg.color, fontSize: size * 0.26 }}>{label}</span>
     </div>
   );
 }
@@ -266,7 +266,7 @@ function FileRow({
         <div className="flex items-center gap-2">
           <span className="text-[13px] text-foreground truncate">{file.name}.{file.ext}</span>
           {file.version > 1 && (
-            <span className="flex-shrink-0 text-[9px] px-1.5 py-0.5 rounded-full"
+            <span className="flex-shrink-0 text-[10px] px-1.5 py-0.5 rounded-full"
               style={{ background: cfg.bg, color: cfg.color }}>
               v{file.version}
             </span>
@@ -362,7 +362,7 @@ function FileCard({
           <Av name={file.lastEditedBy} size={16} />
           <span className="text-[10px] text-muted-foreground flex-1 truncate">{file.lastEditedAt}</span>
           {file.version > 1 && (
-            <span className="text-[9px] px-1 py-0.5 rounded-full" style={{ background: cfg.bg, color: cfg.color }}>
+            <span className="text-[10px] px-1 py-0.5 rounded-full" style={{ background: cfg.bg, color: cfg.color }}>
               v{file.version}
             </span>
           )}
@@ -407,7 +407,7 @@ function ContinueCard({ file, onSelect }: { file: FileItem; onSelect: () => void
         <p className="text-[11px] font-medium text-foreground truncate">{file.name}</p>
         <p className="text-[10px] text-muted-foreground truncate">{file.lastEditedBy === "John Doe" ? "You" : file.lastEditedBy} · {file.lastEditedAt}</p>
         {file.version > 1 && (
-          <span className="inline-block mt-1 text-[9px] px-1.5 py-0.5 rounded-full" style={{ background: cfg.bg, color: cfg.color }}>
+          <span className="inline-block mt-1 text-[10px] px-1.5 py-0.5 rounded-full" style={{ background: cfg.bg, color: cfg.color }}>
             v{file.version}
           </span>
         )}
@@ -468,7 +468,7 @@ function LeftRail({
 
       {/* Folder tree */}
       <div className="px-2 pb-3 flex-1">
-        <p className="text-[9px] font-semibold uppercase tracking-widest text-muted-foreground px-2 mb-1.5">
+        <p className="text-[10px] font-medium uppercase tracking-widest px-2 mb-1.5" style={{ color: "var(--text-tertiary)" }}>
           Folders
         </p>
         {rootFolders.map(folder => {
@@ -566,7 +566,7 @@ function FilesHome({
                   </div>
                 </div>
                 {file.version > 1 && (
-                  <span className="flex-shrink-0 text-[9px] px-1.5 py-0.5 rounded-full"
+                  <span className="flex-shrink-0 text-[10px] px-1.5 py-0.5 rounded-full"
                     style={{ background: cfg.bg, color: cfg.color }}>
                     v{file.version}
                   </span>
@@ -697,7 +697,7 @@ function BrowseView({
         {/* Sub-folders */}
         {subFolders.length > 0 && (
           <div className="mb-5">
-            <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-2">Folders</p>
+            <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>Folders</p>
             <div className="grid grid-cols-2 xl:grid-cols-3 gap-2.5">
               {subFolders.map(f => (
                 <FolderTile key={f.id} folder={f} onClick={() => onNavigate(f.id)} />
@@ -710,7 +710,7 @@ function BrowseView({
         {sortedFiles.length > 0 && (
           <div>
             {subFolders.length > 0 && (
-              <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-2">Files</p>
+              <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>Files</p>
             )}
             {viewMode === "list" ? (
               <div className="space-y-1.5">
@@ -793,7 +793,7 @@ function FileDetailPanel({
       <div className="h-1 flex-shrink-0" style={{ background: cfg.color }} />
 
       {/* Header */}
-      <div className="flex-shrink-0 flex items-center gap-2 px-4 py-3 border-b border-border">
+      <div className="flex-shrink-0 flex items-center gap-2 px-4 py-3 border-b border-[var(--border-subtle)]">
         <span className="flex-1 text-[12px] font-medium text-muted-foreground">File details</span>
         <button onClick={() => setShowAI(v => !v)}
           className={`w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors ${showAI ? "bg-[var(--rally-brand-soft-light)]" : "hover:bg-muted text-muted-foreground"}`}
@@ -821,7 +821,7 @@ function FileDetailPanel({
             </div>
             <div className="flex flex-wrap gap-1.5">
               {AI_ACTIONS.slice(0, 4).map(a => (
-                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-colors">
+                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors">
                   {a}
                 </button>
               ))}
@@ -892,10 +892,10 @@ function FileDetailPanel({
             {showVersions ? <ChevronDown className="size-3.5 text-muted-foreground" /> : <ChevronRight className="size-3.5 text-muted-foreground" />}
           </button>
           {showVersions && (
-            <div className="border-t border-border px-3 py-2 space-y-3">
+            <div className="border-t border-[var(--border-subtle)] px-3 py-2 space-y-3">
               {versions.map(v => (
                 <div key={v.ver} className="flex items-start gap-2.5">
-                  <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-[9px] font-bold text-muted-foreground flex-shrink-0 mt-0.5">
+                  <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-[10px] font-medium text-muted-foreground flex-shrink-0 mt-0.5">
                     v{v.ver}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -925,7 +925,7 @@ function FileDetailPanel({
             {showPerms ? <ChevronDown className="size-3.5 text-muted-foreground" /> : <ChevronRight className="size-3.5 text-muted-foreground" />}
           </button>
           {showPerms && (
-            <div className="border-t border-border px-3 py-2 space-y-2">
+            <div className="border-t border-[var(--border-subtle)] px-3 py-2 space-y-2">
               {[
                 { label: "Can view",   roles: ["Owner", "Admin", "Member", "Viewer"] },
                 { label: "Can edit",   roles: ["Owner", "Admin", "Member"] },
@@ -935,7 +935,7 @@ function FileDetailPanel({
                   <span className="text-[10px] text-muted-foreground w-16 flex-shrink-0">{row.label}</span>
                   <div className="flex gap-1 flex-wrap">
                     {row.roles.map(r => (
-                      <span key={r} className="text-[9px] px-1.5 py-0.5 rounded-full bg-muted text-muted-foreground">{r}</span>
+                      <span key={r} className="text-[10px] px-1.5 py-0.5 rounded-full bg-muted text-muted-foreground">{r}</span>
                     ))}
                   </div>
                 </div>
@@ -946,7 +946,7 @@ function FileDetailPanel({
       </div>
 
       {/* Footer actions */}
-      <div className="flex-shrink-0 border-t border-border px-4 py-3">
+      <div className="flex-shrink-0 border-t border-[var(--border-subtle)] px-4 py-3">
         <div className="flex gap-2">
           <button className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-[8px] border border-border bg-background text-foreground hover:bg-muted transition-colors text-[12px]">
             <Download className="size-3.5" /> Download
@@ -1173,9 +1173,9 @@ export function FilesV2() {
 
         {/* AI bar */}
         {showAIBar && (
-          <div className="mt-3 pt-3 border-t border-border flex flex-wrap gap-1.5">
+          <div className="mt-3 pt-3 border-t border-[var(--border-subtle)] flex flex-wrap gap-1.5">
             {AI_ACTIONS.map(a => (
-              <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-background text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-colors">
+              <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-background text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors">
                 {a}
               </button>
             ))}
