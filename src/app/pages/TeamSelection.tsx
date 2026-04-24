@@ -5,7 +5,7 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
-import { Users, Plus, ArrowRight, Crown, Clock } from "lucide-react";
+import { Users, Plus, ArrowRight, Crown, Clock, Zap } from "lucide-react";
 
 const mockTeams = [
   {
@@ -60,6 +60,15 @@ export function TeamSelection() {
           </div>
           <h1 className="text-3xl font-bold text-foreground mb-2">Choose Your Team</h1>
           <p className="text-muted-foreground">Select a team to continue or create a new one</p>
+          {/* V2 link */}
+          <button
+            onClick={() => navigate("/team-selection-v2")}
+            className="inline-flex items-center gap-1.5 mt-4 px-3 py-1.5 rounded-full border border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground transition-colors text-sm"
+          >
+            <Zap className="size-3.5" style={{ color: "#ff4615" }} />
+            Try the new experience
+            <ArrowRight className="size-3.5" />
+          </button>
         </div>
 
         {!showCreateForm ? (

@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../co
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Button } from "../components/ui/button";
-import { Lock, CheckCircle2 } from "lucide-react";
+import { Lock, CheckCircle2, ArrowRight, Zap } from "lucide-react";
 
 export function ResetPassword() {
   const navigate = useNavigate();
@@ -104,6 +104,15 @@ export function ResetPassword() {
             </>
           )}
         </Card>
+
+        <div className="mt-4 text-center">
+          <Link to="/reset-password-v2"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground transition-colors text-xs">
+            <Zap className="size-3" style={{ color: "#ff4615" }} />
+            Try the new experience
+            <ArrowRight className="size-3" />
+          </Link>
+        </div>
       </div>
     </div>
   );

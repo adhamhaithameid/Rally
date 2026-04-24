@@ -86,6 +86,12 @@ export function Landing() {
               <Link to="/Dashboard">
                 <Button variant="ghost">Dashboard</Button>
               </Link>
+              <Link to="/v2"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground transition-colors text-sm">
+                <Zap className="size-3.5" style={{ color: "#ff4615" }} />
+                Try V2
+                <ArrowRight className="size-3.5" />
+              </Link>
             </div>
           </div>
         </div>
@@ -255,6 +261,14 @@ export function Landing() {
           </div>
           <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
             <p>© 2026 Rally. All rights reserved.</p>
+            <div className="mt-3">
+              <Link to="/v2"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground transition-colors text-xs">
+                <Zap className="size-3" style={{ color: "#ff4615" }} />
+                Try the new V2 experience
+                <ArrowRight className="size-3" />
+              </Link>
+            </div>
           </div>
         </div>
       </footer>

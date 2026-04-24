@@ -4,11 +4,17 @@ import { Chat } from "./pages/Chat";
 import { ChatV2 } from "./pages/ChatV2";
 import { Layout } from "./components/Layout";
 import { Landing } from "./pages/Landing";
+import { LandingV2 } from "./pages/LandingV2";
 import { Login } from "./pages/Login";
+import { LoginV2 } from "./pages/LoginV2";
 import { Signup } from "./pages/Signup";
+import { SignupV2 } from "./pages/SignupV2";
 import { ForgotPassword } from "./pages/ForgotPassword";
+import { ForgotPasswordV2 } from "./pages/ForgotPasswordV2";
 import { ResetPassword } from "./pages/ResetPassword";
+import { ResetPasswordV2 } from "./pages/ResetPasswordV2";
 import { TeamSelection } from "./pages/TeamSelection";
+import { TeamSelectionV2 } from "./pages/TeamSelectionV2";
 import { Dashboard } from "./pages/Dashboard";
 import { AIChat } from "./pages/AIChat";
 import { AIChatV2 } from "./pages/AIChatV2";
@@ -31,24 +37,48 @@ export const router = createBrowserRouter([
     Component: Landing,
   },
   {
+    path: "/v2",
+    Component: LandingV2,
+  },
+  {
     path: "/login",
     Component: Login,
+  },
+  {
+    path: "/login-v2",
+    Component: LoginV2,
   },
   {
     path: "/signup",
     Component: Signup,
   },
   {
+    path: "/signup-v2",
+    Component: SignupV2,
+  },
+  {
     path: "/forgot-password",
     Component: ForgotPassword,
+  },
+  {
+    path: "/forgot-password-v2",
+    Component: ForgotPasswordV2,
   },
   {
     path: "/reset-password",
     Component: ResetPassword,
   },
   {
+    path: "/reset-password-v2",
+    Component: ResetPasswordV2,
+  },
+  {
     path: "/team-selection",
     Component: TeamSelection,
+  },
+  {
+    path: "/team-selection-v2",
+    Component: TeamSelectionV2,
   },
   {
     path: "/app",

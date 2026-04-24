@@ -5,7 +5,7 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Button } from "../components/ui/button";
 import { Checkbox } from "../components/ui/checkbox";
-import { Mail, Lock, User, ArrowRight } from "lucide-react";
+import { Mail, Lock, User, ArrowRight, Zap } from "lucide-react";
 
 export function Signup() {
   const navigate = useNavigate();
@@ -137,6 +137,15 @@ export function Signup() {
         <p className="text-center text-xs text-muted-foreground mt-6">
           No credit card required • Cancel anytime
         </p>
+
+        <div className="mt-4 text-center">
+          <Link to="/signup-v2"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground transition-colors text-xs">
+            <Zap className="size-3" style={{ color: "#ff4615" }} />
+            Try the new experience
+            <ArrowRight className="size-3" />
+          </Link>
+        </div>
       </div>
     </div>
   );
