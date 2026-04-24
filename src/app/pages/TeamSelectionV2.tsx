@@ -16,7 +16,7 @@ type CreateStep = 1 | 2 | 3;
 // ── Config ────────────────────────────────────────────────────────────────────
 
 const ROLE_CFG: Record<Role, { label: string; color: string; bg: string; Icon: React.ElementType }> = {
-  owner:  { label: "Owner",  color: "#ff4615", bg: "#fff2ed", Icon: Crown     },
+  owner:  { label: "Owner",  color: "var(--rally-brand)", bg: "var(--rally-brand-soft-light)", Icon: Crown },
   admin:  { label: "Admin",  color: "#0f5fd7", bg: "#eef4ff", Icon: Shield    },
   member: { label: "Member", color: "#0f6a43", bg: "#eaf7f0", Icon: UserCheck },
   viewer: { label: "Viewer", color: "#6b7280", bg: "#f3f4f6", Icon: Eye       },
@@ -76,7 +76,7 @@ const MOCK_TEAMS: MockTeam[] = [
   },
 ];
 
-const TEAM_ICON_COLORS = ["#ff4615", "#0f5fd7", "#0f6a43", "#8B5CF6", "#F59E0B", "#EC4899"];
+const TEAM_ICON_COLORS = ["var(--rally-brand)", "#0f5fd7", "#0f6a43", "#8B5CF6", "#F59E0B", "#EC4899"];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -195,7 +195,7 @@ function TeamCard({ team, onSelect }: { team: MockTeam; onSelect: (id: number) =
         className="mt-3 w-full h-9 flex items-center justify-center gap-1.5 rounded-[10px] text-[13px] font-medium transition-colors"
         style={
           team.role === "owner"
-            ? { background: "#ff4615", color: "#fff" }
+            ? { background: "var(--rally-brand)", color: "#fff" }
             : { border: "1px solid var(--border)", background: "var(--background)", color: "var(--text-foreground)" }
         }>
         Open workspace
@@ -241,7 +241,7 @@ function CreatePanel({ onClose, onDone }: { onClose: () => void; onDone: () => v
         <div className="flex items-center gap-1.5">
           {[1, 2, 3].map(s => (
             <span key={s} className="w-2 h-2 rounded-full transition-colors"
-              style={{ background: s <= step ? "#ff4615" : "var(--muted-foreground)", opacity: s < step ? 0.4 : 1 }} />
+              style={{ background: s <= step ? "var(--rally-brand)" : "var(--muted-foreground)", opacity: s < step ? 0.4 : 1 }} />
           ))}
         </div>
       </div>
@@ -255,21 +255,21 @@ function CreatePanel({ onClose, onDone }: { onClose: () => void; onDone: () => v
               <input value={teamName} onChange={e => setTeamName(e.target.value)}
                 placeholder="e.g. Design Team"
                 autoFocus
-                className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[#ff4615] transition-colors placeholder:text-muted-foreground" />
+                className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground" />
               <p className="text-[10px] text-muted-foreground mt-1">The name of your team or department</p>
             </div>
             <div>
               <label className="block text-[11px] font-medium text-foreground mb-1.5">Project Name <span className="text-red-400">*</span></label>
               <input value={projName} onChange={e => setProjName(e.target.value)}
                 placeholder="e.g. Website Redesign"
-                className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[#ff4615] transition-colors placeholder:text-muted-foreground" />
+                className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground" />
               <p className="text-[10px] text-muted-foreground mt-1">What is this workspace focused on?</p>
             </div>
             <div className="flex justify-end pt-2">
               <button onClick={() => setStep(2)}
                 disabled={!canNext1}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-[8px] text-white text-[12px] font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-                style={{ background: "#ff4615" }}>
+                style={{ background: "var(--rally-brand)" }}>
                 Continue <ChevronRight className="size-3.5" />
               </button>
             </div>
@@ -293,7 +293,7 @@ function CreatePanel({ onClose, onDone }: { onClose: () => void; onDone: () => v
                   {ICON_EMOJIS.map(e => (
                     <button key={e} onClick={() => setIcon(e)}
                       className="w-9 h-9 rounded-[8px] text-lg flex items-center justify-center transition-colors"
-                      style={icon === e ? { background: "#fff2ed", border: "2px solid #ff4615" } : { border: "1px solid var(--border)", background: "var(--background)" }}>
+                      style={icon === e ? { background: "var(--rally-brand-soft-light)", border: "2px solid var(--rally-brand)" } : { border: "1px solid var(--border)", background: "var(--background)" }}>
                       {e}
                     </button>
                   ))}
@@ -306,7 +306,7 @@ function CreatePanel({ onClose, onDone }: { onClose: () => void; onDone: () => v
               <label className="block text-[11px] font-medium text-foreground mb-1.5">Description <span className="text-muted-foreground">(optional)</span></label>
               <textarea value={desc} onChange={e => setDesc(e.target.value)}
                 rows={2} placeholder="What is this team building or working on?"
-                className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[#ff4615] resize-none transition-colors placeholder:text-muted-foreground" />
+                className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[var(--rally-brand)] resize-none transition-colors placeholder:text-muted-foreground" />
             </div>
 
             {/* Tags */}
@@ -316,7 +316,7 @@ function CreatePanel({ onClose, onDone }: { onClose: () => void; onDone: () => v
                 <Tag className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
                 <input value={tags} onChange={e => setTags(e.target.value)}
                   placeholder="Design, UX, Frontend"
-                  className="w-full pl-9 pr-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[#ff4615] transition-colors placeholder:text-muted-foreground" />
+                  className="w-full pl-9 pr-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground" />
               </div>
             </div>
 
@@ -327,7 +327,7 @@ function CreatePanel({ onClose, onDone }: { onClose: () => void; onDone: () => v
               </button>
               <button onClick={() => setStep(3)}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-[8px] text-white text-[12px] font-medium"
-                style={{ background: "#ff4615" }}>
+                style={{ background: "var(--rally-brand)" }}>
                 Continue <ChevronRight className="size-3.5" />
               </button>
             </div>
@@ -347,7 +347,7 @@ function CreatePanel({ onClose, onDone }: { onClose: () => void; onDone: () => v
                 <p className="text-[13px] font-medium text-foreground">{teamName}</p>
                 <p className="text-[11px] text-muted-foreground">{projName}</p>
               </div>
-              <span className="text-[10px] px-2 py-0.5 rounded-full text-white" style={{ background: "#ff4615" }}>Owner</span>
+              <span className="text-[10px] px-2 py-0.5 rounded-full text-white" style={{ background: "var(--rally-brand)" }}>Owner</span>
             </div>
 
             {/* Invite emails */}
@@ -356,7 +356,7 @@ function CreatePanel({ onClose, onDone }: { onClose: () => void; onDone: () => v
               <textarea value={emails} onChange={e => setEmails(e.target.value)}
                 rows={3}
                 placeholder={"sarah@company.com\nmike@company.com\nemily@company.com"}
-                className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[12px] outline-none focus:border-[#ff4615] resize-none transition-colors placeholder:text-muted-foreground font-mono" />
+                className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[12px] outline-none focus:border-[var(--rally-brand)] resize-none transition-colors placeholder:text-muted-foreground font-mono" />
               <p className="text-[10px] text-muted-foreground mt-1">One email per line. Invites will be sent when you create the workspace.</p>
             </div>
 
@@ -367,7 +367,7 @@ function CreatePanel({ onClose, onDone }: { onClose: () => void; onDone: () => v
               </button>
               <button onClick={handleDone}
                 className="flex items-center gap-1.5 px-5 py-2 rounded-[8px] text-white text-[12px] font-medium"
-                style={{ background: "#ff4615" }}>
+                style={{ background: "var(--rally-brand)" }}>
                 <Zap className="size-3.5" />
                 Create workspace
               </button>
@@ -415,14 +415,14 @@ function JoinPanel({ onClose, onDone }: { onClose: () => void; onDone: () => voi
                 onKeyDown={e => e.key === "Enter" && handleLookup()}
                 placeholder="https://rally.app/invite/… or TEAM-CODE"
                 autoFocus
-                className="w-full pl-9 pr-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[#ff4615] transition-colors placeholder:text-muted-foreground" />
+                className="w-full pl-9 pr-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground" />
             </div>
             <button onClick={handleLookup}
               disabled={!code.trim() || searching}
               className="px-3 py-2.5 rounded-[8px] text-[12px] font-medium border border-border bg-background text-foreground hover:bg-muted transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0">
               {searching ? (
                 <span className="flex items-center gap-1">
-                  <span className="w-3 h-3 rounded-full border-2 border-[#ff4615] border-t-transparent animate-spin" />
+                  <span className="w-3 h-3 rounded-full border-2 border-[var(--rally-brand)] border-t-transparent animate-spin" />
                   Looking…
                 </span>
               ) : "Look up"}
@@ -454,7 +454,7 @@ function JoinPanel({ onClose, onDone }: { onClose: () => void; onDone: () => voi
             </div>
             <button onClick={onDone}
               className="w-full h-9 flex items-center justify-center gap-1.5 rounded-[8px] text-white text-[13px] font-medium"
-              style={{ background: "#ff4615" }}>
+              style={{ background: "var(--rally-brand)" }}>
               Join workspace <ArrowRight className="size-3.5" />
             </button>
           </div>
@@ -491,10 +491,10 @@ export function TeamSelectionV2() {
       <div className="flex-shrink-0 flex items-center justify-between px-6 py-4 border-b border-border bg-card">
         <div className="flex items-center gap-2.5">
           <svg viewBox="27 26 133 127" width="24" height="24" fill="none">
-            <path d={svgPaths.p6b466c0} fill="#ff4615" />
+            <path d={svgPaths.p6b466c0} fill="var(--rally-brand)" />
           </svg>
           <span className="text-[16px] font-bold text-foreground">Rally</span>
-          <span className="text-[10px] px-2 py-0.5 rounded-full text-white ml-1" style={{ background: "#ff4615" }}>
+          <span className="text-[10px] px-2 py-0.5 rounded-full text-white ml-1" style={{ background: "var(--rally-brand)" }}>
             V2
           </span>
         </div>
@@ -535,7 +535,7 @@ export function TeamSelectionV2() {
                   <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
                   <input value={search} onChange={e => setSearch(e.target.value)}
                     placeholder="Search workspaces…"
-                    className="pl-8 pr-3 h-9 w-52 rounded-[8px] border border-border bg-background text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-[#ff4615] transition-colors" />
+                    className="pl-8 pr-3 h-9 w-52 rounded-[8px] border border-border bg-background text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-[var(--rally-brand)] transition-colors" />
                 </div>
                 <div className="flex-1" />
                 <button onClick={() => setPanel("join")}
@@ -544,7 +544,7 @@ export function TeamSelectionV2() {
                 </button>
                 <button onClick={() => setPanel("create")}
                   className="flex items-center gap-1.5 h-9 px-3 rounded-[8px] text-white text-[12px] font-medium"
-                  style={{ background: "#ff4615" }}>
+                  style={{ background: "var(--rally-brand)" }}>
                   <Plus className="size-3.5" /> New workspace
                 </button>
               </div>
@@ -559,10 +559,10 @@ export function TeamSelectionV2() {
                   {/* Create card — always last */}
                   <div
                     onClick={() => setPanel("create")}
-                    className="flex flex-col items-center justify-center rounded-[16px] border-2 border-dashed border-border bg-background cursor-pointer hover:border-[#ff4615] hover:bg-[#fff8f7] transition-all group min-h-[220px]">
+                    className="flex flex-col items-center justify-center rounded-[16px] border-2 border-dashed border-border bg-background cursor-pointer hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-all group min-h-[220px]">
                     <div className="w-11 h-11 rounded-full flex items-center justify-center mb-3 transition-colors"
-                      style={{ background: "#fff2ed" }}>
-                      <Plus className="size-5" style={{ color: "#ff4615" }} />
+                      style={{ background: "var(--rally-brand-soft-light)" }}>
+                      <Plus className="size-5" style={{ color: "var(--rally-brand)" }} />
                     </div>
                     <p className="text-[13px] font-semibold text-foreground">New workspace</p>
                     <p className="text-[11px] text-muted-foreground mt-1">Start from scratch</p>

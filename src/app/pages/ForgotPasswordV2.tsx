@@ -6,12 +6,12 @@ import svgPaths from "../../imports/svg-gyowvurp60";
 function RallyLogo({ size = 26 }: { size?: number }) {
   return (
     <svg viewBox="27 26 133 127" width={size} height={size} fill="none">
-      <path d={svgPaths.p6b466c0} fill="#ff4615" />
+      <path d={svgPaths.p6b466c0} fill="var(--rally-brand)" />
     </svg>
   );
 }
 
-const INPUT = "w-full pl-9 pr-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[#ff4615] transition-colors placeholder:text-muted-foreground";
+const INPUT = "w-full pl-9 pr-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground";
 
 export function ForgotPasswordV2() {
   const [email,     setEmail]     = useState("");
@@ -44,8 +44,8 @@ export function ForgotPasswordV2() {
           <>
             {/* Icon */}
             <div className="w-12 h-12 rounded-[12px] flex items-center justify-center mb-6"
-              style={{ background: "#fff2ed" }}>
-              <Mail className="size-6" style={{ color: "#ff4615" }} />
+              style={{ background: "var(--rally-brand-soft-light)" }}>
+              <Mail className="size-6" style={{ color: "var(--rally-brand)" }} />
             </div>
 
             <h1 className="text-[22px] font-bold text-foreground mb-1">Forgot your password?</h1>
@@ -66,7 +66,7 @@ export function ForgotPasswordV2() {
 
               <button type="submit" disabled={!email || loading}
                 className="w-full h-10 flex items-center justify-center gap-2 rounded-[8px] text-white text-[13px] font-medium transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
-                style={{ background: "#ff4615" }}>
+                style={{ background: "var(--rally-brand)" }}>
                 {loading ? (
                   <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
                 ) : (
@@ -101,7 +101,7 @@ export function ForgotPasswordV2() {
                 Didn't get it? Check your spam folder or{" "}
                 <button onClick={handleResend}
                   className="font-medium transition-colors hover:underline"
-                  style={{ color: "#ff4615" }}>
+                  style={{ color: "var(--rally-brand)" }}>
                   {resent ? "Sent!" : "resend"}
                 </button>
                 {resent && (

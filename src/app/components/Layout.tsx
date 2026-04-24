@@ -93,7 +93,7 @@ function VersionSwitcher({
         <div className="px-3 pt-3 pb-2 border-b border-border">
           <div className="flex items-center gap-2">
             <svg viewBox="27 26 133 127" width="16" height="16" fill="none">
-              <path d={svgPaths.p6b466c0} fill="#ff4615" />
+              <path d={svgPaths.p6b466c0} fill="var(--rally-brand)" />
             </svg>
             <span className="text-[12px] font-medium text-foreground">Rally</span>
             <span className="ml-auto text-[10px] text-muted-foreground">Switch version</span>
@@ -115,7 +115,7 @@ function VersionSwitcher({
                 className="w-full flex items-start gap-3 px-3 py-2.5 rounded-[10px] text-left transition-colors"
                 style={
                   active
-                    ? { background: "#fff2ed", border: "1px solid #ff4615" }
+                    ? { background: "var(--rally-brand-soft-light)", border: "1px solid var(--rally-brand)" }
                     : { border: "1px solid transparent" }
                 }
               >
@@ -124,7 +124,7 @@ function VersionSwitcher({
                   className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0 text-[11px] font-bold mt-0.5"
                   style={
                     active
-                      ? { background: "#ff4615", color: "#fff" }
+                      ? { background: "var(--rally-brand)", color: "#fff" }
                       : { background: "var(--muted)", color: "var(--text-muted)" }
                   }
                 >
@@ -135,7 +135,7 @@ function VersionSwitcher({
                   <div className="flex items-center gap-1.5">
                     <span
                       className="text-[12px] font-medium"
-                      style={{ color: active ? "#ff4615" : "var(--text-foreground)" }}
+                      style={{ color: active ? "var(--rally-brand)" : "var(--text-foreground)" }}
                     >
                       {v.label}
                     </span>
@@ -143,7 +143,7 @@ function VersionSwitcher({
                       className="text-[10px] px-1.5 py-0.5 rounded-full"
                       style={
                         active
-                          ? { background: "#ff4615", color: "#fff" }
+                          ? { background: "var(--rally-brand)", color: "#fff" }
                           : { background: "var(--muted)", color: "var(--text-muted)" }
                       }
                     >
@@ -158,7 +158,7 @@ function VersionSwitcher({
                 {active && (
                   <Check
                     className="size-3.5 flex-shrink-0 mt-1"
-                    style={{ color: "#ff4615" }}
+                    style={{ color: "var(--rally-brand)" }}
                   />
                 )}
               </button>
@@ -341,7 +341,7 @@ function LayoutInner() {
       "flex rounded-xl transition-colors",
       "flex-col items-center gap-1 py-2.5 px-1 w-full",
       active
-        ? "bg-[#fff2ed] text-[#c60f08] dark:bg-[#440608]/40 dark:text-[#ff9571]"
+        ? "bg-[var(--selected-bg)] text-[var(--selected-text)]"
         : "text-foreground hover:bg-muted",
     ].join(" ");
   }
@@ -377,12 +377,12 @@ function LayoutInner() {
           aria-label="Switch Rally version"
         >
           <svg viewBox="27 26 133 127" width="26" height="26" fill="none">
-            <path d={svgPaths.p6b466c0} fill="#ff4615" />
+            <path d={svgPaths.p6b466c0} fill="var(--rally-brand)" />
           </svg>
           {/* Version badge — bottom-right corner of logo button */}
           <span
             className="absolute bottom-0.5 right-0.5 w-[14px] h-[14px] rounded-full flex items-center justify-center text-white text-[8px] font-bold leading-none border border-card transition-colors"
-            style={{ background: "#ff4615" }}
+            style={{ background: "var(--rally-brand)" }}
           >
             {version === "v1" ? "1" : "2"}
           </span>

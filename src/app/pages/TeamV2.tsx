@@ -20,7 +20,7 @@ interface MockMember {
 // ── Config ────────────────────────────────────────────────────────────────────
 
 const ROLE_CFG: Record<UserRole, { label: string; color: string; bg: string; Icon: React.ElementType }> = {
-  owner:  { label: "Owner",  color: "#ff4615", bg: "#fff2ed", Icon: Crown     },
+  owner:  { label: "Owner",  color: "var(--rally-brand)", bg: "var(--rally-brand-soft-light)", Icon: Crown },
   admin:  { label: "Admin",  color: "#0f5fd7", bg: "#eef4ff", Icon: Shield    },
   member: { label: "Member", color: "#0f6a43", bg: "#eaf7f0", Icon: UserCheck },
   viewer: { label: "Viewer", color: "#6b7280", bg: "#f3f4f6", Icon: Eye       },
@@ -52,7 +52,7 @@ const MOCK_STATUSES: Record<string, OnlineStatus> = {
 const RECENT_CHANGES = [
   { id: "r1", text: "Emily Davis joined the workspace",       time: "2h ago",     color: "#0f6a43" },
   { id: "r2", text: "Alex Rivera's role changed to Viewer",   time: "Yesterday",  color: "#0f5fd7" },
-  { id: "r3", text: "Invite sent to david@example.com",       time: "2 days ago", color: "#ff4615" },
+  { id: "r3", text: "Invite sent to david@example.com",       time: "2 days ago", color: "var(--rally-brand)" },
   { id: "r4", text: "Sarah Johnson promoted to Admin",        time: "3 days ago", color: "#0f5fd7" },
   { id: "r5", text: "Team description updated",               time: "1 week ago", color: "#6b7280" },
 ];
@@ -222,7 +222,7 @@ function MemberRow({
   return (
     <div onClick={onSelect}
       className={`flex items-center gap-3 px-3 py-2.5 rounded-[10px] border cursor-pointer group transition-all ${
-        selected ? "border-[#ff4615] bg-[#fff8f7]" : "border-border bg-card hover:bg-muted/30 hover:border-[#d1aa99]"
+        selected ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)]" : "border-border bg-card hover:bg-muted/30 hover:border-[var(--border)]"
       }`}>
       {/* Avatar + status */}
       <div className="relative flex-shrink-0">
@@ -397,11 +397,11 @@ function MemberDetailPanel({
               {ROLE_ORDER.filter(r => r !== "owner").map(r => (
                 <button key={r} onClick={() => { onRoleChange(member.userId, r); setShowRolePicker(false); }}
                   className={`w-full flex items-center gap-2 px-2.5 py-2 rounded-[7px] border text-left transition-colors ${
-                    member.role === r ? "border-[#ff4615] bg-[#fff2ed]" : "border-border hover:bg-muted"
+                    member.role === r ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)]" : "border-border hover:bg-muted"
                   }`}>
                   <RoleBadge role={r} size="xs" />
                   <span className="text-[12px] text-foreground flex-1">{ROLE_CFG[r].label}</span>
-                  {member.role === r && <Check className="size-3.5 text-[#ff4615]" />}
+                  {member.role === r && <Check className="size-3.5 text-[var(--rally-brand)]" />}
                 </button>
               ))}
             </div>
@@ -488,7 +488,7 @@ function TeamHome({
         <div className="flex items-start gap-4">
           {/* Logo */}
           <div className="w-14 h-14 rounded-[14px] flex items-center justify-center flex-shrink-0 text-white text-[22px] font-bold"
-            style={{ background: "#ff4615" }}>
+            style={{ background: "var(--rally-brand)" }}>
             {teamName.charAt(0).toUpperCase()}
           </div>
           {/* Info */}
@@ -534,7 +534,7 @@ function TeamHome({
               className={`flex items-center gap-1.5 h-8 px-3 rounded-[8px] text-[12px] font-medium transition-colors flex-shrink-0 ${
                 a.primary ? "text-white" : "border border-border bg-background text-foreground hover:bg-muted"
               }`}
-              style={a.primary ? { background: "#ff4615" } : {}}>
+              style={a.primary ? { background: "var(--rally-brand)" } : {}}>
               <Icon className="size-3.5" />
               {a.label}
             </button>
@@ -644,7 +644,7 @@ function TeamHome({
               </div>
             ))}
             <button onClick={onInvite}
-              className="w-full flex items-center justify-center gap-1.5 py-2 rounded-[10px] border border-dashed border-border text-muted-foreground hover:border-[#ff4615] hover:text-[#ff4615] hover:bg-[#fff8f7] transition-colors text-[11px]">
+              className="w-full flex items-center justify-center gap-1.5 py-2 rounded-[10px] border border-dashed border-border text-muted-foreground hover:border-[var(--rally-brand)] hover:text-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-colors text-[11px]">
               <Plus className="size-3.5" /> Send new invite
             </button>
           </div>
@@ -696,7 +696,7 @@ function MembersView({
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
           <input value={search} onChange={e => setSearch(e.target.value)}
             placeholder="Search members…"
-            className="pl-8 pr-3 h-8 w-48 rounded-[8px] border border-border bg-background text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-[#ff4615] transition-colors" />
+            className="pl-8 pr-3 h-8 w-48 rounded-[8px] border border-border bg-background text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-[var(--rally-brand)] transition-colors" />
         </div>
 
         {/* Role filters */}
@@ -717,7 +717,7 @@ function MembersView({
         {canManage && (
           <button onClick={onInvite}
             className="flex items-center gap-1.5 h-8 px-3 rounded-[8px] text-white text-[12px] font-medium"
-            style={{ background: "#ff4615" }}>
+            style={{ background: "var(--rally-brand)" }}>
             <UserPlus className="size-3.5" /> Invite
           </button>
         )}
@@ -767,7 +767,7 @@ function SettingsView({
   }
 
   const fieldClass = `w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none transition-colors placeholder:text-muted-foreground ${
-    canEdit ? "focus:border-[#ff4615]" : "opacity-60 cursor-not-allowed"
+    canEdit ? "focus:border-[var(--rally-brand)]" : "opacity-60 cursor-not-allowed"
   }`;
 
   return (
@@ -780,7 +780,7 @@ function SettingsView({
           <p className="text-[11px] font-medium text-muted-foreground mb-2">Team Icon</p>
           <div className="flex items-center gap-3">
             <div className="w-14 h-14 rounded-[14px] flex items-center justify-center text-white text-[22px] font-bold"
-              style={{ background: "#ff4615" }}>
+              style={{ background: "var(--rally-brand)" }}>
               {name.charAt(0).toUpperCase() || "?"}
             </div>
             {canEdit && (
@@ -816,7 +816,7 @@ function SettingsView({
         {canEdit ? (
           <button onClick={handleSave}
             className="flex items-center gap-1.5 px-4 py-2 rounded-[8px] text-white text-[12px] font-medium transition-colors"
-            style={{ background: saved ? "#0f6a43" : "#ff4615" }}>
+            style={{ background: saved ? "#0f6a43" : "var(--rally-brand)" }}>
             {saved ? <><Check className="size-3.5" /> Saved</> : "Save Changes"}
           </button>
         ) : (
@@ -949,7 +949,7 @@ function DangerZone({ teamName }: { teamName: string }) {
                     className="px-3 py-1.5 rounded-[7px] border border-border text-[11px] text-muted-foreground hover:bg-muted transition-colors">
                     Cancel
                   </button>
-                  <button className="px-3 py-1.5 rounded-[7px] bg-[#ff4615] text-white text-[11px] font-medium hover:opacity-90 transition-opacity">
+                  <button className="px-3 py-1.5 rounded-[7px] text-white text-[11px] font-medium hover:opacity-90 transition-opacity" style={{ background: "var(--rally-brand)" }}>
                     Confirm Transfer
                   </button>
                 </div>
@@ -1028,12 +1028,12 @@ function InviteModal({ open, onClose, canInviteAdmins }: { open: boolean; onClos
               <input value={email} onChange={e => setEmail(e.target.value)}
                 onKeyDown={e => e.key === "Enter" && handleSend()}
                 placeholder="name@company.com" autoFocus
-                className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[#ff4615] transition-colors placeholder:text-muted-foreground" />
+                className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground" />
             </div>
             <div>
               <label className="block text-[11px] font-medium text-foreground mb-1.5">Role</label>
               <select value={role} onChange={e => setRole(e.target.value as UserRole)}
-                className="w-full px-3 py-2 rounded-[8px] border border-border bg-background text-[12px] text-foreground outline-none focus:border-[#ff4615] transition-colors">
+                className="w-full px-3 py-2 rounded-[8px] border border-border bg-background text-[12px] text-foreground outline-none focus:border-[var(--rally-brand)] transition-colors">
                 {canInviteAdmins && <option value="admin">Admin — can manage members & settings</option>}
                 <option value="member">Member — full create/edit access</option>
                 <option value="viewer">Viewer — read-only access</option>
@@ -1043,7 +1043,7 @@ function InviteModal({ open, onClose, canInviteAdmins }: { open: boolean; onClos
               <label className="block text-[11px] font-medium text-foreground mb-1.5">Message (optional)</label>
               <textarea value={message} onChange={e => setMessage(e.target.value)}
                 rows={2} placeholder="Add a personal note to your invite…"
-                className="w-full px-3 py-2 rounded-[8px] border border-border bg-background text-[12px] text-foreground outline-none resize-none focus:border-[#ff4615] transition-colors placeholder:text-muted-foreground" />
+                className="w-full px-3 py-2 rounded-[8px] border border-border bg-background text-[12px] text-foreground outline-none resize-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground" />
             </div>
           </div>
           <div className="flex gap-2 mt-4">
@@ -1053,7 +1053,7 @@ function InviteModal({ open, onClose, canInviteAdmins }: { open: boolean; onClos
             </button>
             <button onClick={handleSend}
               className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-[8px] text-white text-[12px] font-medium transition-colors"
-              style={{ background: sent ? "#0f6a43" : "#ff4615" }}>
+              style={{ background: sent ? "#0f6a43" : "var(--rally-brand)" }}>
               {sent ? <><Check className="size-3.5" /> Invite Sent!</> : <><Mail className="size-3.5" /> Send Invite</>}
             </button>
           </div>
@@ -1125,7 +1125,7 @@ export function TeamV2() {
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
             <input value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
               placeholder="Search people…"
-              className="pl-8 pr-3 h-8 w-40 rounded-[8px] border border-border bg-background text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-[#ff4615] transition-colors" />
+              className="pl-8 pr-3 h-8 w-40 rounded-[8px] border border-border bg-background text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-[var(--rally-brand)] transition-colors" />
           </div>
 
           {/* Copy invite link */}
@@ -1139,7 +1139,7 @@ export function TeamV2() {
           {canManage && (
             <button onClick={() => setInviteOpen(true)}
               className="flex items-center gap-1.5 h-8 px-3 rounded-[8px] text-white text-[12px] font-medium"
-              style={{ background: "#ff4615" }}>
+              style={{ background: "var(--rally-brand)" }}>
               <UserPlus className="size-3.5" /> Invite
             </button>
           )}

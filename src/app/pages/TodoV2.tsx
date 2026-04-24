@@ -275,7 +275,7 @@ function QuickAdd({ onAdd, disabled }: { onAdd: (t: Partial<Task>) => void; disa
           className="flex-1 bg-transparent text-[13px] text-foreground placeholder:text-muted-foreground outline-none disabled:opacity-60" />
         {title && (
           <button onClick={submit} className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-[6px] text-white"
-            style={{ background: "#ff4615" }}>
+            style={{ background: "var(--rally-brand)" }}>
             <Check className="size-3.5" />
           </button>
         )}
@@ -322,7 +322,7 @@ function TaskRow({
   return (
     <div onClick={onSelect}
       className={`flex items-center gap-3 px-3 py-2.5 rounded-[10px] border transition-all cursor-pointer group ${
-        selected ? "border-[#ff4615] bg-[#fff8f7]" : "border-border bg-card hover:border-[#d1aa99] hover:bg-muted/30"
+        selected ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)]" : "border-border bg-card hover:border-[var(--border)] hover:bg-muted/30"
       }`}>
       {/* Done toggle */}
       <button onClick={e => { e.stopPropagation(); canEdit && onToggleDone(); }}
@@ -357,7 +357,7 @@ function TaskRow({
         );
       })}
       {task.aiGenerated && (
-        <Sparkles className="size-3.5 flex-shrink-0" style={{ color: "#ff4615" }} title="AI generated" />
+        <Sparkles className="size-3.5 flex-shrink-0" style={{ color: "var(--rally-brand)" }} title="AI generated" />
       )}
 
       {/* Assignees */}
@@ -442,8 +442,8 @@ function DetailPanel({
       <div className="flex-shrink-0 flex items-center gap-2 px-4 py-3 border-b border-border">
         <span className="flex-1 text-[12px] font-medium text-muted-foreground">Task detail</span>
         <button onClick={() => setShowAI(v => !v)} title="AI assist"
-          className={`w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors ${showAI ? "bg-[#fff2ed]" : "hover:bg-muted text-muted-foreground"}`}
-          style={{ color: showAI ? "#ff4615" : undefined }}>
+          className={`w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors ${showAI ? "bg-[var(--rally-brand-soft-light)]" : "hover:bg-muted text-muted-foreground"}`}
+          style={{ color: showAI ? "var(--rally-brand)" : undefined }}>
           <Sparkles className="size-4" />
         </button>
         <button onClick={onClose} className="w-7 h-7 flex items-center justify-center rounded-[7px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
@@ -454,14 +454,14 @@ function DetailPanel({
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
         {/* AI assist */}
         {showAI && (
-          <div className="p-3 rounded-[10px] border" style={{ borderColor: "#ff461540", background: "#fff8f7" }}>
+          <div className="p-3 rounded-[10px] border" style={{ borderColor: "var(--rally-brand-soft-light)", background: "var(--rally-brand-soft-light)" }}>
             <div className="flex items-center gap-1.5 mb-2">
-              <Sparkles className="size-3.5" style={{ color: "#ff4615" }} />
-              <span className="text-[11px] font-medium" style={{ color: "#ff4615" }}>AI Assist</span>
+              <Sparkles className="size-3.5" style={{ color: "var(--rally-brand)" }} />
+              <span className="text-[11px] font-medium" style={{ color: "var(--rally-brand)" }}>AI Assist</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {aiActions.map(a => (
-                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[#ff4615] hover:bg-[#fff2ed] transition-colors">
+                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-colors">
                   {a}
                 </button>
               ))}
@@ -474,7 +474,7 @@ function DetailPanel({
           {canEdit ? (
             <input value={editTitle} onChange={e => setEditTitle(e.target.value)}
               onBlur={() => editTitle.trim() && onUpdate(task.id, { title: editTitle.trim() })}
-              className="w-full text-[15px] font-medium text-foreground bg-transparent outline-none border-b border-transparent hover:border-border focus:border-[#ff4615] pb-0.5 transition-colors"
+              className="w-full text-[15px] font-medium text-foreground bg-transparent outline-none border-b border-transparent hover:border-border focus:border-[var(--rally-brand)] pb-0.5 transition-colors"
               placeholder="Task title" />
           ) : (
             <p className="text-[15px] font-medium text-foreground">{task.title}</p>
@@ -562,7 +562,7 @@ function DetailPanel({
             <textarea value={editDesc} onChange={e => setEditDesc(e.target.value)}
               onBlur={() => onUpdate(task.id, { description: editDesc })}
               rows={4} placeholder="Add a description…"
-              className="w-full text-[12px] text-foreground bg-background border border-border rounded-[8px] px-3 py-2 outline-none resize-none focus:border-[#ff4615] transition-colors placeholder:text-muted-foreground" />
+              className="w-full text-[12px] text-foreground bg-background border border-border rounded-[8px] px-3 py-2 outline-none resize-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground" />
           ) : (
             <p className="text-[12px] text-muted-foreground leading-relaxed">{task.description || "No description."}</p>
           )}
@@ -606,9 +606,9 @@ function DetailPanel({
 
         {/* AI badge */}
         {task.aiGenerated && (
-          <div className="flex items-center gap-2 px-2.5 py-2 rounded-[8px]" style={{ background:"#fff8f7", border:"1px solid #ff461530" }}>
-            <Sparkles className="size-3.5 flex-shrink-0" style={{ color:"#ff4615" }} />
-            <span className="text-[11px]" style={{ color:"#ff4615" }}>Created by Rally AI</span>
+          <div className="flex items-center gap-2 px-2.5 py-2 rounded-[8px]" style={{ background:"var(--rally-brand-soft-light)", border:"1px solid var(--rally-brand-soft-light)" }}>
+            <Sparkles className="size-3.5 flex-shrink-0" style={{ color:"var(--rally-brand)" }} />
+            <span className="text-[11px]" style={{ color:"var(--rally-brand)" }}>Created by Rally AI</span>
           </div>
         )}
       </div>
@@ -635,7 +635,7 @@ function BoardCard({ task, selected, onSelect }: { task: Task; selected: boolean
   const pri = PRIORITY[task.priority];
   return (
     <div onClick={onSelect}
-      className={`p-3 rounded-[10px] border bg-card cursor-pointer transition-all hover:shadow-sm ${selected ? "border-[#ff4615]" : "border-border hover:border-[#d1aa99]"}`}>
+      className={`p-3 rounded-[10px] border bg-card cursor-pointer transition-all hover:shadow-sm ${selected ? "border-[var(--rally-brand)]" : "border-border hover:border-[var(--border)]"}`}>
       <div className="flex items-start gap-2 mb-2">
         <span className="w-2 h-2 rounded-full flex-shrink-0 mt-1" style={{ background: pri.dot }} />
         <p className="text-[12px] text-foreground leading-snug flex-1">{task.title}</p>
@@ -849,7 +849,7 @@ export function TodoV2() {
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
             <input value={search} onChange={e => setSearch(e.target.value)}
               placeholder="Search tasks…"
-              className="pl-8 pr-3 h-8 w-44 rounded-[8px] border border-border bg-background text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-[#ff4615] transition-colors" />
+              className="pl-8 pr-3 h-8 w-44 rounded-[8px] border border-border bg-background text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-[var(--rally-brand)] transition-colors" />
           </div>
           {/* Priority filter */}
           <select value={filterPriority} onChange={e => setFilterPriority(e.target.value as Priority | "all")}
@@ -859,13 +859,13 @@ export function TodoV2() {
           </select>
           {/* Ask AI */}
           <button className="flex items-center gap-1.5 h-8 px-3 rounded-[8px] border border-border bg-background text-muted-foreground hover:text-foreground hover:bg-muted transition-colors text-[12px]">
-            <Sparkles className="size-3.5" style={{ color: "#ff4615" }} /> Ask AI
+            <Sparkles className="size-3.5" style={{ color: "var(--rally-brand)" }} /> Ask AI
           </button>
           {/* New Task */}
           {canEdit && (
             <button onClick={() => addTask({ title: "New task" })}
               className="flex items-center gap-1.5 h-8 px-3 rounded-[8px] text-white text-[12px] font-medium transition-colors"
-              style={{ background: "#ff4615" }}>
+              style={{ background: "var(--rally-brand)" }}>
               <Plus className="size-3.5" /> New Task
             </button>
           )}
@@ -877,7 +877,7 @@ export function TodoV2() {
             <button key={tab.id} onClick={() => { setActiveTab(tab.id); setFocusFilter(null); }}
               className={`px-3 py-1.5 rounded-[7px] text-[12px] transition-colors ${
                 activeTab === tab.id
-                  ? "bg-[#fff2ed] text-[#c60f08] font-medium"
+                  ? "bg-[var(--rally-brand-soft-light)] text-[var(--rally-brand)] font-medium"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
               }`}>
               {tab.label}
@@ -889,7 +889,7 @@ export function TodoV2() {
           {focusFilter && (
             <button onClick={() => setFocusFilter(null)}
               className="ml-2 flex items-center gap-1 px-2 py-1 rounded-full text-[10px] border"
-              style={{ borderColor: "#ff461560", background: "#fff2ed", color: "#c60f08" }}>
+              style={{ borderColor: "var(--rally-brand)", background: "var(--rally-brand-soft-light)", color: "var(--rally-brand)" }}>
               <X className="size-3" /> Clear filter
             </button>
           )}

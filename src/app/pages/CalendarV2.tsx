@@ -56,7 +56,7 @@ const MONTH_NAMES    = ["January","February","March","April","May","June","July"
 
 const initialLists: CalList[] = [
   { id: "meetings",    name: "Meetings",    color: "#0f5fd7", visible: true },
-  { id: "milestones",  name: "Milestones",  color: "#ff4615", visible: true },
+  { id: "milestones",  name: "Milestones",  color: "var(--rally-brand)", visible: true },
   { id: "deadlines",   name: "Deadlines",   color: "#d90000", visible: true },
   { id: "team-events", name: "Team Events", color: "#0f6a43", visible: true },
   { id: "launches",    name: "Launches",    color: "#6b21a8", visible: true },
@@ -428,7 +428,7 @@ function MiniCalendar({
             <button key={i} onClick={() => onDateClick(d)}
               className={`relative w-6 h-6 mx-auto flex items-center justify-center rounded-full text-[10px] transition-colors ${
                 isTodayD
-                  ? "bg-[#ff4615] text-white font-semibold"
+                  ? "bg-[var(--rally-brand)] text-white font-semibold"
                   : inWeek && !isTodayD
                   ? "bg-muted text-foreground"
                   : isSelected && !isTodayD
@@ -439,7 +439,7 @@ function MiniCalendar({
               }`}>
               {d.getDate()}
               {hasEvent && !isTodayD && (
-                <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#ff4615]" />
+                <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[var(--rally-brand)]" />
               )}
             </button>
           );
@@ -610,7 +610,7 @@ function LeftRail({
       {/* Quick create */}
       <div className="px-3 pb-3">
         <button onClick={onNewEvent}
-          className="w-full flex items-center justify-center gap-1.5 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[#ff4615] hover:text-[#ff4615] hover:bg-[#fff8f7] transition-colors text-[11px]">
+          className="w-full flex items-center justify-center gap-1.5 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[var(--rally-brand)] hover:text-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-colors text-[11px]">
           <Plus className="size-3.5" /> Quick Create
         </button>
       </div>
@@ -738,7 +738,7 @@ function WeekView({
                 <span className="text-[10px] text-muted-foreground uppercase">{dow}</span>
                 <div className={`w-7 h-7 flex items-center justify-center rounded-full text-[14px] font-medium mt-0.5 transition-colors ${
                   today ? "text-white" : "text-foreground"}`}
-                  style={today ? { background: "#ff4615" } : {}}>
+                  style={today ? { background: "var(--rally-brand)" } : {}}>
                   {num}
                 </div>
               </div>
@@ -791,7 +791,7 @@ function WeekView({
 
             return (
               <div key={d} className="flex-1 relative border-l border-border/30"
-                style={{ height: TOTAL_GRID_H, background: today ? "#ff461504" : undefined }}
+                style={{ height: TOTAL_GRID_H, background: today ? "color-mix(in srgb, var(--rally-brand) 2%, transparent)" : undefined }}
                 onClick={e => {
                   const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
                   const y = e.clientY - rect.top + gridRef.current!.scrollTop;
@@ -869,10 +869,10 @@ function AgendaView({
         return (
           <div key={d} className="mb-6">
             <div className="flex items-center gap-2 mb-2">
-              <span className={`text-[12px] font-medium ${isDay ? "text-[#ff4615]" : "text-foreground"}`}>
+              <span className={`text-[12px] font-medium ${isDay ? "text-[var(--rally-brand)]" : "text-foreground"}`}>
                 {isDay ? "Today · " : ""}{dayLabel}
               </span>
-              {isDay && <span className="w-1.5 h-1.5 rounded-full bg-[#ff4615]" />}
+              {isDay && <span className="w-1.5 h-1.5 rounded-full bg-[var(--rally-brand)]" />}
             </div>
             <div className="space-y-1.5">
               {dayEvs.map(e => {
@@ -880,7 +880,7 @@ function AgendaView({
                 return (
                   <div key={e.id} onClick={() => onEventClick(e)}
                     className={`flex items-center gap-3 px-3 py-2.5 rounded-[10px] border cursor-pointer transition-all hover:shadow-sm ${
-                      selectedEventId === e.id ? "border-[#ff4615]" : "border-border hover:border-[#d1aa99]"
+                      selectedEventId === e.id ? "border-[var(--rally-brand)]" : "border-border hover:border-[var(--border)]"
                     } bg-card`}>
                     <div className="w-1 self-stretch rounded-full flex-shrink-0" style={{ background: color }} />
                     <div className="flex-1 min-w-0">
@@ -948,12 +948,12 @@ function MonthView({
             <div key={i} onClick={() => onDayClick(d)}
               className={`rounded-[8px] p-1.5 cursor-pointer border transition-colors min-h-[72px] ${
                 isTodayD
-                  ? "border-[#ff4615] bg-[#fff8f7]"
+                  ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)]"
                   : "border-border bg-card hover:bg-muted/40"
               }`}>
               <div className={`w-6 h-6 flex items-center justify-center rounded-full text-[11px] font-medium mb-1 ${
                 isTodayD ? "text-white" : isThisMo ? "text-foreground" : "text-muted-foreground/40"
-              }`} style={isTodayD ? { background: "#ff4615" } : {}}>
+              }`} style={isTodayD ? { background: "var(--rally-brand)" } : {}}>
                 {d.getDate()}
               </div>
 
@@ -1025,8 +1025,8 @@ function EventDetailPanel({
       <div className="flex-shrink-0 flex items-center gap-2 px-4 py-3 border-b border-border">
         <span className="flex-1 text-[12px] font-medium text-muted-foreground">Event detail</span>
         <button onClick={() => setShowAI(v => !v)} title="AI Assist"
-          className={`w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors ${showAI ? "bg-[#fff2ed]" : "hover:bg-muted text-muted-foreground"}`}
-          style={{ color: showAI ? "#ff4615" : undefined }}>
+          className={`w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors ${showAI ? "bg-[var(--rally-brand-soft-light)]" : "hover:bg-muted text-muted-foreground"}`}
+          style={{ color: showAI ? "var(--rally-brand)" : undefined }}>
           <Sparkles className="size-4" />
         </button>
         <button onClick={onClose}
@@ -1038,14 +1038,14 @@ function EventDetailPanel({
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
         {/* AI Assist */}
         {showAI && (
-          <div className="p-3 rounded-[10px] border" style={{ borderColor: "#ff461540", background: "#fff8f7" }}>
+          <div className="p-3 rounded-[10px] border" style={{ borderColor: "var(--rally-brand-soft-light)", background: "var(--rally-brand-soft-light)" }}>
             <div className="flex items-center gap-1.5 mb-2">
-              <Sparkles className="size-3.5" style={{ color: "#ff4615" }} />
-              <span className="text-[11px] font-medium" style={{ color: "#ff4615" }}>AI Assist</span>
+              <Sparkles className="size-3.5" style={{ color: "var(--rally-brand)" }} />
+              <span className="text-[11px] font-medium" style={{ color: "var(--rally-brand)" }}>AI Assist</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {aiActions.map(a => (
-                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[#ff4615] hover:bg-[#fff2ed] transition-colors">
+                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-colors">
                   {a}
                 </button>
               ))}
@@ -1058,7 +1058,7 @@ function EventDetailPanel({
           {canEdit ? (
             <input value={editTitle} onChange={e => setEditTitle(e.target.value)}
               onBlur={() => editTitle.trim() && onUpdate(event.id, { title: editTitle.trim() })}
-              className="w-full text-[15px] font-medium text-foreground bg-transparent outline-none border-b border-transparent hover:border-border focus:border-[#ff4615] pb-0.5 transition-colors" />
+              className="w-full text-[15px] font-medium text-foreground bg-transparent outline-none border-b border-transparent hover:border-border focus:border-[var(--rally-brand)] pb-0.5 transition-colors" />
           ) : (
             <p className="text-[15px] font-medium text-foreground">{event.title}</p>
           )}
@@ -1131,7 +1131,7 @@ function EventDetailPanel({
             <textarea value={editDesc} onChange={e => setEditDesc(e.target.value)}
               onBlur={() => onUpdate(event.id, { description: editDesc })}
               rows={3} placeholder="Add notes, agenda, or context…"
-              className="w-full text-[12px] text-foreground bg-background border border-border rounded-[8px] px-3 py-2 outline-none resize-none focus:border-[#ff4615] transition-colors placeholder:text-muted-foreground" />
+              className="w-full text-[12px] text-foreground bg-background border border-border rounded-[8px] px-3 py-2 outline-none resize-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground" />
           ) : (
             <p className="text-[12px] text-muted-foreground leading-relaxed">
               {event.description || "No description."}
@@ -1197,7 +1197,7 @@ function EventDetailPanel({
           </button>
           <button onClick={() => onClose()}
             className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-[8px] text-white text-[12px] font-medium transition-colors"
-            style={{ background: "#ff4615" }}>
+            style={{ background: "var(--rally-brand)" }}>
             Done
           </button>
         </div>
@@ -1248,7 +1248,7 @@ function NewEventModal({
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
       <div className="relative bg-card border border-border rounded-[16px] shadow-2xl w-full max-w-md overflow-hidden">
         {/* Top color strip */}
-        <div className="h-1" style={{ background: lists.find(l => l.id === form.calendarId)?.color ?? "#ff4615" }} />
+        <div className="h-1" style={{ background: lists.find(l => l.id === form.calendarId)?.color ?? "var(--rally-brand)" }} />
 
         <div className="px-5 py-4">
           <div className="flex items-center gap-2 mb-4">
@@ -1262,18 +1262,18 @@ function NewEventModal({
             {/* Title */}
             <input value={form.title} onChange={e => set("title", e.target.value)}
               placeholder="Event title"
-              className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[#ff4615] transition-colors placeholder:text-muted-foreground" />
+              className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground" />
 
             {/* Date + all-day */}
             <div className="flex items-center gap-3">
               <div className="flex-1">
                 <label className="text-[10px] text-muted-foreground block mb-1">Date</label>
                 <input type="date" value={form.date} onChange={e => set("date", e.target.value)}
-                  className="w-full px-3 py-2 rounded-[8px] border border-border bg-background text-foreground text-[12px] outline-none focus:border-[#ff4615] transition-colors" />
+                  className="w-full px-3 py-2 rounded-[8px] border border-border bg-background text-foreground text-[12px] outline-none focus:border-[var(--rally-brand)] transition-colors" />
               </div>
               <div className="flex items-center gap-2 mt-4">
                 <button onClick={() => set("allDay", !form.allDay)}
-                  className={`w-8 h-5 rounded-full transition-colors relative ${form.allDay ? "bg-[#ff4615]" : "bg-muted"}`}>
+                  className={`w-8 h-5 rounded-full transition-colors relative ${form.allDay ? "bg-[var(--rally-brand)]" : "bg-muted"}`}>
                   <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${form.allDay ? "translate-x-3" : "translate-x-0.5"}`} />
                 </button>
                 <span className="text-[11px] text-muted-foreground">All day</span>
@@ -1286,12 +1286,12 @@ function NewEventModal({
                 <div className="flex-1">
                   <label className="text-[10px] text-muted-foreground block mb-1">Start</label>
                   <input type="time" value={form.startTime} onChange={e => set("startTime", e.target.value)}
-                    className="w-full px-3 py-2 rounded-[8px] border border-border bg-background text-foreground text-[12px] outline-none focus:border-[#ff4615] transition-colors" />
+                    className="w-full px-3 py-2 rounded-[8px] border border-border bg-background text-foreground text-[12px] outline-none focus:border-[var(--rally-brand)] transition-colors" />
                 </div>
                 <div className="flex-1">
                   <label className="text-[10px] text-muted-foreground block mb-1">End</label>
                   <input type="time" value={form.endTime} onChange={e => set("endTime", e.target.value)}
-                    className="w-full px-3 py-2 rounded-[8px] border border-border bg-background text-foreground text-[12px] outline-none focus:border-[#ff4615] transition-colors" />
+                    className="w-full px-3 py-2 rounded-[8px] border border-border bg-background text-foreground text-[12px] outline-none focus:border-[var(--rally-brand)] transition-colors" />
                 </div>
               </div>
             )}
@@ -1300,7 +1300,7 @@ function NewEventModal({
             <div>
               <label className="text-[10px] text-muted-foreground block mb-1">Calendar</label>
               <select value={form.calendarId} onChange={e => set("calendarId", e.target.value)}
-                className="w-full px-3 py-2 rounded-[8px] border border-border bg-background text-foreground text-[12px] outline-none focus:border-[#ff4615] transition-colors">
+                className="w-full px-3 py-2 rounded-[8px] border border-border bg-background text-foreground text-[12px] outline-none focus:border-[var(--rally-brand)] transition-colors">
                 {lists.map(l => <option key={l.id} value={l.id}>{l.name}</option>)}
               </select>
             </div>
@@ -1308,12 +1308,12 @@ function NewEventModal({
             {/* Location */}
             <input value={form.location} onChange={e => set("location", e.target.value)}
               placeholder="Location (optional)"
-              className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[12px] outline-none focus:border-[#ff4615] transition-colors placeholder:text-muted-foreground" />
+              className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[12px] outline-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground" />
 
             {/* Description */}
             <textarea value={form.description} onChange={e => set("description", e.target.value)}
               rows={2} placeholder="Notes or agenda (optional)"
-              className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[12px] outline-none resize-none focus:border-[#ff4615] transition-colors placeholder:text-muted-foreground" />
+              className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[12px] outline-none resize-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground" />
           </div>
 
           <div className="flex gap-2 mt-4">
@@ -1323,7 +1323,7 @@ function NewEventModal({
             </button>
             <button onClick={handleSubmit}
               className="flex-1 py-2 rounded-[8px] text-white text-[12px] font-medium transition-colors"
-              style={{ background: "#ff4615" }}>
+              style={{ background: "var(--rally-brand)" }}>
               Create Event
             </button>
           </div>
@@ -1451,7 +1451,7 @@ export function CalendarV2() {
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
             <input value={search} onChange={e => setSearch(e.target.value)}
               placeholder="Search events…"
-              className="pl-8 pr-3 h-8 w-40 rounded-[8px] border border-border bg-background text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-[#ff4615] transition-colors" />
+              className="pl-8 pr-3 h-8 w-40 rounded-[8px] border border-border bg-background text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-[var(--rally-brand)] transition-colors" />
           </div>
 
           {/* View switcher */}
@@ -1461,7 +1461,7 @@ export function CalendarV2() {
                 className={`h-8 px-3 text-[11px] transition-colors ${
                   view === v.id ? "text-white" : "text-muted-foreground hover:bg-muted"
                 }`}
-                style={view === v.id ? { background: "#ff4615" } : {}}>
+                style={view === v.id ? { background: "var(--rally-brand)" } : {}}>
                 {v.label}
               </button>
             ))}
@@ -1469,14 +1469,14 @@ export function CalendarV2() {
 
           {/* Ask AI */}
           <button className="flex items-center gap-1.5 h-8 px-3 rounded-[8px] border border-border bg-background text-muted-foreground hover:bg-muted transition-colors text-[12px]">
-            <Sparkles className="size-3.5" style={{ color: "#ff4615" }} /> Ask AI
+            <Sparkles className="size-3.5" style={{ color: "var(--rally-brand)" }} /> Ask AI
           </button>
 
           {/* New Event */}
           {canEdit && (
             <button onClick={() => { setNewInit({}); setNewOpen(true); }}
               className="flex items-center gap-1.5 h-8 px-3 rounded-[8px] text-white text-[12px] font-medium"
-              style={{ background: "#ff4615" }}>
+              style={{ background: "var(--rally-brand)" }}>
               <Plus className="size-3.5" /> New Event
             </button>
           )}

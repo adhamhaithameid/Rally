@@ -65,7 +65,7 @@ export function TeamSelection() {
             onClick={() => navigate("/team-selection-v2")}
             className="inline-flex items-center gap-1.5 mt-4 px-3 py-1.5 rounded-full border border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground transition-colors text-sm"
           >
-            <Zap className="size-3.5" style={{ color: "#ff4615" }} />
+            <Zap className="size-3.5" style={{ color: "var(--rally-brand)" }} />
             Try the new experience
             <ArrowRight className="size-3.5" />
           </button>

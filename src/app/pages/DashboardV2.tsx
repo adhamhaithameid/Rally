@@ -190,7 +190,7 @@ function TopNav() {
           onClick={() => setTeamOpen((o) => !o)}
           className="flex items-center gap-2.5 px-3 py-2 rounded-[10px] border border-border bg-background hover:bg-muted transition-colors"
         >
-          <div className="w-6 h-6 rounded-[6px] flex items-center justify-center flex-shrink-0" style={{ background: "#ff4615" }}>
+          <div className="w-6 h-6 rounded-[6px] flex items-center justify-center flex-shrink-0" style={{ background: "var(--rally-brand)" }}>
             <svg viewBox="27 26 133 127" width="14" height="14" fill="none">
               <path d={svgPaths.p6b466c0} fill="#fff" />
             </svg>
@@ -209,7 +209,7 @@ function TopNav() {
               <button key={t.teamId}
                 className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-muted transition-colors text-left"
                 onClick={() => { setTeamOpen(false); }}>
-                <div className="w-7 h-7 rounded-[6px] flex items-center justify-center text-white text-[11px] font-bold" style={{ background: "#ff4615" }}>
+                <div className="w-7 h-7 rounded-[6px] flex items-center justify-center text-white text-[11px] font-bold" style={{ background: "var(--rally-brand)" }}>
                   {t.teamName.charAt(0)}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -230,7 +230,7 @@ function TopNav() {
 
       {/* Search bar */}
       <div className="flex-1 max-w-lg relative">
-        <div className={`flex items-center gap-2 px-3 py-2 rounded-[10px] border transition-colors ${searchFocused ? "border-[#ff4615] bg-card" : "border-border bg-background"}`}>
+        <div className={`flex items-center gap-2 px-3 py-2 rounded-[10px] border transition-colors ${searchFocused ? "border-[var(--rally-brand)] bg-card" : "border-border bg-background"}`}>
           <Search className="size-4 flex-shrink-0 text-muted-foreground" />
           <input
             type="text"
@@ -252,7 +252,7 @@ function TopNav() {
           <button
             onClick={() => setNewOpen((o) => !o)}
             className="flex items-center gap-1.5 px-3 py-2 rounded-[10px] text-[13px] font-medium text-white transition-colors"
-            style={{ background: "#ff4615" }}
+            style={{ background: "var(--rally-brand)" }}
           >
             <Plus className="size-4" />
             <span className="hidden sm:inline">New</span>
@@ -286,7 +286,7 @@ function TopNav() {
           >
             <Bell className="size-4 text-foreground" />
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[16px] h-4 flex items-center justify-center rounded-full text-white text-[9px] font-bold px-1" style={{ background: "#ff4615" }}>
+              <span className="absolute -top-1 -right-1 min-w-[16px] h-4 flex items-center justify-center rounded-full text-white text-[9px] font-bold px-1" style={{ background: "var(--rally-brand)" }}>
                 {unreadCount}
               </span>
             )}
@@ -306,7 +306,7 @@ function TopNav() {
                     <p className="text-[11px] text-muted-foreground truncate mt-0.5">{m.text}</p>
                     <p className="text-[10px] text-muted-foreground mt-1">{m.time}</p>
                   </div>
-                  {m.unread && <div className="w-2 h-2 rounded-full flex-shrink-0 mt-1" style={{ background: "#ff4615" }} />}
+                  {m.unread && <div className="w-2 h-2 rounded-full flex-shrink-0 mt-1" style={{ background: "var(--rally-brand)" }} />}
                 </div>
               ))}
               <button className="w-full px-4 py-3 text-[12px] text-center text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
@@ -325,7 +325,7 @@ function TopNav() {
 
         {/* Profile */}
         <Link to="/app/profile" className="flex-shrink-0">
-          <Avatar name={user?.name ?? "User"} size={34} color="#ff4615" />
+          <Avatar name={user?.name ?? "User"} size={34} color="var(--rally-brand)" />
         </Link>
       </div>
     </header>
@@ -350,7 +350,7 @@ function AIDailyBrief() {
       <CardHeader
         title="AI Daily Brief"
         icon={Sparkles}
-        iconColor="#ff4615"
+        iconColor="var(--rally-brand)"
         action={
           <button
             onClick={() => navigate("/app/ai-chat")}
@@ -380,7 +380,7 @@ function AIDailyBrief() {
           <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Suggested actions</p>
           <div className="flex flex-wrap gap-2">
             {aiSuggestions.filter((s) => !dismissed.includes(s.id)).map((s) => (
-              <div key={s.id} className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-full border border-border bg-background hover:border-[#ff4615] hover:bg-[#fff2ed] transition-colors group cursor-pointer">
+              <div key={s.id} className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-full border border-border bg-background hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-colors group cursor-pointer">
                 <span className="text-[12px] text-foreground">{s.label}</span>
                 <button
                   onClick={(e) => { e.stopPropagation(); setDismissed((d) => [...d, s.id]); }}
@@ -405,7 +405,7 @@ function QuickActions() {
   const navigate = useNavigate();
   return (
     <Card>
-      <CardHeader title="Quick Actions" icon={Zap} iconColor="#ff4615" />
+      <CardHeader title="Quick Actions" icon={Zap} iconColor="var(--rally-brand)" />
       <div className="p-4 grid grid-cols-2 gap-2">
         {quickActions.map((a) => (
           <button
@@ -507,9 +507,9 @@ function NextUp() {
           const meta = statusMeta[ev.status];
           return (
             <div key={ev.id}
-              className={`flex items-start gap-3 p-3 rounded-[10px] border transition-colors ${ev.status === "next" ? "border-[#ff4615] bg-[#fff2ed] dark:bg-[#440608]/30" : "border-border bg-background"}`}>
+              className={`flex items-start gap-3 p-3 rounded-[10px] border transition-colors ${ev.status === "next" ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)] dark:bg-[var(--rally-brand-soft-dark)]/30" : "border-border bg-background"}`}>
               <div className="text-center flex-shrink-0 w-10">
-                <p className="text-[11px] font-medium" style={{ color: ev.status === "next" ? "#ff4615" : "var(--text-muted)" }}>{ev.time}</p>
+                <p className="text-[11px] font-medium" style={{ color: ev.status === "next" ? "var(--rally-brand)" : "var(--text-muted)" }}>{ev.time}</p>
                 <p className="text-[10px] text-muted-foreground">{ev.duration}</p>
               </div>
               <div className="flex-1 min-w-0">
@@ -536,7 +536,7 @@ function NextUp() {
                 </span>
                 {ev.status === "next" && (
                   <button className="flex items-center gap-1 px-2.5 py-1 rounded-[6px] text-white text-[11px] font-medium transition-colors"
-                    style={{ background: "#ff4615" }}>
+                    style={{ background: "var(--rally-brand)" }}>
                     <Play className="size-3" /> Join
                   </button>
                 )}
@@ -590,7 +590,7 @@ function MentionsChats() {
               </div>
               <div className="flex flex-col items-end gap-2 flex-shrink-0">
                 {(!isRead && m.unread) && (
-                  <div className="w-2 h-2 rounded-full" style={{ background: "#ff4615" }} />
+                  <div className="w-2 h-2 rounded-full" style={{ background: "var(--rally-brand)" }} />
                 )}
                 <button
                   onClick={() => setRead((r) => [...r, m.id])}
@@ -747,7 +747,7 @@ function RolePanel() {
   if (userRole === "owner") {
     return (
       <Card className="flex flex-col">
-        <CardHeader title="Team Health" icon={Shield} iconColor="#ff4615"
+        <CardHeader title="Team Health" icon={Shield} iconColor="var(--rally-brand)"
           action={<Link to="/app/team" className="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-foreground transition-colors">Team <ArrowRight className="size-3" /></Link>}
         />
         <div className="p-4 space-y-3 flex-1">

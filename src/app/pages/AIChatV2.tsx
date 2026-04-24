@@ -252,7 +252,7 @@ function UserAv({ name, size = 28 }: { name: string; size?: number }) {
 function AIAvatar({ size = 28, thinking = false }: { size?: number; thinking?: boolean }) {
   return (
     <div className="rounded-[8px] flex items-center justify-center flex-shrink-0"
-      style={{ width: size, height: size, background: thinking ? "#f97316" : "#ff4615" }}>
+      style={{ width: size, height: size, background: thinking ? "#f97316" : "var(--rally-brand)" }}>
       <Sparkles className="text-white" style={{ width: size * 0.5, height: size * 0.5 }} />
     </div>
   );
@@ -282,7 +282,7 @@ function RenderResultCard({
     files:   <FileText className="size-4" style={{ color: "#6b21a8" }} />,
     tasks:   <CheckSquare className="size-4" style={{ color: "#0f6a43" }} />,
     events:  <Calendar className="size-4" style={{ color: "#d90000" }} />,
-    summary: <Sparkles className="size-4" style={{ color: "#ff4615" }} />,
+    summary: <Sparkles className="size-4" style={{ color: "var(--rally-brand)" }} />,
     action:  <Zap className="size-4" style={{ color: "#8a4f00" }} />,
   };
   return (
@@ -299,7 +299,7 @@ function RenderResultCard({
           <div className="space-y-1.5">
             {card.items.map((item, i) => (
               <div key={i} className="flex items-start gap-2">
-                <span className="mt-1 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#ff4615" }} />
+                <span className="mt-1 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "var(--rally-brand)" }} />
                 <div className="min-w-0">
                   <p className="text-[12px] text-foreground">{item.name}</p>
                   {item.meta && <p className="text-[10px] text-muted-foreground">{item.meta}</p>}
@@ -312,7 +312,7 @@ function RenderResultCard({
           <button
             onClick={() => card.action?.confirm && onAction?.(card.action.label)}
             className="mt-2 flex items-center gap-1.5 px-3 py-1.5 rounded-[7px] text-white text-[11px] font-medium transition-colors"
-            style={{ background: "#ff4615" }}>
+            style={{ background: "var(--rally-brand)" }}>
             {card.action.confirm ? <><CheckCircle2 className="size-3" /> Confirm</> : <>{card.action.label}</>}
           </button>
         )}
@@ -334,8 +334,8 @@ function ActionPreviewCard({
   };
   return (
     <div className="flex items-start gap-3 p-3 rounded-[10px] border bg-card"
-      style={{ borderColor: "#ff461530", background: "#fff8f7" }}>
-      <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0" style={{ background: "#fff2ed" }}>
+      style={{ borderColor: "var(--rally-brand-soft-light)", background: "var(--rally-brand-soft-light)" }}>
+      <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0" style={{ background: "var(--rally-brand-soft-light)" }}>
         {iconMap[action.type]}
       </div>
       <div className="flex-1 min-w-0">
@@ -345,7 +345,7 @@ function ActionPreviewCard({
       <div className="flex items-center gap-1.5 flex-shrink-0">
         <button onClick={onConfirm}
           className="flex items-center gap-1 px-2.5 py-1 rounded-[7px] text-white text-[11px] font-medium"
-          style={{ background: "#ff4615" }}>
+          style={{ background: "var(--rally-brand)" }}>
           <CheckCircle2 className="size-3" /> Confirm
         </button>
         <button onClick={onDeny}
@@ -382,9 +382,9 @@ function AISidebar({
     const active = selectedId === thread.id;
     return (
       <button onClick={() => onSelect(thread.id)}
-        className={`w-full flex flex-col gap-1 px-2.5 py-2 rounded-[9px] transition-colors text-left group ${active ? "bg-[#fff2ed]" : "hover:bg-muted"}`}>
+        className={`w-full flex flex-col gap-1 px-2.5 py-2 rounded-[9px] transition-colors text-left group ${active ? "bg-[var(--rally-brand-soft-light)]" : "hover:bg-muted"}`}>
         <div className="flex items-center gap-2">
-          <span className={`flex-1 text-[12px] truncate ${active ? "text-[#c60f08] font-medium" : "text-foreground"}`}>{thread.title}</span>
+          <span className={`flex-1 text-[12px] truncate ${active ? "text-[var(--rally-brand)] font-medium" : "text-foreground"}`}>{thread.title}</span>
           {thread.pinned && <Pin className="size-3 text-muted-foreground flex-shrink-0" />}
           <span className="text-[10px] text-muted-foreground flex-shrink-0">{timeLabel(thread.lastUpdated)}</span>
         </div>
@@ -422,7 +422,7 @@ function AISidebar({
           </button>
         </div>
         {/* Search */}
-        <div className={`flex items-center gap-2 px-2 py-1.5 rounded-[8px] border transition-colors bg-background ${searchFocused ? "border-[#ff4615]" : "border-border"}`}>
+        <div className={`flex items-center gap-2 px-2 py-1.5 rounded-[8px] border transition-colors bg-background ${searchFocused ? "border-[var(--rally-brand)]" : "border-border"}`}>
           <Search className="size-3.5 text-muted-foreground flex-shrink-0" />
           <input value={searchVal} onChange={e => setSearchVal(e.target.value)}
             placeholder="Search threads…"
@@ -434,7 +434,7 @@ function AISidebar({
       {/* Inbox button */}
       <div className="px-2 py-2 border-b border-border flex-shrink-0">
         <button onClick={() => onSelect(null)}
-          className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[9px] transition-colors ${selectedId === null ? "bg-[#fff2ed] text-[#c60f08]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}>
+          className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[9px] transition-colors ${selectedId === null ? "bg-[var(--rally-brand-soft-light)] text-[var(--rally-brand)]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}>
           <Bot className="size-4 flex-shrink-0" />
           <span className="text-[13px]">AI Home</span>
         </button>
@@ -504,8 +504,8 @@ function ContextPanel({
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-[7px] flex items-center justify-center flex-shrink-0" style={{ background:"#fff2ed" }}>
-              <Sparkles className="size-3.5" style={{ color:"#ff4615" }} />
+            <div className="w-7 h-7 rounded-[7px] flex items-center justify-center flex-shrink-0" style={{ background:"var(--rally-brand-soft-light)" }}>
+              <Sparkles className="size-3.5" style={{ color:"var(--rally-brand)" }} />
             </div>
             <div>
               <p className="text-[11px] font-medium text-foreground">Rally AI</p>
@@ -543,7 +543,7 @@ function ContextPanel({
           <div className="flex items-center gap-2 mb-3">
             <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">Pending Actions</p>
             <span className="w-4 h-4 rounded-full flex items-center justify-center text-white text-[9px]"
-              style={{ background:"#ff4615" }}>{pendingActions.length}</span>
+              style={{ background:"var(--rally-brand)" }}>{pendingActions.length}</span>
           </div>
           <div className="space-y-2">
             {pendingActions.map(a => (
@@ -552,7 +552,7 @@ function ContextPanel({
                 <p className="text-[10px] text-muted-foreground mb-2">{a.detail}</p>
                 <div className="flex gap-1.5">
                   <button onClick={() => onConfirm(a.id)}
-                    className="flex-1 py-1 rounded-[6px] text-white text-[10px] font-medium" style={{ background:"#ff4615" }}>
+                    className="flex-1 py-1 rounded-[6px] text-white text-[10px] font-medium" style={{ background:"var(--rally-brand)" }}>
                     Confirm
                   </button>
                   <button onClick={() => onDeny(a.id)}
@@ -613,7 +613,7 @@ function Composer({
   }, [value]);
 
   return (
-    <div className={`rounded-[14px] border border-border bg-card shadow-sm focus-within:border-[#ff4615] transition-colors ${compact ? "" : "shadow-md"}`}>
+    <div className={`rounded-[14px] border border-border bg-card shadow-sm focus-within:border-[var(--rally-brand)] transition-colors ${compact ? "" : "shadow-md"}`}>
       {/* Source chips */}
       {showSourceChips && (
         <div className="flex items-center gap-1.5 px-3 pt-3 pb-1 flex-wrap">
@@ -625,7 +625,7 @@ function Composer({
                 disabled={!s.available}
                 className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] border transition-colors"
                 style={on
-                  ? { borderColor: "#ff461550", background: "#fff2ed", color: "#c60f08" }
+                  ? { borderColor: "var(--rally-brand)", background: "var(--rally-brand-soft-light)", color: "var(--rally-brand)" }
                   : { borderColor: "var(--border)", background: "transparent", color: "var(--muted-foreground)" }}>
                 {s.icon} {s.label}
                 {!s.available && <span className="ml-0.5 opacity-50">✕</span>}
@@ -664,7 +664,7 @@ function Composer({
         </button>
         <button onClick={onSend} disabled={!value.trim() || isStreaming}
           className="w-8 h-8 flex items-center justify-center rounded-[8px] text-white transition-colors disabled:opacity-30"
-          style={{ background: value.trim() && !isStreaming ? "#ff4615" : "#d1aa99" }}>
+          style={{ background: value.trim() && !isStreaming ? "var(--rally-brand)" : "#d1aa99" }}>
           <Send className="size-4" />
         </button>
       </div>
@@ -725,7 +725,7 @@ function AIHome({
                 <div className="flex-1 min-w-0">
                   <p className="text-[12px] text-foreground truncate">{item.label}</p>
                 </div>
-                <span className="text-[10px] text-[#ff4615] flex-shrink-0 font-medium">{item.action}</span>
+                <span className="text-[10px] text-[var(--rally-brand)] flex-shrink-0 font-medium">{item.action}</span>
               </button>
             ))}
           </div>
@@ -874,7 +874,7 @@ function ThreadView({
                   <div className="flex flex-wrap gap-1.5 mt-3">
                     {msg.followUps.map((fu, i) => (
                       <button key={i} onClick={() => onFollowUp(fu.prompt)}
-                        className="flex items-center gap-1 px-3 py-1 rounded-full border border-border bg-card hover:border-[#ff4615] hover:bg-[#fff2ed] text-[11px] text-foreground transition-colors">
+                        className="flex items-center gap-1 px-3 py-1 rounded-full border border-border bg-card hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] text-[11px] text-foreground transition-colors">
                         {fu.label} <ChevronRight className="size-3 text-muted-foreground" />
                       </button>
                     ))}

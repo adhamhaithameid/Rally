@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Check, Copy } from "lucide-react";
+import { Check, Copy, Palette } from "lucide-react";
 import svgPaths from "../../imports/svg-gyowvurp60";
+import { usePalette, ThemePalette } from "../contexts/PaletteContext";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -225,7 +226,7 @@ const shadowValues: Record<string, string> = {
 
 // ── Tabs ─────────────────────────────────────────────────────────────────────
 
-const TABS = ["Brand", "Colors", "Typography", "Spacing", "Components"] as const;
+const TABS = ["Brand", "Colors", "Typography", "Spacing", "Components", "Themes"] as const;
 type Tab = typeof TABS[number];
 
 // ── CopyBadge ────────────────────────────────────────────────────────────────
@@ -360,10 +361,53 @@ function DemoBadge({ label, bg, text }: { label: string; bg: string; text: strin
   );
 }
 
-// ── Tabs ─────────────────────────────────────────────────────────────────────
+// ── Theme Mini Preview ────────────────────────────────────────────────────────
+
+function ThemeMiniPreview({ palette }: { palette: ThemePalette }) {
+  const p = palette.preview;
+  return (
+    <div style={{ background: p.canvas, borderBottom: `1px solid ${p.border}`, height: 120 }}
+      className="overflow-hidden flex flex-col">
+      {/* Browser bar */}
+      <div style={{ background: p.surface, borderBottom: `1px solid ${p.border}`, padding: "5px 8px", flexShrink: 0, display: "flex", alignItems: "center", gap: 4 }}>
+        <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />
+        <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#f59e0b", display: "inline-block" }} />
+        <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />
+        <div style={{ flex: 1, height: 7, borderRadius: 4, background: p.border, marginLeft: 4, opacity: 0.5 }} />
+      </div>
+      {/* App shell */}
+      <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
+        {/* Sidebar */}
+        <div style={{ width: 24, background: p.surface, borderRight: `1px solid ${p.border}`, display: "flex", flexDirection: "column", alignItems: "center", paddingTop: 5, gap: 5, flexShrink: 0 }}>
+          <div style={{ width: 10, height: 10, borderRadius: 3, background: p.primary }} />
+          {[0, 1, 2].map(i => <div key={i} style={{ width: 10, height: 10, borderRadius: 3, background: p.border }} />)}
+        </div>
+        {/* Content */}
+        <div style={{ flex: 1, padding: "6px 8px" }}>
+          <div style={{ background: p.surface, border: `1px solid ${p.border}`, borderRadius: 5, padding: "4px 6px", marginBottom: 5 }}>
+            <div style={{ width: 55, height: 5, borderRadius: 2, background: p.text, marginBottom: 3 }} />
+            <div style={{ width: 80, height: 4, borderRadius: 2, background: p.text, opacity: 0.4, marginBottom: 2 }} />
+            <div style={{ width: 65, height: 4, borderRadius: 2, background: p.text, opacity: 0.25 }} />
+          </div>
+          <div style={{ display: "flex", gap: 4 }}>
+            <div style={{ background: p.primary, borderRadius: 3, padding: "2px 7px" }}>
+              <div style={{ width: 22, height: 3, borderRadius: 2, background: "rgba(255,255,255,0.9)" }} />
+            </div>
+            <div style={{ border: `1px solid ${p.border}`, borderRadius: 3, padding: "2px 7px" }}>
+              <div style={{ width: 22, height: 3, borderRadius: 2, background: p.text, opacity: 0.35 }} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Main ─────────────────────────────────────────────────────────────────────
 
 export function DesignSystem() {
   const [activeTab, setActiveTab] = useState<Tab>("Brand");
+  const { activePaletteId, activePalette, palettes, setPalette } = usePalette();
 
   return (
     <div className="h-full flex flex-col bg-background overflow-hidden">
@@ -375,8 +419,9 @@ export function DesignSystem() {
           <p className="text-[12px] text-muted-foreground">Rally · v1.0</p>
         </div>
         <div className="ml-auto flex items-center gap-2">
-          <span className="text-[11px] text-muted-foreground font-mono bg-muted px-2 py-1 rounded-[6px]">
-            Primary: #ff4615
+          <span className="text-[11px] text-muted-foreground font-mono bg-muted px-2 py-1 rounded-[6px] flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: "var(--rally-brand)" }} />
+            {activePalette.emoji} {activePalette.name}
           </span>
           <span className="text-[11px] text-muted-foreground font-mono bg-muted px-2 py-1 rounded-[6px]">
             Font: Nunito Sans
@@ -391,12 +436,13 @@ export function DesignSystem() {
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={[
-              "px-4 py-3 text-[13px] font-medium border-b-2 transition-colors",
+              "px-4 py-3 text-[13px] font-medium border-b-2 transition-colors flex items-center gap-1.5",
               activeTab === tab
-                ? "border-[#ff4615] text-[#ff4615]"
+                ? "border-[var(--rally-brand)] text-[var(--rally-brand)]"
                 : "border-transparent text-muted-foreground hover:text-foreground",
             ].join(" ")}
           >
+            {tab === "Themes" && <Palette className="size-3.5" />}
             {tab}
           </button>
         ))}
@@ -672,8 +718,8 @@ export function DesignSystem() {
                   <div key={s.token} className="group flex items-center gap-4 py-2">
                     <span className="text-[11px] font-mono text-muted-foreground w-20 flex-shrink-0">{s.token}</span>
                     <div
-                      className="bg-[#ff4615] rounded-sm flex-shrink-0"
-                      style={{ height: 16, width: s.px }}
+                      className="rounded-sm flex-shrink-0"
+                      style={{ height: 16, width: s.px, background: "var(--rally-brand)" }}
                     />
                     <span className="text-[12px] font-mono text-muted-foreground">{s.px}</span>
                     <span className="text-[11px] text-muted-foreground/60">{s.rem}</span>
@@ -846,42 +892,42 @@ export function DesignSystem() {
               <div className="flex flex-wrap gap-4">
                 {/* Normal */}
                 <div className="flex flex-col gap-1 items-center">
-                  <div className="rounded-[8px] border px-4 py-2.5 text-[13px] font-medium cursor-pointer" style={{ background: "#ff4615", borderColor: "#ff4615", color: "#fff" }}>
+                  <div className="rounded-[8px] border px-4 py-2.5 text-[13px] font-medium cursor-pointer" style={{ background: "var(--rally-brand)", borderColor: "var(--rally-brand)", color: "#fff" }}>
                     Normal
                   </div>
                   <span className="text-[10px] font-mono text-muted-foreground">normal</span>
                 </div>
                 {/* Hover */}
                 <div className="flex flex-col gap-1 items-center">
-                  <div className="rounded-[8px] border px-4 py-2.5 text-[13px] font-medium" style={{ background: "#fe3511", borderColor: "#fe3511", color: "#fff" }}>
+                  <div className="rounded-[8px] border px-4 py-2.5 text-[13px] font-medium" style={{ background: "var(--rally-brand-hover)", borderColor: "var(--rally-brand-hover)", color: "#fff" }}>
                     Hover
                   </div>
                   <span className="text-[10px] font-mono text-muted-foreground">:hover</span>
                 </div>
                 {/* Focus */}
                 <div className="flex flex-col gap-1 items-center">
-                  <div className="rounded-[8px] border px-4 py-2.5 text-[13px] font-medium" style={{ background: "#ff4615", borderColor: "#ff4615", color: "#fff", boxShadow: "0 0 0 3px #ff9571" }}>
+                  <div className="rounded-[8px] border px-4 py-2.5 text-[13px] font-medium" style={{ background: "var(--rally-brand)", borderColor: "var(--rally-brand)", color: "#fff", boxShadow: "0 0 0 3px var(--focus-ring)" }}>
                     Focus
                   </div>
                   <span className="text-[10px] font-mono text-muted-foreground">:focus</span>
                 </div>
                 {/* Pressed */}
                 <div className="flex flex-col gap-1 items-center">
-                  <div className="rounded-[8px] border px-4 py-2.5 text-[13px] font-medium" style={{ background: "#ef1b07", borderColor: "#ef1b07", color: "#fff" }}>
+                  <div className="rounded-[8px] border px-4 py-2.5 text-[13px] font-medium" style={{ background: "var(--rally-brand-pressed)", borderColor: "var(--rally-brand-pressed)", color: "#fff" }}>
                     Pressed
                   </div>
                   <span className="text-[10px] font-mono text-muted-foreground">:active</span>
                 </div>
                 {/* Selected */}
                 <div className="flex flex-col gap-1 items-center">
-                  <div className="rounded-[8px] border px-4 py-2.5 text-[13px] font-medium" style={{ background: "#ffe2d4", borderColor: "#ff5931", color: "#c60f08" }}>
+                  <div className="rounded-[8px] border px-4 py-2.5 text-[13px] font-medium" style={{ background: "var(--selected-bg)", borderColor: "var(--selected-border)", color: "var(--selected-text)" }}>
                     Selected
                   </div>
                   <span className="text-[10px] font-mono text-muted-foreground">selected</span>
                 </div>
                 {/* Disabled */}
                 <div className="flex flex-col gap-1 items-center">
-                  <div className="rounded-[8px] border px-4 py-2.5 text-[13px] font-medium cursor-not-allowed" style={{ background: "#fff2ed", borderColor: "#ff5931", color: "#70635d", opacity: 0.65 }}>
+                  <div className="rounded-[8px] border px-4 py-2.5 text-[13px] font-medium cursor-not-allowed" style={{ background: "var(--disabled-bg)", borderColor: "var(--disabled-border)", color: "var(--disabled-text)", opacity: 0.65 }}>
                     Disabled
                   </div>
                   <span className="text-[10px] font-mono text-muted-foreground">disabled</span>
@@ -901,7 +947,7 @@ export function DesignSystem() {
                   <div key={size} className="flex flex-col items-center gap-1">
                     <div
                       className="rounded-full flex items-center justify-center flex-shrink-0"
-                      style={{ width: size, height: size, background: "#ff4615" }}
+                      style={{ width: size, height: size, background: "var(--rally-brand)" }}
                     >
                       <span className="text-white font-medium" style={{ fontSize: size * 0.35 }}>{initials}</span>
                     </div>
@@ -954,6 +1000,150 @@ export function DesignSystem() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            </Section>
+          </>
+        )}
+
+        {/* ── THEMES ───────────────────────────────────────────────────────── */}
+        {activeTab === "Themes" && (
+          <>
+            {/* Active banner */}
+            <div className="flex items-center gap-4 p-4 rounded-[14px] border border-border bg-card">
+              <div className="w-12 h-12 rounded-[12px] flex items-center justify-center text-[22px] flex-shrink-0 border border-border"
+                style={{ background: activePalette.preview.canvas }}>
+                {activePalette.emoji}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[14px] font-semibold text-foreground">{activePalette.name} — currently active</p>
+                <p className="text-[12px] text-muted-foreground">{activePalette.description}</p>
+              </div>
+              <div className="flex gap-1.5 flex-shrink-0">
+                {[activePalette.preview.primary, activePalette.preview.canvas, activePalette.preview.surface, activePalette.preview.border, activePalette.preview.text].map((c, i) => (
+                  <div key={i} className="w-6 h-6 rounded-[6px] border border-border/60" style={{ background: c }} />
+                ))}
+              </div>
+            </div>
+
+            {/* Theme grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {palettes.map(palette => {
+                const isActive = palette.id === activePaletteId;
+                return (
+                  <div key={palette.id}
+                    className="rounded-[14px] bg-card overflow-hidden transition-all hover:shadow-md"
+                    style={{ border: `${isActive ? 2 : 1}px solid ${isActive ? palette.preview.primary : "var(--border)"}` }}>
+                    <ThemeMiniPreview palette={palette} />
+                    <div className="p-4 border-t border-border">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-[16px]">{palette.emoji}</span>
+                        <span className="text-[13px] font-semibold text-foreground">{palette.name}</span>
+                        {isActive && (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded-full text-white font-medium flex-shrink-0"
+                            style={{ background: palette.preview.primary }}>Active</span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-muted-foreground mb-3 leading-relaxed">{palette.description}</p>
+                      {/* Color strip */}
+                      <div className="flex gap-1 mb-3">
+                        {[
+                          { label: "Primary", color: palette.preview.primary },
+                          { label: "Canvas",  color: palette.preview.canvas  },
+                          { label: "Surface", color: palette.preview.surface },
+                          { label: "Border",  color: palette.preview.border  },
+                          { label: "Text",    color: palette.preview.text    },
+                        ].map(chip => (
+                          <div key={chip.label} className="flex-1 flex flex-col items-center gap-0.5" title={`${chip.label}: ${chip.color}`}>
+                            <div className="w-full h-5 rounded-[4px] border border-border/40" style={{ background: chip.color }} />
+                            <span className="text-[8px] text-muted-foreground/60 font-mono">{chip.label}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <button
+                        onClick={() => setPalette(palette.id)}
+                        disabled={isActive}
+                        className="w-full py-2 rounded-[8px] text-[12px] font-medium transition-all disabled:cursor-default"
+                        style={isActive
+                          ? { background: palette.preview.primary, color: "#fff" }
+                          : { border: "1px solid var(--border)", background: "var(--background)", color: "var(--foreground)" }
+                        }>
+                        {isActive ? "✓ Applied" : "Apply theme"}
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Dark mode previews */}
+            <Section title="Dark mode palette preview">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                {palettes.map(palette => (
+                  <div key={palette.id} className="rounded-[10px] border border-border overflow-hidden">
+                    <div style={{ background: palette.dark['--canvas'] ?? '#191919', height: 64, display: "flex", alignItems: "center", justifyContent: "center", gap: 5, padding: "0 10px" }}>
+                      <div style={{ width: 8, height: 8, borderRadius: "50%", background: palette.preview.primary, flexShrink: 0 }} />
+                      <div style={{ flex: 1, height: 22, borderRadius: 5, background: palette.dark['--elevated'] ?? '#2c2c2c', border: `1px solid ${palette.dark['--border-color'] ?? '#4a403c'}`, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 6px", gap: 3 }}>
+                        <div style={{ width: "70%", height: 4, borderRadius: 2, background: palette.dark['--text-primary'] ?? '#fff2ed' }} />
+                        <div style={{ width: "50%", height: 3, borderRadius: 2, background: palette.dark['--text-secondary'] ?? '#c7b8b2', opacity: 0.6 }} />
+                      </div>
+                    </div>
+                    <div className="px-2 py-1.5 bg-card border-t border-border">
+                      <p className="text-[10px] font-medium text-foreground">{palette.emoji} {palette.name}</p>
+                      <code className="text-[9px] font-mono text-muted-foreground">{palette.dark['--canvas'] ?? '#191919'}</code>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Section>
+
+            {/* How it works */}
+            <Section title="How the theme system works">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {[
+                  { emoji: "🎨", title: "CSS Custom Properties", body: "Every color is a CSS variable. Applying a theme injects overrides on :root via inline style, which cascade to every component, Tailwind utility, and CSS rule in the app." },
+                  { emoji: "🌙", title: "Dark mode aware", body: "Each palette has separate light and dark maps. When the dark/light toggle is flipped, the context re-applies the correct palette values automatically." },
+                  { emoji: "🔌", title: "Fully extensible", body: "Add new themes by adding an entry to PALETTES in PaletteContext.tsx. Define brand, light, and dark CSS var maps. No CSS files need to change." },
+                ].map(item => (
+                  <div key={item.title} className="rounded-[12px] border border-border bg-card p-4 space-y-2">
+                    <span className="text-[20px]">{item.emoji}</span>
+                    <p className="text-[13px] font-medium text-foreground">{item.title}</p>
+                    <p className="text-[12px] text-muted-foreground leading-relaxed">{item.body}</p>
+                  </div>
+                ))}
+              </div>
+            </Section>
+
+            {/* CSS variable reference */}
+            <Section title="CSS variable helper — cv.* (import from PaletteContext)">
+              <div className="rounded-[12px] border border-border bg-card overflow-hidden">
+                <div className="px-4 py-2.5 border-b border-border bg-muted/30">
+                  <code className="text-[11px] font-mono text-muted-foreground">
+                    import &#123; cv &#125; from '../contexts/PaletteContext'; &nbsp;// usage: style=&#123;&#123; color: cv.brand &#125;&#125;
+                  </code>
+                </div>
+                <div className="divide-y divide-border">
+                  {([
+                    ["cv.brand",        "var(--rally-brand)",           "Primary action color — buttons, links, active states"],
+                    ["cv.brandHover",   "var(--rally-brand-hover)",      "Hover state of the primary color"],
+                    ["cv.brandPressed", "var(--rally-brand-pressed)",    "Pressed / active state of primary"],
+                    ["cv.brandSoft",    "var(--rally-brand-soft-light)", "Tinted brand surface — badge bg, soft card bg"],
+                    ["cv.brandOnLight", "var(--rally-brand-on-light)",   "Brand-colored text on light surfaces"],
+                    ["cv.brandOnDark",  "var(--rally-brand-on-dark)",    "Brand-colored text on dark surfaces"],
+                    ["cv.focusRing",    "var(--focus-ring)",             "Focus ring / outline color"],
+                    ["cv.selectedBg",   "var(--selected-bg)",            "Selected item background"],
+                    ["cv.selectedText", "var(--selected-text)",          "Selected item text color"],
+                    ["cv.bg",           "var(--background)",             "Page background (= bg-background)"],
+                    ["cv.card",         "var(--card)",                   "Card surface background (= bg-card)"],
+                    ["cv.border",       "var(--border)",                 "Border color (= border-border)"],
+                  ] as [string, string, string][]).map(([key, token, desc]) => (
+                    <div key={key} className="flex items-center gap-3 px-4 py-2.5 hover:bg-muted/20 transition-colors">
+                      <code className="text-[11px] font-mono flex-shrink-0 w-32" style={{ color: "var(--rally-brand)" }}>{key}</code>
+                      <code className="text-[11px] font-mono text-muted-foreground flex-shrink-0 w-52 hidden lg:block">{token}</code>
+                      <span className="text-[11px] text-muted-foreground flex-1">{desc}</span>
+                      <div className="w-5 h-5 rounded-[3px] border border-border/50 flex-shrink-0" style={{ background: token }} />
+                    </div>
+                  ))}
+                </div>
               </div>
             </Section>
           </>

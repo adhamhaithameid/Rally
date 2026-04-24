@@ -8,13 +8,13 @@ import svgPaths from "../../imports/svg-gyowvurp60";
 function RallyLogo({ size = 28 }: { size?: number }) {
   return (
     <svg viewBox="27 26 133 127" width={size} height={size} fill="none">
-      <path d={svgPaths.p6b466c0} fill="#ff4615" />
+      <path d={svgPaths.p6b466c0} fill="var(--rally-brand)" />
     </svg>
   );
 }
 
-const INPUT      = "w-full pl-9 pr-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[#ff4615] transition-colors placeholder:text-muted-foreground";
-const INPUT_PR9  = "w-full pl-9 pr-9 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[#ff4615] transition-colors placeholder:text-muted-foreground";
+const INPUT      = "w-full pl-9 pr-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground";
+const INPUT_PR9  = "w-full pl-9 pr-9 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground";
 
 interface PwStrength { score: number; label: string; color: string }
 
@@ -77,8 +77,8 @@ function BrandPanel() {
           {features.map(f => (
             <li key={f} className="flex items-start gap-2.5">
               <span className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-                style={{ background: "#fff2ed" }}>
-                <Check className="size-2.5" style={{ color: "#ff4615" }} />
+                style={{ background: "var(--rally-brand-soft-light)" }}>
+                <Check className="size-2.5" style={{ color: "var(--rally-brand)" }} />
               </span>
               <span className="text-[12px] text-foreground">{f}</span>
             </li>
@@ -199,21 +199,21 @@ export function SignupV2() {
             <div className="flex items-start gap-2.5">
               <button type="button" onClick={() => setAgreed(v => !v)}
                 className="w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors"
-                style={agreed ? { background: "#ff4615", borderColor: "#ff4615" } : { borderColor: "var(--border)" }}>
+                style={agreed ? { background: "var(--rally-brand)", borderColor: "var(--rally-brand)" } : { borderColor: "var(--border)" }}>
                 {agreed && <Check className="size-2.5 text-white" />}
               </button>
               <span className="text-[12px] text-muted-foreground leading-relaxed">
                 I agree to the{" "}
-                <a href="#" className="hover:underline transition-colors" style={{ color: "#ff4615" }}>Terms of Service</a>
+                <a href="#" className="hover:underline transition-colors" style={{ color: "var(--rally-brand)" }}>Terms of Service</a>
                 {" "}and{" "}
-                <a href="#" className="hover:underline transition-colors" style={{ color: "#ff4615" }}>Privacy Policy</a>
+                <a href="#" className="hover:underline transition-colors" style={{ color: "var(--rally-brand)" }}>Privacy Policy</a>
               </span>
             </div>
 
             {/* Submit */}
             <button type="submit" disabled={!canSubmit || loading}
               className="w-full h-10 flex items-center justify-center gap-2 rounded-[8px] text-white text-[13px] font-medium transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
-              style={{ background: "#ff4615" }}>
+              style={{ background: "var(--rally-brand)" }}>
               {loading ? (
                 <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
               ) : (
@@ -231,7 +231,7 @@ export function SignupV2() {
 
           <p className="text-center text-[13px] text-muted-foreground">
             Already have an account?{" "}
-            <Link to="/login-v2" className="font-medium hover:underline transition-colors" style={{ color: "#ff4615" }}>
+            <Link to="/login-v2" className="font-medium hover:underline transition-colors" style={{ color: "var(--rally-brand)" }}>
               Sign in
             </Link>
           </p>

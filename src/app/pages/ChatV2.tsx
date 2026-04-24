@@ -166,7 +166,7 @@ function UnreadBadge({ count }: { count: number }) {
   if (!count) return null;
   return (
     <span className="ml-auto flex-shrink-0 min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center text-white text-[10px] font-bold"
-      style={{ background: "#ff4615" }}>
+      style={{ background: "var(--rally-brand)" }}>
       {count > 9 ? "9+" : count}
     </span>
   );
@@ -221,7 +221,7 @@ function ChatSidebar({
           </div>
         </div>
         {/* Search */}
-        <div className={`flex items-center gap-2 px-2 py-1.5 rounded-[8px] border transition-colors ${searchFocused ? "border-[#ff4615]" : "border-border"} bg-background`}>
+        <div className={`flex items-center gap-2 px-2 py-1.5 rounded-[8px] border transition-colors ${searchFocused ? "border-[var(--rally-brand)]" : "border-border"} bg-background`}>
           <Search className="size-3.5 text-muted-foreground flex-shrink-0" />
           <input
             value={searchVal} onChange={e => setSearchVal(e.target.value)}
@@ -327,7 +327,7 @@ function ChatSidebar({
                       {!joined ? (
                         <button onClick={() => onJoinVoice(room.id)}
                           className="flex items-center gap-1 px-2 py-0.5 rounded-[5px] text-white text-[10px] flex-shrink-0 transition-colors"
-                          style={{ background: "#ff4615" }}>
+                          style={{ background: "var(--rally-brand)" }}>
                           <Play className="size-2.5" /> Join
                         </button>
                       ) : (
@@ -448,7 +448,7 @@ function InboxView({
               </div>
               <button
                 className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-[7px] text-white text-[11px] opacity-0 group-hover:opacity-100 transition-opacity"
-                style={{ background: "#ff4615" }}
+                style={{ background: "var(--rally-brand)" }}
                 onClick={e => { e.stopPropagation(); onOpenChannel(item.id); }}
               >
                 <Reply className="size-3" /> Reply
@@ -490,7 +490,7 @@ function InboxView({
                 <span className="text-[11px] text-muted-foreground flex-1 truncate">{room.participants.join(", ")}</span>
               </div>
               <button className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded-[7px] text-white text-[11px] font-medium transition-colors"
-                style={{ background: "#ff4615" }}>
+                style={{ background: "var(--rally-brand)" }}>
                 <Play className="size-3" /> Join Room
               </button>
             </div>
@@ -534,8 +534,8 @@ function InboxView({
         <h2 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">Important & Pinned</h2>
         <div className="p-3 rounded-[12px] border border-border bg-card">
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0" style={{ background:"#fff2ed" }}>
-              <Pin className="size-4" style={{ color:"#ff4615" }} />
+            <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0" style={{ background:"var(--rally-brand-soft-light)" }}>
+              <Pin className="size-4" style={{ color:"var(--rally-brand)" }} />
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
@@ -553,13 +553,13 @@ function InboxView({
       {allowAi && (
         <section>
           <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="size-3.5" style={{ color:"#ff4615" }} />
+            <Sparkles className="size-3.5" style={{ color:"var(--rally-brand)" }} />
             <h2 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest">AI Catch-up</h2>
             <span className="text-[10px] px-1.5 py-0.5 rounded-full" style={{ background:"#fff2ed", color:"#c60f08" }}>Beta</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {aiActions.filter(a => !aiDismissed.includes(a)).map(action => (
-              <div key={action} className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-full border border-border bg-card hover:border-[#ff4615] hover:bg-[#fff2ed] transition-colors group cursor-pointer">
+              <div key={action} className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-full border border-border bg-card hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-colors group cursor-pointer">
                 <span className="text-[12px] text-foreground">{action}</span>
                 <button onClick={e => { e.stopPropagation(); setAiDismissed(d => [...d, action]); }}
                   className="text-muted-foreground hover:text-foreground opacity-0 group-hover:opacity-100 transition-opacity">
@@ -652,7 +652,7 @@ function MessageItem({
               <button key={i}
                 onClick={() => setReactions(prev => prev.map((rx, ri) => ri === i ? { ...rx, count: rx.count + (rx.reacted ? -1 : 1), reacted: !rx.reacted } : rx))}
                 className="flex items-center gap-1 px-2 py-0.5 rounded-full border text-[11px] transition-colors"
-                style={r.reacted ? { borderColor:"#ff4615", background:"#fff2ed", color:"#c60f08" } : { borderColor:"var(--border)", background:"var(--muted)", color:"var(--foreground)" }}>
+                style={r.reacted ? { borderColor:"var(--rally-brand)", background:"var(--rally-brand-soft-light)", color:"var(--rally-brand-on-light)" } : { borderColor:"var(--border)", background:"var(--muted)", color:"var(--foreground)" }}>
                 {r.emoji} {r.count}
               </button>
             ))}
@@ -768,7 +768,7 @@ function ChannelView({
           <div className="relative hidden md:block">
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3 text-muted-foreground" />
             <input value={searchVal} onChange={e => setSearchVal(e.target.value)}
-              placeholder="Search…" className="pl-7 pr-3 h-7 w-36 rounded-[7px] border border-border bg-background text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-[#ff4615] transition-colors" />
+              placeholder="Search…" className="pl-7 pr-3 h-7 w-36 rounded-[7px] border border-border bg-background text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-[var(--rally-brand)] transition-colors" />
           </div>
           <button title="Pins" className="w-7 h-7 flex items-center justify-center rounded-[7px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
             <Pin className="size-4" />
@@ -821,11 +821,11 @@ function ChannelView({
           <div key={msg.id}>
             {i === unreadDividerIndex + 1 && (
               <div className="flex items-center gap-3 px-4 my-2">
-                <div className="flex-1 h-px" style={{ background: "#ff4615" }} />
-                <span className="text-[10px] font-medium px-2 py-0.5 rounded-full flex-shrink-0" style={{ background:"#fff2ed", color:"#c60f08" }}>
+                <div className="flex-1 h-px" style={{ background: "var(--rally-brand)" }} />
+                <span className="text-[10px] font-medium px-2 py-0.5 rounded-full flex-shrink-0" style={{ background:"var(--rally-brand-soft-light)", color:"var(--rally-brand-on-light)" }}>
                   New messages
                 </span>
-                <div className="flex-1 h-px" style={{ background:"#ff4615" }} />
+                <div className="flex-1 h-px" style={{ background:"var(--rally-brand)" }} />
               </div>
             )}
             <MessageItem
@@ -867,7 +867,7 @@ function ChannelView({
               <button onClick={() => { setReplyingTo(null); setEditingMsg(null); setInput(""); }} className="text-muted-foreground hover:text-foreground"><X className="size-3.5" /></button>
             </div>
           )}
-          <div className="flex items-end gap-2 p-2 rounded-[12px] border border-border bg-background focus-within:border-[#ff4615] transition-colors">
+          <div className="flex items-end gap-2 p-2 rounded-[12px] border border-border bg-background focus-within:border-[var(--rally-brand)] transition-colors">
             <div className="flex gap-1 pb-1.5 pl-1">
               <button title="Attach" className="w-7 h-7 flex items-center justify-center rounded-[6px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
                 <Paperclip className="size-4" />
@@ -891,7 +891,7 @@ function ChannelView({
             />
             <div className="flex gap-1 pb-1.5 pr-1">
               {channel.allowAi && (
-                <button title="AI assist" className="w-7 h-7 flex items-center justify-center rounded-[6px] hover:bg-muted transition-colors" style={{ color: "#ff4615" }}>
+                <button title="AI assist" className="w-7 h-7 flex items-center justify-center rounded-[6px] hover:bg-muted transition-colors" style={{ color: "var(--rally-brand)" }}>
                   <Sparkles className="size-4" />
                 </button>
               )}
@@ -899,7 +899,7 @@ function ChannelView({
                 onClick={handleSend}
                 disabled={!input.trim()}
                 className="w-7 h-7 flex items-center justify-center rounded-[6px] text-white transition-colors disabled:opacity-40"
-                style={{ background: input.trim() ? "#ff4615" : "#d1aa99" }}
+                style={{ background: input.trim() ? "var(--rally-brand)" : "var(--border)" }}
               >
                 <Send className="size-4" />
               </button>
@@ -958,7 +958,7 @@ function RightPanel({ selectedChannelId }: { selectedChannelId: string | null })
           <div className="space-y-2">
             {channelPins.map(m => (
               <div key={m.id} className="flex items-start gap-2 p-2.5 rounded-[8px] border border-border bg-background">
-                <Pin className="size-3 flex-shrink-0 mt-0.5" style={{ color:"#ff4615" }} />
+                <Pin className="size-3 flex-shrink-0 mt-0.5" style={{ color:"var(--rally-brand)" }} />
                 <div className="min-w-0">
                   <p className="text-[11px] font-medium text-foreground">{m.userName}</p>
                   <p className="text-[11px] text-muted-foreground leading-snug mt-0.5 line-clamp-2">{m.message}</p>

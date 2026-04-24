@@ -19,7 +19,7 @@ type AvailabilityStatus = "online" | "away" | "dnd" | "offline";
 // ── Config ────────────────────────────────────────────────────────────────────
 
 const ROLE_CFG: Record<UserRole, { label: string; color: string; bg: string }> = {
-  owner:  { label: "Owner",  color: "#ff4615", bg: "#fff2ed" },
+  owner:  { label: "Owner",  color: "var(--rally-brand)",          bg: "var(--rally-brand-soft-light)" },
   admin:  { label: "Admin",  color: "#0f5fd7", bg: "#eef4ff" },
   member: { label: "Member", color: "#0f6a43", bg: "#eaf7f0" },
   viewer: { label: "Viewer", color: "#6b7280", bg: "#f3f4f6" },
@@ -67,7 +67,7 @@ const MOCK_WORK_SNAPSHOT = {
 };
 
 const RECENT_ACTIVITY = [
-  { id: "a1", icon: FileText,      label: "Brand guidelines v3.pdf",         sub: "Opened 1h ago",      color: "#ff4615" },
+  { id: "a1", icon: FileText,      label: "Brand guidelines v3.pdf",         sub: "Opened 1h ago",      color: "var(--rally-brand)" },
   { id: "a2", icon: Bot,           label: "AI thread: Rally nav structure",   sub: "2h ago",             color: "#8B5CF6" },
   { id: "a3", icon: MessageSquare, label: "#design – mobile header thread",   sub: "4h ago",             color: "#0f5fd7" },
   { id: "a4", icon: CheckSquare,   label: "Review mobile header spec",        sub: "Viewed yesterday",   color: "#0f6a43" },
@@ -76,7 +76,7 @@ const RECENT_ACTIVITY = [
 
 const SAVED_ITEMS = [
   { id: "s1", icon: MessageSquare, label: "Chat: Project kickoff",         sub: "Pinned conversation",  color: "#0f5fd7" },
-  { id: "s2", icon: FileText,      label: "Brand guidelines v3.pdf",      sub: "Pinned file",           color: "#ff4615" },
+  { id: "s2", icon: FileText,      label: "Brand guidelines v3.pdf",      sub: "Pinned file",           color: "var(--rally-brand)" },
   { id: "s3", icon: Bot,           label: "AI: Design system audit",      sub: "Bookmarked thread",     color: "#8B5CF6" },
   { id: "s4", icon: CheckSquare,   label: "Q1 roadmap tasks",             sub: "Important task group",  color: "#0f6a43" },
 ];
@@ -126,7 +126,7 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean
   return (
     <button onClick={() => onChange(!checked)} role="switch" aria-checked={checked}
       className="relative w-9 h-5 rounded-full transition-colors flex-shrink-0"
-      style={{ background: checked ? "#ff4615" : "var(--border)" }}>
+      style={{ background: checked ? "var(--rally-brand)" : "var(--border)" }}>
       <span className="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform"
         style={{ transform: checked ? "translateX(16px)" : "translateX(0)" }} />
     </button>
@@ -144,7 +144,7 @@ function FieldInput({ label, value, onChange, icon: Icon, type = "text", placeho
         {Icon && <Icon className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />}
         <input value={value} onChange={e => onChange(e.target.value)} type={type}
           placeholder={placeholder} disabled={disabled}
-          className={`w-full ${Icon ? "pl-9" : "pl-3"} pr-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none transition-colors placeholder:text-muted-foreground ${disabled ? "opacity-60 cursor-not-allowed" : "focus:border-[#ff4615]"}`} />
+          className={`w-full ${Icon ? "pl-9" : "pl-3"} pr-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none transition-colors placeholder:text-muted-foreground ${disabled ? "opacity-60 cursor-not-allowed" : "focus:border-[var(--rally-brand)]"}`} />
       </div>
     </div>
   );
@@ -169,7 +169,7 @@ function LeftRail({ section, onSection }: { section: NavSection; onSection: (s: 
           return (
             <button key={item.id} onClick={() => onSection(item.id)}
               className="w-full flex items-center gap-2.5 px-3 py-2 rounded-[8px] text-left text-[12px] transition-colors"
-              style={active ? { background: "#fff2ed", color: "#c60f08", fontWeight: 500 } : { color: "var(--text-muted)" }}>
+              style={active ? { background: "var(--rally-brand-soft-light)", color: "var(--rally-brand-on-light)", fontWeight: 500 } : { color: "var(--muted-foreground)" }}>
               <Icon className="size-4 flex-shrink-0" />
               {item.label}
             </button>
@@ -263,8 +263,8 @@ function OverviewSection({
                 <input value={statusDraft} onChange={e => setStatusDraft(e.target.value)}
                   onKeyDown={e => { if (e.key === "Enter") saveStatus(); if (e.key === "Escape") setEditStatus(false); }}
                   autoFocus
-                  className="flex-1 px-2.5 py-1.5 rounded-[7px] border border-border bg-background text-foreground text-[12px] outline-none focus:border-[#ff4615] transition-colors" />
-                <button onClick={saveStatus} className="w-7 h-7 flex items-center justify-center rounded-[7px] text-white flex-shrink-0" style={{ background: "#ff4615" }}>
+                  className="flex-1 px-2.5 py-1.5 rounded-[7px] border border-border bg-background text-foreground text-[12px] outline-none focus:border-[var(--rally-brand)] transition-colors" />
+                <button onClick={saveStatus} className="w-7 h-7 flex items-center justify-center rounded-[7px] text-white flex-shrink-0" style={{ background: "var(--rally-brand)" }}>
                   <Check className="size-3.5" />
                 </button>
                 <button onClick={() => setEditStatus(false)} className="w-7 h-7 flex items-center justify-center rounded-[7px] border border-border text-muted-foreground hover:bg-muted flex-shrink-0">
@@ -273,7 +273,7 @@ function OverviewSection({
               </>
             ) : (
               <button onClick={() => { setStatusDraft(customStatus); setEditStatus(true); }}
-                className="flex-1 text-left px-2.5 py-1.5 rounded-[7px] border border-dashed border-border hover:border-[#ff4615] hover:bg-[#fff8f7] text-[12px] transition-colors"
+                className="flex-1 text-left px-2.5 py-1.5 rounded-[7px] border border-dashed border-border hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] text-[12px] transition-colors"
                 style={{ color: customStatus ? "var(--text-foreground)" : "var(--text-muted)" }}>
                 {customStatus || "Set a custom status…"}
               </button>
@@ -328,7 +328,7 @@ function OverviewSection({
           {/* Unread */}
           <div className="rounded-[12px] border border-border bg-card p-4">
             <div className="flex items-center gap-2 mb-3">
-              <Bell className="size-4" style={{ color: "#ff4615" }} />
+              <Bell className="size-4" style={{ color: "var(--rally-brand)" }} />
               <span className="text-[12px] font-medium text-foreground">Unread</span>
             </div>
             <div className="space-y-3">
@@ -338,7 +338,7 @@ function OverviewSection({
                   <span className="text-[11px] text-muted-foreground">Messages</span>
                 </div>
                 <span className="w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-medium flex-shrink-0"
-                  style={{ background: "#ff4615" }}>
+                  style={{ background: "var(--rally-brand)" }}>
                   {MOCK_WORK_SNAPSHOT.unread.messages}
                 </span>
               </div>
@@ -482,7 +482,7 @@ function PreferencesSection({
             <div className="relative">
               <Globe className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground z-10" />
               <select value={timezone} onChange={e => setTimezone(e.target.value)}
-                className="w-full pl-9 pr-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[#ff4615] transition-colors">
+                className="w-full pl-9 pr-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[var(--rally-brand)] transition-colors">
                 {TIMEZONES.map(([val, label]) => <option key={val} value={val}>{label}</option>)}
               </select>
             </div>
@@ -493,14 +493,14 @@ function PreferencesSection({
               <Tag className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
               <input value={tags} onChange={e => setTags(e.target.value)}
                 placeholder="Product, Design, Leadership"
-                className="w-full pl-9 pr-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[#ff4615] transition-colors placeholder:text-muted-foreground" />
+                className="w-full pl-9 pr-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground" />
             </div>
             <p className="text-[10px] text-muted-foreground mt-1">Comma-separated — helps teammates know your expertise</p>
           </div>
           <div className="pt-2 border-t border-border flex justify-end">
             <button onClick={handleSave}
               className="flex items-center gap-1.5 px-4 py-2 rounded-[8px] text-white text-[12px] font-medium transition-colors"
-              style={{ background: saved ? "#0f6a43" : "#ff4615" }}>
+              style={{ background: saved ? "#0f6a43" : "var(--rally-brand)" }}>
               {saved ? <><Check className="size-3.5" /> Saved</> : "Save Changes"}
             </button>
           </div>
@@ -516,7 +516,7 @@ function PreferencesSection({
             {(["light", "dark"] as const).map(t => (
               <button key={t} onClick={() => onTheme(t)}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-[8px] border transition-all text-[12px]"
-                style={theme === t ? { borderColor: "#ff4615", background: "#fff2ed", color: "#ff4615", fontWeight: 500 } : { borderColor: "var(--border)", color: "var(--text-foreground)" }}>
+                style={theme === t ? { borderColor: "var(--rally-brand)", background: "var(--rally-brand-soft-light)", color: "var(--rally-brand)", fontWeight: 500 } : { borderColor: "var(--border)", color: "var(--foreground)" }}>
                 {t === "light" ? <Sun className="size-3.5" /> : <Moon className="size-3.5" />}
                 {t === "light" ? "Light" : "Dark"}
                 {theme === t && <Check className="size-3 ml-1" />}
@@ -600,7 +600,7 @@ function PreferencesSection({
   );
 }
 
-// ── Access & Teams ────────────────────────────────────────────────────────────
+// ── Access & Teams ───────────────────────────────────────────────────────────
 
 function TeamsSection({
   user, userRole, currentTeamId,
@@ -626,19 +626,19 @@ function TeamsSection({
             return (
               <div key={team.teamId}
                 className="rounded-[12px] border bg-card overflow-hidden transition-colors"
-                style={{ borderColor: active ? "#ff4615" : "var(--border)" }}>
+                style={{ borderColor: active ? "var(--rally-brand)" : "var(--border)" }}>
                 <button
                   onClick={() => setExpandedTeam(expanded ? null : team.teamId)}
                   className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-muted/30 transition-colors">
                   {/* Team icon */}
                   <div className="w-9 h-9 rounded-[9px] flex items-center justify-center text-white text-[14px] font-bold flex-shrink-0"
-                    style={{ background: active ? "#ff4615" : avatarBg(team.teamName) }}>
+                    style={{ background: active ? "var(--rally-brand)" : avatarBg(team.teamName) }}>
                     {team.teamName.charAt(0).toUpperCase()}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <p className="text-[13px] font-medium text-foreground truncate">{team.teamName}</p>
-                      {active && <span className="text-[9px] px-1.5 py-0.5 rounded-full text-white flex-shrink-0" style={{ background: "#ff4615" }}>Current</span>}
+                      {active && <span className="text-[9px] px-1.5 py-0.5 rounded-full text-white flex-shrink-0" style={{ background: "var(--rally-brand)" }}>Current</span>}
                     </div>
                     <p className="text-[11px] text-muted-foreground truncate">{team.projectName}</p>
                   </div>
@@ -676,7 +676,7 @@ function TeamsSection({
 
       {/* Create / join another team */}
       <div className="flex items-center gap-2">
-        <button className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[#ff4615] hover:text-[#ff4615] hover:bg-[#fff8f7] transition-colors text-[12px]">
+        <button className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[var(--rally-brand)] hover:text-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft-light)] transition-colors text-[12px]">
           <Users className="size-3.5" /> Create another team
         </button>
         <button className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[#0f5fd7] hover:text-[#0f5fd7] hover:bg-[#eef4ff] transition-colors text-[12px]">
@@ -689,9 +689,9 @@ function TeamsSection({
         <SectionLabel>My Permissions in Current Team</SectionLabel>
         <div className="rounded-[12px] border border-border bg-card p-4">
           <div className="flex items-center gap-2 mb-3">
-            <ShieldCheck className="size-4" style={{ color: "#ff4615" }} />
+            <ShieldCheck className="size-4" style={{ color: "var(--rally-brand)" }} />
             <span className="text-[12px] font-medium text-foreground">
-              Role: <span style={{ color: "#ff4615" }}>{ROLE_CFG[userRole].label}</span>
+              Role: <span style={{ color: "var(--rally-brand)" }}>{ROLE_CFG[userRole].label}</span>
             </span>
           </div>
           <div className="space-y-2">
@@ -733,7 +733,7 @@ function SecuritySection({ onLogout }: { onLogout: () => void }) {
     setTimeout(() => setPwSaved(false), 2000);
   }
 
-  const pwInputClass = `w-full pl-3 pr-9 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[#ff4615] transition-colors placeholder:text-muted-foreground`;
+  const pwInputClass = `w-full pl-3 pr-9 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground`;
 
   return (
     <div className="flex-1 overflow-y-auto px-5 py-5 space-y-6 max-w-xl">
@@ -774,7 +774,7 @@ function SecuritySection({ onLogout }: { onLogout: () => void }) {
           <button onClick={handleChangePw}
             disabled={!currentPw || !newPw || newPw !== confirmPw}
             className="flex items-center gap-1.5 px-4 py-2 rounded-[8px] text-white text-[12px] font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-            style={{ background: pwSaved ? "#0f6a43" : "#ff4615" }}>
+            style={{ background: pwSaved ? "#0f6a43" : "var(--rally-brand)" }}>
             {pwSaved ? <><Check className="size-3.5" /> Password updated</> : "Update Password"}
           </button>
         </div>
@@ -834,7 +834,7 @@ function SecuritySection({ onLogout }: { onLogout: () => void }) {
                   Cancel
                 </button>
                 <button onClick={onLogout}
-                  className="px-3 py-1.5 rounded-[7px] bg-[#ff4615] text-white text-[11px] font-medium transition-colors hover:opacity-90">
+                  className="px-3 py-1.5 rounded-[7px] text-white text-[11px] font-medium transition-colors hover:opacity-90" style={{ background: "var(--rally-brand)" }}>
                   Confirm
                 </button>
               </div>
@@ -949,7 +949,7 @@ export function ProfileV2() {
             {(["overview", "preferences", "teams", "security"] as NavSection[]).map(s => (
               <button key={s} onClick={() => setSection(s)}
                 className="px-2 py-1 rounded-[6px] text-[10px] capitalize transition-colors"
-                style={section === s ? { background: "#fff2ed", color: "#ff4615", fontWeight: 500 } : { color: "var(--text-muted)" }}>
+                style={section === s ? { background: "var(--rally-brand-soft-light)", color: "var(--rally-brand)", fontWeight: 500 } : { color: "var(--muted-foreground)" }}>
                 {s === "teams" ? "Teams" : s === "preferences" ? "Prefs" : s === "security" ? "Sec" : s.charAt(0).toUpperCase() + s.slice(1)}
               </button>
             ))}

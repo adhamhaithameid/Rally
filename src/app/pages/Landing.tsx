@@ -88,7 +88,7 @@ export function Landing() {
               </Link>
               <Link to="/v2"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground transition-colors text-sm">
-                <Zap className="size-3.5" style={{ color: "#ff4615" }} />
+                <Zap className="size-3.5" style={{ color: "var(--rally-brand)" }} />
                 Try V2
                 <ArrowRight className="size-3.5" />
               </Link>
@@ -264,7 +264,7 @@ export function Landing() {
             <div className="mt-3">
               <Link to="/v2"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground transition-colors text-xs">
-                <Zap className="size-3" style={{ color: "#ff4615" }} />
+                <Zap className="size-3" style={{ color: "var(--rally-brand)" }} />
                 Try the new V2 experience
                 <ArrowRight className="size-3" />
               </Link>
