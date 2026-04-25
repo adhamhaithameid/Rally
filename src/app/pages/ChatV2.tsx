@@ -252,7 +252,7 @@ function ChatSidebar({
         <div className="px-2 mt-2">
           <button
             onClick={() => setDmCollapsed(v => !v)}
-            className="w-full flex items-center gap-1 px-2 py-1.5 text-[10px] font-semibold text-muted-foreground hover:text-foreground uppercase tracking-widest transition-colors"
+            className="w-full flex items-center gap-1 px-2 py-1.5 text-[10px] font-medium text-muted-foreground hover:text-foreground uppercase tracking-widest transition-colors"
           >
             <ChevronDown className={`size-3 transition-transform duration-150 ${dmCollapsed ? "-rotate-90" : ""}`} />
             Direct Messages
@@ -278,7 +278,7 @@ function ChatSidebar({
         <div className="px-2 mt-1">
           <div className="flex items-center justify-between px-2 py-1.5">
             <button onClick={() => setChCollapsed(v => !v)}
-              className="flex items-center gap-1 text-[10px] font-semibold text-muted-foreground hover:text-foreground uppercase tracking-widest transition-colors">
+              className="flex items-center gap-1 text-[10px] font-medium text-muted-foreground hover:text-foreground uppercase tracking-widest transition-colors">
               <ChevronDown className={`size-3 transition-transform duration-150 ${chCollapsed ? "-rotate-90" : ""}`} />
               Text Channels
             </button>
@@ -308,7 +308,7 @@ function ChatSidebar({
         {/* Voice Rooms */}
         <div className="px-2 mt-1">
           <button onClick={() => setVoiceCollapsed(v => !v)}
-            className="w-full flex items-center gap-1 px-2 py-1.5 text-[10px] font-semibold text-muted-foreground hover:text-foreground uppercase tracking-widest transition-colors">
+            className="w-full flex items-center gap-1 px-2 py-1.5 text-[10px] font-medium text-muted-foreground hover:text-foreground uppercase tracking-widest transition-colors">
             <ChevronDown className={`size-3 transition-transform duration-150 ${voiceCollapsed ? "-rotate-90" : ""}`} />
             Voice Rooms
           </button>
@@ -431,7 +431,7 @@ function InboxView({
 
       {/* Need Reply */}
       <section>
-        <h2 className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Need Reply</h2>
+        <h2 className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Need Reply</h2>
         <div className="space-y-2">
           {needReply.map(item => (
             <div key={item.id}
@@ -460,7 +460,7 @@ function InboxView({
 
       {/* Live Now */}
       <section>
-        <h2 className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Live Now</h2>
+        <h2 className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Live Now</h2>
         <div className="grid grid-cols-2 gap-3">
           {voiceRooms.map(room => (
             <div key={room.id} className="p-3 rounded-[12px] border border-border bg-card">
@@ -500,7 +500,7 @@ function InboxView({
 
       {/* Jump Back In */}
       <section>
-        <h2 className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Jump Back In</h2>
+        <h2 className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Jump Back In</h2>
         <div className="space-y-1">
           {jumpBack.map(ch => {
             const lastMsg = mockMessages.filter(m => m.channelId === ch.id).at(-1);
@@ -531,7 +531,7 @@ function InboxView({
 
       {/* Important / Pinned */}
       <section>
-        <h2 className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Important & Pinned</h2>
+        <h2 className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Important & Pinned</h2>
         <div className="p-3 rounded-[12px] border border-border bg-card">
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0" style={{ background:"var(--rally-brand-soft-light)" }}>
@@ -554,7 +554,7 @@ function InboxView({
         <section>
           <div className="flex items-center gap-2 mb-3">
             <Sparkles className="size-3.5" style={{ color:"var(--rally-brand)" }} />
-            <h2 className="text-[11px] font-medium uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>AI Catch-up</h2>
+            <h2 className="text-[11px] font-medium uppercase tracking-widest" style={{ color: "var(--text-overline)" }}>AI Catch-up</h2>
             <span className="text-[10px] px-1.5 py-0.5 rounded-full" style={{ background:"#fff2ed", color:"#c60f08" }}>Beta</span>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -574,7 +574,7 @@ function InboxView({
 
       {/* Shared in Chat */}
       <section>
-        <h2 className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Shared in Chat</h2>
+        <h2 className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Shared in Chat</h2>
         <div className="space-y-2">
           {sharedItems.map(item => {
             const iconMap = { file: FileText, task: CheckSquare, event: Calendar };
@@ -933,7 +933,7 @@ function RightPanel({ selectedChannelId }: { selectedChannelId: string | null })
 
       {/* Online now */}
       <div className="p-4 border-b border-[var(--border-subtle)]">
-        <p className="text-[10px] font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Online now</p>
+        <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Online now</p>
         <div className="space-y-2">
           {onlineMembers.map(m => (
             <div key={m.name} className="flex items-center gap-2">
@@ -954,7 +954,7 @@ function RightPanel({ selectedChannelId }: { selectedChannelId: string | null })
       {/* Pinned in channel */}
       {channelPins.length > 0 && (
         <div className="p-4 border-b border-[var(--border-subtle)]">
-          <p className="text-[10px] font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Pinned</p>
+          <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Pinned</p>
           <div className="space-y-2">
             {channelPins.map(m => (
               <div key={m.id} className="flex items-start gap-2 p-2.5 rounded-[8px] border border-border bg-background">
@@ -972,7 +972,7 @@ function RightPanel({ selectedChannelId }: { selectedChannelId: string | null })
       {/* Files shared here */}
       {channelFiles.length > 0 && (
         <div className="p-4">
-          <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Files shared here</p>
+          <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Files shared here</p>
           <div className="space-y-2">
             {channelFiles.map(f => (
               <div key={f.id} className="flex items-center gap-2 p-2.5 rounded-[8px] border border-border bg-background hover:bg-muted transition-colors cursor-pointer">
@@ -989,7 +989,7 @@ function RightPanel({ selectedChannelId }: { selectedChannelId: string | null })
 
       {/* Related work shortcut */}
       <div className="p-4 mt-auto border-t border-[var(--border-subtle)]">
-        <p className="text-[10px] font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Related work</p>
+        <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Related work</p>
         <div className="space-y-1.5">
           <Link to="/app/todo" className="flex items-center gap-2 px-2.5 py-2 rounded-[8px] hover:bg-muted transition-colors text-muted-foreground hover:text-foreground">
             <CheckSquare className="size-4" />

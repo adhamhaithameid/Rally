@@ -135,7 +135,7 @@ function TeamCard({ team, onSelect }: { team: MockTeam; onSelect: (id: number) =
         </div>
         {/* Name + project */}
         <div className="flex-1 min-w-0">
-          <p className="text-[14px] font-semibold text-foreground truncate">{team.name}</p>
+          <p className="text-[14px] font-medium text-foreground truncate">{team.name}</p>
           <p className="text-[11px] text-muted-foreground truncate">{team.projectName}</p>
         </div>
         {/* Role */}
@@ -150,7 +150,7 @@ function TeamCard({ team, onSelect }: { team: MockTeam; onSelect: (id: number) =
       {/* Tags */}
       <div className="flex flex-wrap gap-1 mb-3">
         {team.tags.map(t => (
-          <span key={t} className="px-1.5 py-0.5 rounded-full text-[10px] bg-muted text-muted-foreground">
+          <span key={t} className="px-1.5 py-0.5 rounded-full text-[10px] font-medium bg-muted text-muted-foreground">
             {t}
           </span>
         ))}
@@ -234,7 +234,7 @@ function CreatePanel({ onClose, onDone }: { onClose: () => void; onDone: () => v
           <ArrowLeft className="size-4" />
         </button>
         <div className="flex-1">
-          <p className="text-[14px] font-semibold text-foreground">Create a new workspace</p>
+          <p className="text-[14px] font-medium text-foreground">Create a new workspace</p>
           <p className="text-[11px] text-muted-foreground">Step {step} of 3</p>
         </div>
         {/* Step dots */}
@@ -400,7 +400,7 @@ function JoinPanel({ onClose, onDone }: { onClose: () => void; onDone: () => voi
           <ArrowLeft className="size-4" />
         </button>
         <div>
-          <p className="text-[14px] font-semibold text-foreground">Join a workspace</p>
+          <p className="text-[14px] font-medium text-foreground">Join a workspace</p>
           <p className="text-[11px] text-muted-foreground">Enter an invite link or team code</p>
         </div>
       </div>
@@ -564,7 +564,7 @@ export function TeamSelectionV2() {
                       style={{ background: "var(--rally-brand-soft-light)" }}>
                       <Plus className="size-5" style={{ color: "var(--rally-brand)" }} />
                     </div>
-                    <p className="text-[13px] font-semibold text-foreground">New workspace</p>
+                    <p className="text-[13px] font-medium text-foreground">New workspace</p>
                     <p className="text-[11px] text-muted-foreground mt-1">Start from scratch</p>
                   </div>
                 </div>

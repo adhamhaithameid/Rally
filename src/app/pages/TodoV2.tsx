@@ -240,7 +240,7 @@ function FocusStrip({ tasks, onFilter }: { tasks: Task[]; onFilter: (g: TimeGrou
         <button key={c.label} onClick={c.action}
           className="flex items-center gap-3 px-4 py-3 rounded-[12px] border text-left transition-all hover:shadow-sm"
           style={{ background: c.bg, borderColor: c.border }}>
-          <span className="text-[26px] font-semibold leading-none" style={{ color: c.color }}>{c.value}</span>
+          <span className="text-[26px] font-medium leading-none" style={{ color: c.color }}>{c.value}</span>
           <span className="text-[12px] leading-tight" style={{ color: c.color }}>{c.label}</span>
         </button>
       ))}
@@ -343,7 +343,7 @@ function TaskRow({
 
       {/* Labels */}
       {task.labels.slice(0, 2).map(l => (
-        <span key={l} className="hidden sm:inline-flex px-1.5 py-0.5 rounded-full text-[10px] flex-shrink-0"
+        <span key={l} className="hidden sm:inline-flex px-1.5 py-0.5 rounded-full text-[10px] font-medium flex-shrink-0"
           style={{ background: LABEL[l].bg, color: LABEL[l].color }}>
           {l}
         </span>
@@ -372,7 +372,7 @@ function TaskRow({
 
       {/* Status badge — only for non-default */}
       {(task.status === "blocked" || task.status === "in-progress") && (
-        <span className="hidden lg:inline-flex px-1.5 py-0.5 rounded-full text-[10px] flex-shrink-0"
+        <span className="hidden lg:inline-flex px-1.5 py-0.5 rounded-full text-[10px] font-medium flex-shrink-0"
           style={{ background: STATUS[task.status].bg, color: STATUS[task.status].color }}>
           {STATUS[task.status].label}
         </span>
@@ -397,7 +397,7 @@ function TaskGroup({
       <button onClick={() => setCollapsed(v => !v)}
         className="flex items-center gap-2 mb-2 group w-full text-left">
         <ChevronDown className={`size-3.5 text-muted-foreground transition-transform ${collapsed ? "-rotate-90" : ""}`} />
-        <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: accent ?? "var(--muted-foreground)" }}>
+        <span className="text-[11px] font-medium uppercase tracking-widest" style={{ color: accent ?? "var(--text-overline)" }}>
           {label}
         </span>
         <span className="text-[10px] text-muted-foreground ml-1">({tasks.length})</span>
@@ -484,7 +484,7 @@ function DetailPanel({
         {/* Status & Priority row */}
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Status</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider mb-1.5" style={{ color: "var(--text-overline)" }}>Status</p>
             {canEdit ? (
               <select value={task.status}
                 onChange={e => onUpdate(task.id, { status: e.target.value as Status })}
@@ -499,7 +499,7 @@ function DetailPanel({
             )}
           </div>
           <div>
-            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Priority</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider mb-1.5" style={{ color: "var(--text-overline)" }}>Priority</p>
             {canEdit ? (
               <select value={task.priority}
                 onChange={e => onUpdate(task.id, { priority: e.target.value as Priority })}
@@ -517,7 +517,7 @@ function DetailPanel({
 
         {/* Due date */}
         <div>
-          <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Due Date</p>
+          <p className="text-[10px] font-medium uppercase tracking-wider mb-1.5" style={{ color: "var(--text-overline)" }}>Due Date</p>
           {canEdit ? (
             <input type="date" value={task.dueDate ?? ""}
               onChange={e => onUpdate(task.id, { dueDate: e.target.value || undefined })}
@@ -529,7 +529,7 @@ function DetailPanel({
 
         {/* Assignees */}
         <div>
-          <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Assignees</p>
+          <p className="text-[10px] font-medium uppercase tracking-wider mb-1.5" style={{ color: "var(--text-overline)" }}>Assignees</p>
           <div className="flex items-center gap-2 flex-wrap">
             {task.assignees.map(a => (
               <div key={a} className="flex items-center gap-1.5">
@@ -543,10 +543,10 @@ function DetailPanel({
         {/* Labels */}
         {task.labels.length > 0 && (
           <div>
-            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Labels</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider mb-1.5" style={{ color: "var(--text-overline)" }}>Labels</p>
             <div className="flex flex-wrap gap-1.5">
               {task.labels.map(l => (
-                <span key={l} className="px-2 py-0.5 rounded-full text-[11px]"
+                <span key={l} className="px-2 py-0.5 rounded-full text-[11px] font-medium"
                   style={{ background: LABEL[l].bg, color: LABEL[l].color }}>
                   {l}
                 </span>
@@ -557,7 +557,7 @@ function DetailPanel({
 
         {/* Description */}
         <div>
-          <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Description</p>
+          <p className="text-[10px] font-medium uppercase tracking-wider mb-1.5" style={{ color: "var(--text-overline)" }}>Description</p>
           {canEdit ? (
             <textarea value={editDesc} onChange={e => setEditDesc(e.target.value)}
               onBlur={() => onUpdate(task.id, { description: editDesc })}
@@ -571,7 +571,7 @@ function DetailPanel({
         {/* Linked context */}
         {task.links && task.links.length > 0 && (
           <div>
-            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Linked to</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider mb-1.5" style={{ color: "var(--text-overline)" }}>Linked to</p>
             <div className="space-y-1.5">
               {task.links.map((lk, i) => {
                 const Icon = lk.type === "file" ? FileText : lk.type === "chat" ? MessageSquare : Calendar;
@@ -591,7 +591,7 @@ function DetailPanel({
         {/* Activity */}
         {activity.length > 0 && (
           <div>
-            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Activity</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider mb-1.5" style={{ color: "var(--text-overline)" }}>Activity</p>
             <div className="space-y-2">
               {activity.map(a => (
                 <div key={a.id} className="flex items-start gap-2">
@@ -642,7 +642,7 @@ function BoardCard({ task, selected, onSelect }: { task: Task; selected: boolean
       </div>
       <div className="flex items-center gap-1.5 flex-wrap">
         {task.labels.slice(0, 2).map(l => (
-          <span key={l} className="px-1.5 py-0.5 rounded-full text-[10px]"
+          <span key={l} className="px-1.5 py-0.5 rounded-full text-[10px] font-medium"
             style={{ background: LABEL[l].bg, color: LABEL[l].color }}>{l}</span>
         ))}
         <div className="flex-1" />
@@ -676,7 +676,7 @@ function BoardView({ tasks, selectedId, onSelect, onAdd, canEdit }: {
           <div key={col.status} className="flex flex-col" style={{ minWidth: 240, width: 260 }}>
             {/* Column header */}
             <div className="flex items-center gap-2 px-3 py-2.5 rounded-[10px] mb-3" style={{ background: col.accentBg }}>
-              <span className="text-[12px] font-semibold" style={{ color: col.accentColor }}>{STATUS[col.status].label}</span>
+              <span className="text-[12px] font-medium" style={{ color: col.accentColor }}>{STATUS[col.status].label}</span>
               <span className="ml-auto text-[11px]" style={{ color: col.accentColor }}>{colTasks.length}</span>
               {canEdit && (
                 <button onClick={() => onAdd(col.status)}

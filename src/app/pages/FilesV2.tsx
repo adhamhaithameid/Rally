@@ -236,7 +236,7 @@ function LinkChip({ link }: { link: FileLink }) {
   const Icon  = LINK_ICON[link.type];
   const color = LINK_COLOR[link.type];
   return (
-    <div className="flex items-center gap-1 px-1.5 py-0.5 rounded-full border text-[10px]"
+    <div className="flex items-center gap-1 px-1.5 py-0.5 rounded-full border text-[10px] font-medium"
       style={{ borderColor: `${color}40`, background: `${color}0d`, color }}>
       <Icon className="size-2.5 flex-shrink-0" />
       <span className="max-w-[80px] truncate">{link.label}</span>
@@ -468,7 +468,7 @@ function LeftRail({
 
       {/* Folder tree */}
       <div className="px-2 pb-3 flex-1">
-        <p className="text-[10px] font-medium uppercase tracking-widest px-2 mb-1.5" style={{ color: "var(--text-tertiary)" }}>
+        <p className="text-[10px] font-medium uppercase tracking-widest px-2 mb-1.5" style={{ color: "var(--text-overline)" }}>
           Folders
         </p>
         {rootFolders.map(folder => {
@@ -528,7 +528,7 @@ function FilesHome({
     <div className="flex-1 overflow-y-auto px-5 py-5 space-y-8">
       {/* Continue Working */}
       <section>
-        <h2 className="text-[12px] font-semibold text-foreground mb-3">Continue Working</h2>
+        <h2 className="text-[12px] font-medium text-foreground mb-3">Continue Working</h2>
         <div className="flex gap-3 overflow-x-auto pb-1">
           {continueFiles.map(f => (
             <ContinueCard key={f.id} file={f} onSelect={() => onFileSelect(f)} />
@@ -538,7 +538,7 @@ function FilesHome({
 
       {/* Pinned Folders */}
       <section>
-        <h2 className="text-[12px] font-semibold text-foreground mb-3">Team Folders</h2>
+        <h2 className="text-[12px] font-medium text-foreground mb-3">Team Folders</h2>
         <div className="grid grid-cols-2 xl:grid-cols-3 gap-2.5">
           {pinnedFolders.map(f => (
             <FolderTile key={f.id} folder={f} onClick={() => onFolderBrowse(f.id)} />
@@ -548,7 +548,7 @@ function FilesHome({
 
       {/* Recently Updated */}
       <section>
-        <h2 className="text-[12px] font-semibold text-foreground mb-3">Recently Updated</h2>
+        <h2 className="text-[12px] font-medium text-foreground mb-3">Recently Updated</h2>
         <div className="space-y-1.5">
           {recentUpdated.map(({ file, who, when }) => {
             const cfg = EXTS(file.ext);
@@ -566,7 +566,7 @@ function FilesHome({
                   </div>
                 </div>
                 {file.version > 1 && (
-                  <span className="flex-shrink-0 text-[10px] px-1.5 py-0.5 rounded-full"
+                  <span className="flex-shrink-0 text-[10px] font-medium px-1.5 py-0.5 rounded-full"
                     style={{ background: cfg.bg, color: cfg.color }}>
                     v{file.version}
                   </span>
@@ -587,7 +587,7 @@ function FilesHome({
 
       {/* Linked to Work */}
       <section>
-        <h2 className="text-[12px] font-semibold text-foreground mb-3">Linked to Work</h2>
+        <h2 className="text-[12px] font-medium text-foreground mb-3">Linked to Work</h2>
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-2.5">
           {linkedFiles.map(f => (
             <div key={f.id} onClick={() => onFileSelect(f)}
@@ -697,7 +697,7 @@ function BrowseView({
         {/* Sub-folders */}
         {subFolders.length > 0 && (
           <div className="mb-5">
-            <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>Folders</p>
+            <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-overline)" }}>Folders</p>
             <div className="grid grid-cols-2 xl:grid-cols-3 gap-2.5">
               {subFolders.map(f => (
                 <FolderTile key={f.id} folder={f} onClick={() => onNavigate(f.id)} />
@@ -710,7 +710,7 @@ function BrowseView({
         {sortedFiles.length > 0 && (
           <div>
             {subFolders.length > 0 && (
-              <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>Files</p>
+              <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-overline)" }}>Files</p>
             )}
             {viewMode === "list" ? (
               <div className="space-y-1.5">
@@ -866,7 +866,7 @@ function FileDetailPanel({
         {/* Linked to work */}
         {file.links && file.links.length > 0 && (
           <div>
-            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">Linked to</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider mb-2" style={{ color: "var(--text-overline)" }}>Linked to</p>
             <div className="space-y-1.5">
               {file.links.map((lk, i) => {
                 const Icon = LINK_ICON[lk.type];

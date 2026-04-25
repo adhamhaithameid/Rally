@@ -359,7 +359,7 @@ function MemberDetailPanel({
 
         {/* What they can do */}
         <div>
-          <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">Access</p>
+          <p className="text-[10px] font-medium uppercase tracking-wider mb-2" style={{ color: "var(--text-overline)" }}>Access</p>
           <div className="space-y-1.5">
             {caps.can.map(item => (
               <div key={item} className="flex items-start gap-2">
@@ -378,7 +378,7 @@ function MemberDetailPanel({
 
         {/* Activity */}
         <div>
-          <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">Recent Activity</p>
+          <p className="text-[10px] font-medium uppercase tracking-wider mb-2" style={{ color: "var(--text-overline)" }}>Recent Activity</p>
           <div className="space-y-2">
             {mockActivity.map(a => (
               <div key={a.label} className="flex items-center justify-between">
@@ -494,7 +494,7 @@ function TeamHome({
           {/* Info */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="text-[18px] font-semibold text-foreground">{teamName}</h2>
+              <h2 className="text-[18px] font-medium text-foreground">{teamName}</h2>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground">Workspace</span>
             </div>
             <p className="text-[12px] text-muted-foreground mt-0.5">{projectName}</p>
@@ -509,7 +509,7 @@ function TeamHome({
         {/* Stats row */}
         <div className="flex items-center gap-5 mt-4 pt-4 border-t border-[var(--border-subtle)] flex-wrap">
           <div>
-            <span className="text-[20px] font-semibold text-foreground">{members.length}</span>
+            <span className="text-[20px] font-medium text-foreground">{members.length}</span>
             <span className="text-[11px] text-muted-foreground ml-1">members</span>
           </div>
           <div className="flex items-center gap-1.5">
@@ -545,7 +545,7 @@ function TeamHome({
       {/* Members overview */}
       <section>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-[12px] font-semibold text-foreground">Team Members</h3>
+          <h3 className="text-[12px] font-medium text-foreground">Team Members</h3>
           <button onClick={() => onNav("members")}
             className="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-foreground transition-colors">
             View all <ChevronRight className="size-3.5" />
@@ -579,7 +579,7 @@ function TeamHome({
 
       {/* My role & access */}
       <section>
-        <h3 className="text-[12px] font-semibold text-foreground mb-3">My Role & Access</h3>
+        <h3 className="text-[12px] font-medium text-foreground mb-3">My Role & Access</h3>
         <div className="rounded-[12px] border border-border bg-card p-4">
           <div className="flex items-center gap-3 mb-4">
             <Av name={user?.name ?? "You"} size={36} />
@@ -594,7 +594,7 @@ function TeamHome({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {caps.can.length > 0 && (
               <div>
-                <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Can do</p>
+                <p className="text-[10px] font-medium uppercase tracking-wider mb-1.5" style={{ color: "var(--text-overline)" }}>Can do</p>
                 <div className="space-y-1.5">
                   {caps.can.map(item => (
                     <div key={item} className="flex items-start gap-2">
@@ -607,7 +607,7 @@ function TeamHome({
             )}
             {caps.cannot.length > 0 && (
               <div>
-                <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Cannot do</p>
+                <p className="text-[10px] font-medium uppercase tracking-wider mb-1.5" style={{ color: "var(--text-overline)" }}>Cannot do</p>
                 <div className="space-y-1.5">
                   {caps.cannot.map(item => (
                     <div key={item} className="flex items-start gap-2">
@@ -626,8 +626,8 @@ function TeamHome({
       {canManage && invites.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-[12px] font-semibold text-foreground">Pending Invites</h3>
-            <span className="text-[10px] text-muted-foreground bg-muted px-2 py-0.5 rounded-full">{invites.length}</span>
+            <h3 className="text-[12px] font-medium text-foreground">Pending Invites</h3>
+            <span className="text-[10px] font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-full">{invites.length}</span>
           </div>
           <div className="space-y-1.5">
             {invites.map(inv => (
@@ -653,7 +653,7 @@ function TeamHome({
 
       {/* Recent team changes */}
       <section>
-        <h3 className="text-[12px] font-semibold text-foreground mb-3">Recent Team Changes</h3>
+        <h3 className="text-[12px] font-medium text-foreground mb-3">Recent Team Changes</h3>
         <div className="rounded-[12px] border border-border bg-card overflow-hidden divide-y divide-border">
           {RECENT_CHANGES.map(c => (
             <div key={c.id} className="flex items-center gap-3 px-4 py-3">
@@ -772,7 +772,7 @@ function SettingsView({
 
   return (
     <div className="flex-1 overflow-y-auto px-5 py-6 max-w-xl">
-      <h2 className="text-[14px] font-semibold text-foreground mb-5">Team Settings</h2>
+      <h2 className="text-[14px] font-medium text-foreground mb-5">Team Settings</h2>
 
       <div className="space-y-5">
         {/* Team icon preview */}
@@ -836,7 +836,7 @@ function PermissionsView({ userRole }: { userRole: UserRole }) {
   return (
     <div className="flex-1 overflow-y-auto px-5 py-6">
       <div className="max-w-3xl">
-        <h2 className="text-[14px] font-semibold text-foreground mb-1">Permissions</h2>
+        <h2 className="text-[14px] font-medium text-foreground mb-1">Permissions</h2>
         <p className="text-[12px] text-muted-foreground mb-5">Role-based access control for Rally workspaces.</p>
 
         {/* Your current role callout */}
@@ -852,7 +852,7 @@ function PermissionsView({ userRole }: { userRole: UserRole }) {
         <div className="rounded-[12px] border border-border overflow-hidden">
           {/* Header */}
           <div className="grid grid-cols-5 bg-muted/60 border-b border-[var(--border-subtle)]">
-            <div className="px-4 py-2.5 text-[11px] font-semibold text-muted-foreground col-span-1">Feature</div>
+            <div className="px-4 py-2.5 text-[11px] font-medium col-span-1" style={{ color: "var(--text-overline)" }}>Feature</div>
             {ROLE_ORDER.map(r => {
               const cfg = ROLE_CFG[r];
               const Icon = cfg.Icon;
@@ -860,7 +860,7 @@ function PermissionsView({ userRole }: { userRole: UserRole }) {
                 <div key={r} className={`px-3 py-2.5 text-center ${userRole === r ? "bg-card" : ""}`}>
                   <div className="flex flex-col items-center gap-1">
                     <Icon className="size-3.5" style={{ color: cfg.color }} />
-                    <span className="text-[10px] font-semibold" style={{ color: cfg.color }}>{cfg.label}</span>
+                    <span className="text-[10px] font-medium" style={{ color: cfg.color }}>{cfg.label}</span>
                   </div>
                 </div>
               );
@@ -873,7 +873,7 @@ function PermissionsView({ userRole }: { userRole: UserRole }) {
               {/* Group header */}
               <div className="grid grid-cols-5 bg-muted/30 border-t border-[var(--border-subtle)]">
                 <div className="col-span-5 px-4 py-1.5">
-                  <span className="text-[10px] font-medium uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>{group.group}</span>
+                  <span className="text-[10px] font-medium uppercase tracking-widest" style={{ color: "var(--text-overline)" }}>{group.group}</span>
                 </div>
               </div>
               {/* Rows */}
@@ -919,7 +919,7 @@ function DangerZone({ teamName }: { teamName: string }) {
       <div className="max-w-xl">
         <div className="flex items-center gap-2 mb-1">
           <AlertTriangle className="size-4 text-red-500" />
-          <h2 className="text-[14px] font-semibold text-red-500">Danger Zone</h2>
+          <h2 className="text-[14px] font-medium text-red-500">Danger Zone</h2>
         </div>
         <p className="text-[12px] text-muted-foreground mb-6">These actions are irreversible. Proceed with caution.</p>
 

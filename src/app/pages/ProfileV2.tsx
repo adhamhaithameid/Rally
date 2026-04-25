@@ -116,7 +116,7 @@ function RoleBadge({ role }: { role: UserRole }) {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+    <p className="text-[10px] font-medium uppercase tracking-wider mb-2" style={{ color: "var(--text-overline)" }}>
       {children}
     </p>
   );
@@ -211,7 +211,7 @@ function OverviewSection({
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="text-[17px] font-semibold text-foreground">{user.name}</h2>
+              <h2 className="text-[17px] font-medium text-foreground">{user.name}</h2>
               <RoleBadge role={userRole} />
             </div>
             <p className="text-[12px] text-muted-foreground mt-0.5">{user.email}</p>
@@ -220,7 +220,7 @@ function OverviewSection({
             {user.tags.length > 0 && (
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {user.tags.map(t => (
-                  <span key={t} className="px-2 py-0.5 rounded-full text-[10px] bg-muted text-muted-foreground">{t}</span>
+                  <span key={t} className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-muted text-muted-foreground">{t}</span>
                 ))}
               </div>
             )}
@@ -600,7 +600,7 @@ function PreferencesSection({
   );
 }
 
-// ── Access & Teams ��──────────────────────────────────────────────────────────
+// ── Access & Teams ──────────────────────────────────────────────────────────
 
 function TeamsSection({
   user, userRole, currentTeamId,
@@ -649,7 +649,7 @@ function TeamsSection({
                 {/* Expanded permission summary */}
                 {expanded && (
                   <div className="border-t border-[var(--border-subtle)] px-4 py-3 bg-muted/20">
-                    <p className="text-[10px] font-medium uppercase tracking-wider mb-2" style={{ color: "var(--text-tertiary)" }}>
+                    <p className="text-[10px] font-medium uppercase tracking-wider mb-2" style={{ color: "var(--text-overline)" }}>
                       As {ROLE_CFG[team.role].label} — what you can do:
                     </p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">

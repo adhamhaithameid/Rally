@@ -428,7 +428,7 @@ function MiniCalendar({
             <button key={i} onClick={() => onDateClick(d)}
               className={`relative w-6 h-6 mx-auto flex items-center justify-center rounded-full text-[10px] transition-colors ${
                 isTodayD
-                  ? "bg-[var(--rally-brand)] text-white font-semibold"
+                  ? "bg-[var(--rally-brand)] text-white font-medium"
                   : inWeek && !isTodayD
                   ? "bg-muted text-foreground"
                   : isSelected && !isTodayD
@@ -479,7 +479,7 @@ function UpNextCard({ events, lists }: { events: CalEvent[]; lists: CalList[] })
 
   return (
     <div className="mx-3 mb-3">
-      <p className="text-[10px] font-medium uppercase tracking-widest mb-1.5 px-1" style={{ color: "var(--text-tertiary)" }}>
+      <p className="text-[10px] font-medium uppercase tracking-widest mb-1.5 px-1" style={{ color: "var(--text-overline)" }}>
         {inProgress ? "Happening Now" : "Up Next"}
       </p>
       <div className="rounded-[10px] border overflow-hidden" style={{ borderColor: `${color}40` }}>
@@ -539,7 +539,7 @@ function UpNextCard({ events, lists }: { events: CalEvent[]; lists: CalList[] })
       {/* Later today */}
       {laterToday.length > 0 && (
         <div className="mt-1.5 space-y-0.5">
-          <p className="text-[10px] font-medium uppercase tracking-widest mb-1 px-1" style={{ color: "var(--text-tertiary)" }}>Later Today</p>
+          <p className="text-[10px] font-medium uppercase tracking-widest mb-1 px-1" style={{ color: "var(--text-overline)" }}>Later Today</p>
           {laterToday.map(e => (
             <div key={e.id} className="flex items-center gap-2 px-2 py-1.5 rounded-[7px] hover:bg-muted transition-colors">
               <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: getColor(e.calendarId) }} />
@@ -589,7 +589,7 @@ function LeftRail({
 
       {/* Calendar lists */}
       <div className="px-3 pb-3">
-        <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>
+        <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-overline)" }}>
           Calendars
         </p>
         <div className="space-y-1">
@@ -666,7 +666,7 @@ function EventBlock({
         outline: selected ? `2px solid ${color}` : "none",
         outlineOffset: "1px",
       }}>
-      <p className="text-[10px] font-semibold leading-tight mt-0.5 truncate" style={{ color }}>
+      <p className="text-[10px] font-medium leading-tight mt-0.5 truncate" style={{ color }}>
         {inProg && <span className="inline-block w-1.5 h-1.5 rounded-full mr-1 animate-pulse align-middle" style={{ background: color }} />}
         {event.title}
       </p>
@@ -1074,7 +1074,7 @@ function EventDetailPanel({
 
         {/* Date & Time */}
         <div>
-          <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+          <p className="text-[10px] font-medium uppercase tracking-wider mb-1.5" style={{ color: "var(--text-overline)" }}>
             Date & Time
           </p>
           <div className="flex items-start gap-2">
@@ -1091,7 +1091,7 @@ function EventDetailPanel({
         {/* Location */}
         {event.location && (
           <div>
-            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">Location</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider mb-1.5" style={{ color: "var(--text-overline)" }}>Location</p>
             <div className="flex items-center gap-2">
               <MapPin className="size-3.5 text-muted-foreground flex-shrink-0" />
               <p className="text-[13px] text-foreground">{event.location}</p>
@@ -1102,7 +1102,7 @@ function EventDetailPanel({
         {/* Attendees */}
         {event.attendees.length > 0 && (
           <div>
-            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+            <p className="text-[10px] font-medium uppercase tracking-wider mb-1.5" style={{ color: "var(--text-overline)" }}>
               Attendees ({event.attendees.length + 1})
             </p>
             <div className="space-y-1.5">
@@ -1124,7 +1124,7 @@ function EventDetailPanel({
 
         {/* Description */}
         <div>
-          <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+          <p className="text-[10px] font-medium uppercase tracking-wider mb-1.5" style={{ color: "var(--text-overline)" }}>
             Description
           </p>
           {canEdit ? (
@@ -1142,7 +1142,7 @@ function EventDetailPanel({
         {/* Linked context */}
         {event.links && event.links.length > 0 && (
           <div>
-            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+            <p className="text-[10px] font-medium uppercase tracking-wider mb-1.5" style={{ color: "var(--text-overline)" }}>
               Linked to
             </p>
             <div className="space-y-1.5">

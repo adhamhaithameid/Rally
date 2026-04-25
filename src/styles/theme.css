@@ -21,6 +21,10 @@
   --rally-brand-on-light: #c60f08;
   --rally-brand-on-dark:  #ff9571;
 
+  /* ── Adaptive brand tokens (auto-switch light/dark) ────── */
+  --rally-brand-soft:     var(--rally-brand-soft-light);
+  --rally-brand-on:       var(--rally-brand-on-light);
+
   /* ── Base Layer ─────────────────────────────────── */
   --canvas:     #ffe1d2;
   --surface:    #fff7f3;
@@ -33,12 +37,34 @@
   --text-tertiary:  #8c7b74;
   --text-placeholder: #b09e98;
 
+  /* ── Adaptive text tokens ───────────────────────────────── */
+  --text-overline: var(--text-tertiary);   /* overlines/section labels: tertiary in light, secondary in dark */
+
   /* ── Semantic: Neutral ──────────────────────────── */
   --neutral-solid:       #5f514b;
   --neutral-soft-light:  #f4ece8;
   --neutral-soft-dark:   #262322;
   --neutral-on-light:    #5f514b;
   --neutral-on-dark:     #c7b8b2;
+
+  /* ── Semantic status dot tokens ─────────────────── */
+  --status-active:    var(--success-solid);
+  --status-limited:   var(--neutral-solid);
+  --status-disabled:  var(--error-solid);
+
+  /* ── Adaptive badge tokens (text + bg, auto-switch) ─────── */
+  --badge-tasks-text:    var(--success-on-light);
+  --badge-tasks-bg:      var(--success-soft-light);
+  --badge-calendar-text: var(--rally-brand-on-light);
+  --badge-calendar-bg:   var(--rally-brand-soft-light);
+  --badge-files-text:    var(--info-on-light);
+  --badge-files-bg:      var(--info-soft-light);
+  --badge-chat-text:     var(--neutral-on-light);
+  --badge-chat-bg:       var(--neutral-soft-light);
+  --badge-team-text:     var(--neutral-on-light);
+  --badge-team-bg:       var(--neutral-soft-light);
+  --badge-web-text:      var(--neutral-on-light);
+  --badge-web-bg:        var(--neutral-soft-light);
 
   /* ── Semantic: Error ────────────────────────────── */
   --error-solid:       #d90000;
@@ -153,6 +179,32 @@
   --text-tertiary:    #8a807c;
   --text-placeholder: #5f514b;
   --border-subtle:    rgba(255, 255, 255, 0.06);
+
+  /* ── Adaptive brand tokens (dark overrides) ─────────────── */
+  --rally-brand-soft: var(--rally-brand-soft-dark);
+  --rally-brand-on:   var(--rally-brand-on-dark);
+
+  /* ── Adaptive text tokens (dark overrides) ──────────────── */
+  --text-overline: var(--text-secondary);  /* elevate to secondary in dark for WCAG AA */
+
+  /* ── Semantic status dot tokens (dark overrides) ─────────── */
+  --status-active:    var(--success-on-dark);
+  --status-limited:   var(--neutral-on-dark);
+  --status-disabled:  var(--error-on-dark);
+
+  /* ── Adaptive badge tokens (dark overrides) ─────────────── */
+  --badge-tasks-text:    var(--success-on-dark);
+  --badge-tasks-bg:      var(--success-soft-dark);
+  --badge-calendar-text: var(--rally-brand-on-dark);
+  --badge-calendar-bg:   var(--rally-brand-soft-dark);
+  --badge-files-text:    var(--info-on-dark);
+  --badge-files-bg:      var(--info-soft-dark);
+  --badge-chat-text:     var(--neutral-on-dark);
+  --badge-chat-bg:       var(--neutral-soft-dark);
+  --badge-team-text:     var(--neutral-on-dark);
+  --badge-team-bg:       var(--neutral-soft-dark);
+  --badge-web-text:      var(--neutral-on-dark);
+  --badge-web-bg:        var(--neutral-soft-dark);
 
   /* ── Interaction States dark ────────────────────── */
   --disabled-bg:       #262322;

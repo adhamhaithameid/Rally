@@ -204,7 +204,7 @@ function TopNav() {
 
         {teamOpen && (
           <div className="absolute top-full left-0 mt-1.5 w-60 bg-card border border-border rounded-[12px] shadow-lg z-50 py-1 overflow-hidden">
-            <p className="text-[10px] font-medium uppercase tracking-widest px-3 py-2" style={{ color: "var(--text-tertiary)" }}>Your teams</p>
+            <p className="text-[10px] font-medium uppercase tracking-widest px-3 py-2" style={{ color: "var(--text-overline)" }}>Your teams</p>
             {teams.map((t) => (
               <button key={t.teamId}
                 className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-muted transition-colors text-left"
@@ -377,7 +377,7 @@ function AIDailyBrief() {
 
         {/* Suggested actions */}
         <div>
-          <p className="text-[11px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>Suggested actions</p>
+          <p className="text-[11px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-overline)" }}>Suggested actions</p>
           <div className="flex flex-wrap gap-2">
             {aiSuggestions.filter((s) => !dismissed.includes(s.id)).map((s) => (
               <div key={s.id} className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-full border border-border bg-background hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors group cursor-pointer">
@@ -451,7 +451,7 @@ function MyWorkNow() {
       <div className="p-4 space-y-4 flex-1 overflow-y-auto" style={{ maxHeight: 340 }}>
         {groups.map((g) => (
           <div key={g.key}>
-            <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>{g.label}</p>
+            <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-overline)" }}>{g.label}</p>
             <div className="space-y-1.5">
               {g.items.filter((t) => !done.includes(t.id)).map((task) => (
                 <div key={task.id} className="group flex items-start gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background hover:border-[#d1aa99] transition-colors">
@@ -629,7 +629,7 @@ function ContinueWorking() {
         }
       />
       <div className="p-4 space-y-2 flex-1">
-        <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>Recent files</p>
+        <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Recent files</p>
         {recentFiles.map((f) => (
           <div key={f.id} className="flex items-center gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background hover:bg-muted transition-colors cursor-pointer group">
             <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0 border border-border bg-card">
@@ -647,7 +647,7 @@ function ContinueWorking() {
         ))}
 
         <div className="pt-2 border-t border-[var(--border-subtle)]">
-          <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>Last active</p>
+          <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-overline)" }}>Last active</p>
           <Link to="/app/chat" className="flex items-center gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background hover:bg-muted transition-colors cursor-pointer">
             <div className="w-8 h-8 rounded-[8px] flex items-center justify-center bg-[#eef4ff] border border-border flex-shrink-0">
               <Hash className="size-4" style={{ color: "#0f5fd7" }} />
@@ -689,7 +689,7 @@ function TeamPulse() {
 
         {/* Voice rooms */}
         <div>
-          <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>Voice rooms</p>
+          <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-overline)" }}>Voice rooms</p>
           <div className="space-y-2">
             {voiceRooms.map((room) => (
               <div key={room.id} className="flex items-center gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background">
@@ -717,7 +717,7 @@ function TeamPulse() {
 
         {/* Online members */}
         <div>
-          <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-tertiary)" }}>Members</p>
+          <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-overline)" }}>Members</p>
           <div className="space-y-1.5">
             {onlineMembers.map((m) => (
               <div key={m.name} className="flex items-center gap-2.5 py-1.5">

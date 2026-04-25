@@ -292,7 +292,7 @@ function Swatch({ s }: { s: ColorSwatch }) {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="space-y-3">
-      <h3 className="text-[11px] font-medium uppercase tracking-widest border-b border-[var(--border-subtle)] pb-2" style={{ color: "var(--text-tertiary)" }}>
+      <h3 className="text-[11px] font-medium uppercase tracking-widest border-b border-[var(--border-subtle)] pb-2" style={{ color: "var(--text-overline)" }}>
         {title}
       </h3>
       {children}
