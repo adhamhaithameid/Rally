@@ -156,7 +156,7 @@ function Av({ name, size = 28, online }: { name: string; size?: number; online?:
       </div>
       {online !== undefined && (
         <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-card"
-          style={{ background: online ? "#0f6a43" : "#8a4f00" }} />
+          style={{ background: online ? "var(--success-solid)" : "var(--warning-on-light)" }} />
       )}
     </div>
   );
@@ -238,7 +238,7 @@ function ChatSidebar({
         <div className="px-2 mb-1">
           <button
             onClick={() => onSelect(null)}
-            className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[9px] transition-colors ${selectedId === null ? "bg-[#fff2ed] text-[#c60f08] dark:bg-[#440608]/40 dark:text-[#ff9571]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}
+            className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[9px] transition-colors ${selectedId === null ? "bg-[var(--rally-brand-soft-light)] text-[var(--rally-brand-on-light)] dark:bg-[var(--rally-brand-soft-dark)]/40 dark:text-[var(--rally-brand-on-dark)]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}
           >
             <Inbox className="size-4 flex-shrink-0" />
             <span className="text-[13px]">Inbox</span>
@@ -261,7 +261,7 @@ function ChatSidebar({
             <div className="space-y-0.5 mt-0.5">
               {dms.map(dm => (
                 <button key={dm.id} onClick={() => onSelect(dm.id)}
-                  className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[9px] transition-colors group ${selectedId === dm.id ? "bg-[#fff2ed] text-[#c60f08] dark:bg-[#440608]/40 dark:text-[#ff9571]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}
+                  className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[9px] transition-colors group ${selectedId === dm.id ? "bg-[var(--rally-brand-soft-light)] text-[var(--rally-brand-on-light)] dark:bg-[var(--rally-brand-soft-dark)]/40 dark:text-[var(--rally-brand-on-dark)]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}
                 >
                   <Av name={dm.name} size={22} online={["Sarah Johnson","Mike Chen","Emily Davis"].includes(dm.name)} />
                   <span className={`flex-1 text-[13px] text-left truncate ${dm.unread ? "font-medium text-foreground" : ""}`}>{dm.name}</span>
@@ -292,7 +292,7 @@ function ChatSidebar({
             <div className="space-y-0.5 mt-0.5">
               {textChs.map(ch => (
                 <button key={ch.id} onClick={() => onSelect(ch.id)}
-                  className={`w-full flex items-center gap-2 px-2.5 py-2 rounded-[9px] transition-colors group ${selectedId === ch.id ? "bg-[#fff2ed] text-[#c60f08] dark:bg-[#440608]/40 dark:text-[#ff9571]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}
+                  className={`w-full flex items-center gap-2 px-2.5 py-2 rounded-[9px] transition-colors group ${selectedId === ch.id ? "bg-[var(--rally-brand-soft-light)] text-[var(--rally-brand-on-light)] dark:bg-[var(--rally-brand-soft-dark)]/40 dark:text-[var(--rally-brand-on-dark)]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}
                 >
                   <Hash className="size-3.5 flex-shrink-0" />
                   <span className={`flex-1 text-[13px] text-left truncate ${ch.unread ? "font-medium text-foreground" : ""}`}>{ch.name}</span>
@@ -319,7 +319,7 @@ function ChatSidebar({
                 return (
                   <div key={room.id} className="rounded-[9px] border border-border bg-background overflow-hidden">
                     <div className="flex items-center gap-2 px-2.5 py-2">
-                      <Volume2 className="size-3.5 flex-shrink-0" style={{ color: room.participants.length > 0 ? "#0f6a43" : "#5f514b" }} />
+                      <Volume2 className="size-3.5 flex-shrink-0" style={{ color: room.participants.length > 0 ? "var(--success-solid)" : "var(--text-secondary)" }} />
                       <span className="flex-1 text-[13px] text-foreground text-left truncate">{room.name}</span>
                       {room.participants.length > 0 && (
                         <span className="text-[10px] text-muted-foreground">{room.participants.length}</span>
@@ -347,7 +347,7 @@ function ChatSidebar({
                               <span className="flex gap-0.5 items-end h-3">
                                 {[1,2,3].map(i => (
                                   <span key={i} className="w-0.5 rounded-full"
-                                    style={{ height: [6,10,7][i-1], background: "#0f6a43", animation: `pulse ${0.6+i*0.15}s ease-in-out infinite alternate` }} />
+                                    style={{ height: [6,10,7][i-1], background: "var(--success-solid)", animation: `pulse ${0.6+i*0.15}s ease-in-out infinite alternate` }} />
                                 ))}
                               </span>
                             )}
@@ -366,9 +366,9 @@ function ChatSidebar({
       {/* Me / Voice Controls */}
       <div className="flex-shrink-0 border-t border-border px-3 py-2.5">
         {inVoiceRoom && (
-          <div className="mb-2 px-2.5 py-2 rounded-[9px] border bg-[#eaf7f0] border-[#0f6a43]/30 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: "#0f6a43" }} />
-            <span className="text-[11px] flex-1 truncate" style={{ color: "#0f6a43" }}>
+          <div className="mb-2 px-2.5 py-2 rounded-[9px] border bg-[var(--success-soft-light)] border-[var(--success-solid)]/30 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: "var(--success-solid)" }} />
+            <span className="text-[11px] flex-1 truncate" style={{ color: "var(--success-on-light)" }}>
               {voiceRooms.find(r => r.id === inVoiceRoom)?.name}
             </span>
             <button onClick={onToggleMic} className="text-muted-foreground hover:text-foreground transition-colors">
@@ -435,7 +435,7 @@ function InboxView({
         <div className="space-y-2">
           {needReply.map(item => (
             <div key={item.id}
-              className="flex items-start gap-3 p-3 rounded-[12px] border border-border bg-card hover:border-[#d1aa99] transition-colors cursor-pointer group"
+              className="flex items-start gap-3 p-3 rounded-[12px] border border-border bg-card hover:border-[var(--border-color)] transition-colors cursor-pointer group"
               onClick={() => onOpenChannel(item.id)}>
               <Av name={item.from} size={34} online />
               <div className="flex-1 min-w-0">
@@ -465,15 +465,15 @@ function InboxView({
           {voiceRooms.map(room => (
             <div key={room.id} className="p-3 rounded-[12px] border border-border bg-card">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-7 h-7 rounded-[7px] flex items-center justify-center" style={{ background: "#f5f3ff" }}>
-                  <Volume2 className="size-3.5" style={{ color: "#8B5CF6" }} />
+                <div className="w-7 h-7 rounded-[7px] flex items-center justify-center" style={{ background: "var(--info-soft-light)" }}>
+                  <Volume2 className="size-3.5" style={{ color: "var(--info-on-light)" }} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[12px] font-medium text-foreground truncate">{room.name}</p>
                   <p className="text-[10px] text-muted-foreground">{room.participants.length} in room</p>
                 </div>
                 {room.participants.length > 0 && (
-                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: "#0f6a43" }} />
+                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: "var(--status-active)" }} />
                 )}
               </div>
               <div className="flex items-center gap-1.5 mb-2">
@@ -555,7 +555,7 @@ function InboxView({
           <div className="flex items-center gap-2 mb-3">
             <Sparkles className="size-3.5" style={{ color:"var(--rally-brand)" }} />
             <h2 className="text-[11px] font-medium uppercase tracking-widest" style={{ color: "var(--text-overline)" }}>AI Catch-up</h2>
-            <span className="text-[10px] px-1.5 py-0.5 rounded-full" style={{ background:"#fff2ed", color:"#c60f08" }}>Beta</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium" style={{ background: "var(--badge-calendar-bg)", color: "var(--badge-calendar-text)" }}>Beta</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {aiActions.filter(a => !aiDismissed.includes(a)).map(action => (
@@ -578,7 +578,11 @@ function InboxView({
         <div className="space-y-2">
           {sharedItems.map(item => {
             const iconMap = { file: FileText, task: CheckSquare, event: Calendar };
-            const colorMap = { file: { bg:"#eef4ff", color:"#0f5fd7" }, task: { bg:"#eaf7f0", color:"#0f6a43" }, event: { bg:"#fff4e5", color:"#8a4f00" } };
+            const colorMap = {
+              file:  { bg: "var(--info-soft-light)",    color: "var(--info-on-light)"    },
+              task:  { bg: "var(--success-soft-light)", color: "var(--success-on-light)" },
+              event: { bg: "var(--warning-soft-light)", color: "var(--warning-on-light)" },
+            };
             const Icon = iconMap[item.type];
             const clr = colorMap[item.type];
             return (
@@ -639,7 +643,7 @@ function MessageItem({
         <p className="text-[13px] text-foreground leading-relaxed">{msg.message}</p>
         {msg.attachment && (
           <div className="mt-1.5 flex items-center gap-2 px-3 py-2 rounded-[8px] border border-border bg-background w-fit">
-            <FileText className="size-4" style={{ color:"#0f5fd7" }} />
+            <FileText className="size-4" style={{ color: "var(--info-solid)" }} />
             <div>
               <p className="text-[12px] font-medium text-foreground">{msg.attachment.name}</p>
               <p className="text-[10px] text-muted-foreground">{msg.attachment.size}</p>
@@ -784,7 +788,7 @@ function ChannelView({
             </button>
           )}
           <button onClick={onToggleRightPanel}
-            className={`w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors ${rightPanelOpen ? "bg-[#fff2ed] text-[#c60f08]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}>
+            className={`w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors ${rightPanelOpen ? "bg-[var(--rally-brand-soft)] text-[var(--rally-brand-on)]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}>
             <MoreHorizontal className="size-4" />
           </button>
         </div>
@@ -924,7 +928,7 @@ function ChannelView({
 // ── Right Panel ───────────────────────────────────────────────────────────────
 
 function RightPanel({ selectedChannelId }: { selectedChannelId: string | null }) {
-  const statusDot: Record<string, string> = { active:"#0f6a43", idle:"#8a4f00", dnd:"#d90000" };
+  const statusDot: Record<string, string> = { active:"var(--success-solid)", idle:"var(--warning-on-light)", dnd:"var(--error-solid)" };
   const channelPins = mockMessages.filter(m => m.channelId === selectedChannelId && m.pinned);
   const channelFiles = sharedItems.filter(s => s.channelId === selectedChannelId && s.type === "file");
 
@@ -976,7 +980,7 @@ function RightPanel({ selectedChannelId }: { selectedChannelId: string | null })
           <div className="space-y-2">
             {channelFiles.map(f => (
               <div key={f.id} className="flex items-center gap-2 p-2.5 rounded-[8px] border border-border bg-background hover:bg-muted transition-colors cursor-pointer">
-                <FileText className="size-4 flex-shrink-0" style={{ color:"#0f5fd7" }} />
+                <FileText className="size-4 flex-shrink-0" style={{ color: "var(--info-solid)" }} />
                 <div className="flex-1 min-w-0">
                   <p className="text-[11px] font-medium text-foreground truncate">{f.name}</p>
                   <p className="text-[10px] text-muted-foreground">{f.from} · {f.time}</p>

@@ -160,15 +160,15 @@ const mockThreads: AIThread[] = [
 ];
 
 const todayStrip = [
-  { icon: <CheckSquare className="size-4" />, color: "#0f6a43", bg: "#eaf7f0", label: "2 tasks due today", action: "Prepare me", prompt: "Summarize my tasks due today and help me prioritize" },
-  { icon: <AlarmClock className="size-4" />, color: "#0f5fd7", bg: "#eef4ff", label: "Team standup in 30 min", action: "Prep notes", prompt: "Prepare short talking points for today's team standup" },
-  { icon: <Bell className="size-4" />, color: "#8a4f00", bg: "#fff4e5", label: "3 unread mentions", action: "Catch me up", prompt: "Summarize the messages where I was mentioned today" },
-  { icon: <FileText className="size-4" />, color: "#6b21a8", bg: "#f5f3ff", label: "1 file updated", action: "Review it", prompt: "Summarize recent changes to files updated today" },
+  { icon: <CheckSquare className="size-4" />, color: "var(--success-on)",     bg: "var(--success-soft)",     label: "2 tasks due today",      action: "Prepare me",  prompt: "Summarize my tasks due today and help me prioritize" },
+  { icon: <AlarmClock  className="size-4" />, color: "var(--info-on)",        bg: "var(--info-soft)",        label: "Team standup in 30 min", action: "Prep notes",  prompt: "Prepare short talking points for today's team standup" },
+  { icon: <Bell        className="size-4" />, color: "var(--warning-on)",     bg: "var(--warning-soft)",     label: "3 unread mentions",      action: "Catch me up", prompt: "Summarize the messages where I was mentioned today" },
+  { icon: <FileText    className="size-4" />, color: "var(--info-on)",        bg: "var(--info-soft)",        label: "1 file updated",         action: "Review it",   prompt: "Summarize recent changes to files updated today" },
 ];
 
 const starterGroups = [
   {
-    label: "Catch up", color: "#0f5fd7", bg: "#eef4ff",
+    label: "Catch up", color: "var(--info-on)",        bg: "var(--info-soft)",
     prompts: [
       "What changed since yesterday?",
       "Summarize unread chats",
@@ -176,7 +176,7 @@ const starterGroups = [
     ],
   },
   {
-    label: "Find", color: "#0f6a43", bg: "#eaf7f0",
+    label: "Find",    color: "var(--success-on)",     bg: "var(--success-soft)",
     prompts: [
       "Find the latest file about the launch",
       "Show tasks related to onboarding",
@@ -184,7 +184,7 @@ const starterGroups = [
     ],
   },
   {
-    label: "Create", color: "#6b21a8", bg: "#f5f3ff",
+    label: "Create",  color: "var(--info-on)",        bg: "var(--info-soft)",
     prompts: [
       "Draft a team status update",
       "Turn this discussion into tasks",
@@ -192,7 +192,7 @@ const starterGroups = [
     ],
   },
   {
-    label: "Act", color: "#8a4f00", bg: "#fff4e5",
+    label: "Act",     color: "var(--warning-on)",     bg: "var(--warning-soft)",
     prompts: [
       "Suggest what I should do next",
       "Prepare follow-ups from my last meeting",
@@ -202,12 +202,12 @@ const starterGroups = [
 ];
 
 const quickActions = [
-  { icon: <MessageSquare className="size-4" />, color: "#0f5fd7", bg: "#eef4ff", label: "Summarize recent chat activity", prompt: "Summarize what happened in chat today across all channels" },
-  { icon: <FileText className="size-4" />, color: "#6b21a8", bg: "#f5f3ff", label: "Find a file fast", prompt: "Help me find a recently updated file" },
-  { icon: <PenLine className="size-4" />, color: "#0f6a43", bg: "#eaf7f0", label: "Draft a status update", prompt: "Draft a concise team status update for this week" },
-  { icon: <CheckSquare className="size-4" />, color: "#8a4f00", bg: "#fff4e5", label: "Turn notes into tasks", prompt: "Convert my meeting notes into actionable tasks" },
-  { icon: <Calendar className="size-4" />, color: "#d90000", bg: "#fff0ef", label: "Prepare for next meeting", prompt: "Prepare talking points for my next scheduled meeting" },
-  { icon: <Globe className="size-4" />, color: "#374151", bg: "#f3f4f6", label: "Search web + team knowledge", prompt: "Search both the web and team docs for best practices on remote collaboration" },
+  { icon: <MessageSquare className="size-4" />, color: "var(--info-on)",        bg: "var(--info-soft)",        label: "Summarize recent chat activity",  prompt: "Summarize what happened in chat today across all channels" },
+  { icon: <FileText      className="size-4" />, color: "var(--info-on)",        bg: "var(--info-soft)",        label: "Find a file fast",                prompt: "Help me find a recently updated file" },
+  { icon: <PenLine       className="size-4" />, color: "var(--success-on)",     bg: "var(--success-soft)",     label: "Draft a status update",           prompt: "Draft a concise team status update for this week" },
+  { icon: <CheckSquare   className="size-4" />, color: "var(--warning-on)",     bg: "var(--warning-soft)",     label: "Turn notes into tasks",           prompt: "Convert my meeting notes into actionable tasks" },
+  { icon: <Calendar      className="size-4" />, color: "var(--warning-on)",     bg: "var(--warning-soft)",     label: "Prepare for next meeting",        prompt: "Prepare talking points for my next scheduled meeting" },
+  { icon: <Globe         className="size-4" />, color: "var(--neutral-on)",     bg: "var(--neutral-soft)",     label: "Search web + team knowledge",     prompt: "Search both the web and team docs for best practices on remote collaboration" },
 ];
 
 const sourceDefs: SourceChip[] = [
@@ -284,11 +284,11 @@ function RenderResultCard({
   card, onAction,
 }: { card: ResultCard; onAction?: (prompt: string) => void }) {
   const iconMap: Record<ResultCardType, React.ReactNode> = {
-    files:   <FileText className="size-4" style={{ color: "#6b21a8" }} />,
-    tasks:   <CheckSquare className="size-4" style={{ color: "#0f6a43" }} />,
-    events:  <Calendar className="size-4" style={{ color: "#d90000" }} />,
-    summary: <Sparkles className="size-4" style={{ color: "var(--rally-brand)" }} />,
-    action:  <Zap className="size-4" style={{ color: "#8a4f00" }} />,
+    files:   <FileText   className="size-4" style={{ color: "var(--info-on)"    }} />,
+    tasks:   <CheckSquare className="size-4" style={{ color: "var(--success-on)" }} />,
+    events:  <Calendar   className="size-4" style={{ color: "var(--warning-on)" }} />,
+    summary: <Sparkles   className="size-4" style={{ color: "var(--rally-brand)" }} />,
+    action:  <Zap        className="size-4" style={{ color: "var(--warning-on)" }} />,
   };
   return (
     <div className="mt-2 rounded-[10px] border border-border bg-background overflow-hidden">
@@ -332,15 +332,15 @@ function ActionPreviewCard({
   action, onConfirm, onDeny,
 }: { action: ActionPreview; onConfirm: () => void; onDeny: () => void }) {
   const iconMap = {
-    create_task: <CheckSquare className="size-4" style={{ color: "#0f6a43" }} />,
-    create_event: <Calendar className="size-4" style={{ color: "#d90000" }} />,
-    send_message: <MessageSquare className="size-4" style={{ color: "#0f5fd7" }} />,
-    update_file: <FileText className="size-4" style={{ color: "#6b21a8" }} />,
+    create_task:  <CheckSquare  className="size-4" style={{ color: "var(--success-on)" }} />,
+    create_event: <Calendar     className="size-4" style={{ color: "var(--warning-on)" }} />,
+    send_message: <MessageSquare className="size-4" style={{ color: "var(--info-on)"    }} />,
+    update_file:  <FileText     className="size-4" style={{ color: "var(--info-on)"    }} />,
   };
   return (
     <div className="flex items-start gap-3 p-3 rounded-[10px] border bg-card"
-      style={{ borderColor: "var(--rally-brand-200)", background: "var(--rally-brand-soft-light)" }}>
-      <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0" style={{ background: "var(--rally-brand-soft-light)" }}>
+      style={{ borderColor: "var(--rally-brand-200)", background: "var(--rally-brand-soft)" }}>
+      <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0" style={{ background: "var(--rally-brand-soft)" }}>
         {iconMap[action.type]}
       </div>
       <div className="flex-1 min-w-0">
@@ -500,8 +500,8 @@ function ContextPanel({
         <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Current Context</p>
         <div className="space-y-2.5">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-[7px] flex items-center justify-center flex-shrink-0" style={{ background:"#eef4ff" }}>
-              <Users className="size-3.5" style={{ color:"#0f5fd7" }} />
+            <div className="w-7 h-7 rounded-[7px] flex items-center justify-center flex-shrink-0" style={{ background: "var(--info-soft-light)" }}>
+              <Users className="size-3.5" style={{ color: "var(--info-on-light)" }} />
             </div>
             <div>
               <p className="text-[11px] font-medium text-foreground">Design Team</p>

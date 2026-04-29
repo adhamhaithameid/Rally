@@ -29,6 +29,8 @@ import { FilesV2 } from "./pages/FilesV2";
 import { Team } from "./pages/Team";
 import { TeamV2 } from "./pages/TeamV2";
 import { DesignSystem } from "./pages/DesignSystem";
+import { ColorAuditV2 } from "./pages/ColorAuditV2";
+import { ThemeSettings } from "./pages/ThemeSettings";
 import { NotFound } from "./pages/NotFound";
 
 export const router = createBrowserRouter([
@@ -102,6 +104,8 @@ export const router = createBrowserRouter([
       { path: "team", Component: Team },
       { path: "team-v2", Component: TeamV2 },
       { path: "design-system", Component: DesignSystem },
+      { path: "color-audit",   Component: ColorAuditV2 },
+      { path: "theme-settings",Component: ThemeSettings },
     ],
   },
   {

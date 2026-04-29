@@ -55,10 +55,10 @@ const MONTH_NAMES    = ["January","February","March","April","May","June","July"
 // ── Mock data ─────────────────────────────────────────────────────────────────
 
 const initialLists: CalList[] = [
-  { id: "meetings",    name: "Meetings",    color: "#0f5fd7", visible: true },
+  { id: "meetings",    name: "Meetings",    color: "var(--info-solid)", visible: true },
   { id: "milestones",  name: "Milestones",  color: "var(--rally-brand)", visible: true },
-  { id: "deadlines",   name: "Deadlines",   color: "#d90000", visible: true },
-  { id: "team-events", name: "Team Events", color: "#0f6a43", visible: true },
+  { id: "deadlines",   name: "Deadlines",   color: "var(--error-solid)", visible: true },
+  { id: "team-events", name: "Team Events", color: "var(--success-solid)", visible: true },
   { id: "launches",    name: "Launches",    color: "#6b21a8", visible: true },
 ];
 
@@ -232,9 +232,9 @@ const initialEvents: CalEvent[] = [
 ];
 
 const SCHEDULE_CHANGES = [
-  { id: "sc1", text: "Sprint Planning moved to 10:00 AM", time: "1h ago",   dot: "#0f5fd7" },
-  { id: "sc2", text: "Customer Demo: Demo_Deck_v2 added", time: "3h ago",   dot: "#0f6a43" },
-  { id: "sc3", text: "API Spec Deadline added by Emily",  time: "Yesterday", dot: "#d90000" },
+  { id: "sc1", text: "Sprint Planning moved to 10:00 AM", time: "1h ago",   dot: "var(--info-solid)" },
+  { id: "sc2", text: "Customer Demo: Demo_Deck_v2 added", time: "3h ago",   dot: "var(--success-solid)" },
+  { id: "sc3", text: "API Spec Deadline added by Emily",  time: "Yesterday", dot: "var(--error-solid)" },
 ];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -361,7 +361,7 @@ function Av({ name, size = 22 }: { name: string; size?: number }) {
 
 function linkIcon(type: LinkType) {
   const Icon = type === "chat" ? MessageSquare : type === "voice" ? Mic2 : type === "file" ? FileText : CheckSquare;
-  const colors: Record<LinkType, string> = { chat: "#0f5fd7", voice: "#0f6a43", file: "#6b21a8", task: "#8a4f00" };
+  const colors: Record<LinkType, string> = { chat: "var(--info-solid)", voice: "var(--success-solid)", file: "#6b21a8", task: "var(--warning-on-light)" };
   return <Icon className="size-3.5 flex-shrink-0" style={{ color: colors[type] }} />;
 }
 
@@ -432,7 +432,7 @@ function MiniCalendar({
                   : inWeek && !isTodayD
                   ? "bg-muted text-foreground"
                   : isSelected && !isTodayD
-                  ? "bg-[#fff2ed] text-[#c60f08]"
+                  ? "bg-[var(--rally-brand-soft)] text-[var(--rally-brand-on)]"
                   : isThisMonth
                   ? "text-foreground hover:bg-muted"
                   : "text-muted-foreground/40 hover:bg-muted"
@@ -452,7 +452,7 @@ function MiniCalendar({
 // ── Up Next card ──────────────────────────────────────────────────────────────
 
 function UpNextCard({ events, lists }: { events: CalEvent[]; lists: CalList[] }) {
-  const getColor = (id: string) => lists.find(l => l.id === id)?.color ?? "#6b7280";
+  const getColor = (id: string) => lists.find(l => l.id === id)?.color ?? "var(--text-tertiary)";
 
   const todayTimed = events
     .filter(e => e.date === TODAY && e.startTime && !e.allDay)
@@ -699,7 +699,7 @@ function WeekView({
   const gridRef = useRef<HTMLDivElement>(null);
   const weekDays = Array.from({ length: 5 }, (_, i) => dateToStr(addDays(weekStart, i)));
   const visibleIds = new Set(lists.filter(l => l.visible).map(l => l.id));
-  const getColor = (id: string) => lists.find(l => l.id === id)?.color ?? "#6b7280";
+  const getColor = (id: string) => lists.find(l => l.id === id)?.color ?? "var(--text-tertiary)";
   const curTop = currentTimePx();
 
   useEffect(() => {
@@ -821,9 +821,9 @@ function WeekView({
                 {today && curTop >= 0 && curTop <= TOTAL_GRID_H && (
                   <div className="absolute w-full z-10 pointer-events-none"
                     style={{ top: curTop }}>
-                    <div className="absolute w-2.5 h-2.5 rounded-full -mt-1.5 -ml-1 border-2 border-white"
-                      style={{ background: "#d90000" }} />
-                    <div className="w-full h-0.5" style={{ background: "#d90000", opacity: 0.85 }} />
+                    <div className="absolute w-2.5 h-2.5 rounded-full -mt-1.5 -ml-1 border-2 border-card"
+                      style={{ background: "var(--error-solid)" }} />
+                    <div className="w-full h-0.5" style={{ background: "var(--error-solid)", opacity: 0.85 }} />
                   </div>
                 )}
               </div>
@@ -845,7 +845,7 @@ function AgendaView({
   onEventClick: (e: CalEvent) => void;
 }) {
   const visibleIds = new Set(lists.filter(l => l.visible).map(l => l.id));
-  const getColor   = (id: string) => lists.find(l => l.id === id)?.color ?? "#6b7280";
+  const getColor   = (id: string) => lists.find(l => l.id === id)?.color ?? "var(--text-tertiary)";
 
   const days = Array.from({ length: 14 }, (_, i) => dateToStr(addDays(startDate, i)));
 
@@ -922,7 +922,7 @@ function MonthView({
   onDayClick: (d: Date) => void;
 }) {
   const visibleIds = new Set(lists.filter(l => l.visible).map(l => l.id));
-  const getColor   = (id: string) => lists.find(l => l.id === id)?.color ?? "#6b7280";
+  const getColor   = (id: string) => lists.find(l => l.id === id)?.color ?? "var(--text-tertiary)";
   const days       = getMiniCalDays(year, month);
 
   return (
@@ -999,7 +999,7 @@ function EventDetailPanel({
   const [editTitle,   setEditTitle]   = useState(event.title);
   const [editDesc,    setEditDesc]    = useState(event.description ?? "");
 
-  const color = lists.find(l => l.id === event.calendarId)?.color ?? "#6b7280";
+  const color = lists.find(l => l.id === event.calendarId)?.color ?? "var(--text-tertiary)";
   const list  = lists.find(l => l.id === event.calendarId);
 
   useEffect(() => {
@@ -1148,7 +1148,7 @@ function EventDetailPanel({
             <div className="space-y-1.5">
               {event.links.map((lk, i) => {
                 const labelColors: Record<LinkType, string> = {
-                  chat:  "#0f5fd7", voice: "#0f6a43", file: "#6b21a8", task: "#8a4f00",
+                  chat:  "var(--info-solid)", voice: "var(--success-solid)", file: "#6b21a8", task: "var(--warning-on-light)",
                 };
                 return (
                   <div key={i} className="flex items-center gap-2 px-2.5 py-2 rounded-[8px] border border-border bg-background hover:bg-muted transition-colors cursor-pointer">
@@ -1274,7 +1274,7 @@ function NewEventModal({
               <div className="flex items-center gap-2 mt-4">
                 <button onClick={() => set("allDay", !form.allDay)}
                   className={`w-8 h-5 rounded-full transition-colors relative ${form.allDay ? "bg-[var(--rally-brand)]" : "bg-muted"}`}>
-                  <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${form.allDay ? "translate-x-3" : "translate-x-0.5"}`} />
+                  <span className={`absolute top-0.5 w-4 h-4 bg-card rounded-full shadow transition-transform ${form.allDay ? "translate-x-3" : "translate-x-0.5"}`} />
                 </button>
                 <span className="text-[11px] text-muted-foreground">All day</span>
               </div>

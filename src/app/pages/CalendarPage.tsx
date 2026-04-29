@@ -519,7 +519,7 @@ export function CalendarPage() {
                   } ${canManageCalendars ? "rounded-xl rounded-r-none border-r-0" : "rounded-xl"}`}
                   style={isOnlySelected ? { backgroundColor: calendar.color, borderColor: calendar.color } : {}}
                 >
-                  <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: isOnlySelected ? "white" : calendar.color }} />
+                  <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: isOnlySelected ? "currentColor" : calendar.color }} />
                   {calendar.name}
                 </button>
                 {canManageCalendars && (

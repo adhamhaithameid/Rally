@@ -51,7 +51,7 @@ const EXT: Record<string, { color: string; bg: string; label: string }> = {
 const EXTS = (ext: string) => EXT[ext] ?? { color: "#6B7280", bg: "#f3f4f6", label: "File" };
 
 const LINK_COLOR: Record<LinkKind, string> = {
-  chat: "#0f5fd7", task: "#8a4f00", event: "#d90000", ai: "var(--rally-brand)",
+  chat: "var(--info-solid)", task: "var(--warning-on-light)", event: "var(--error-solid)", ai: "var(--rally-brand)",
 };
 const LINK_ICON: Record<LinkKind, React.ElementType> = {
   chat: MessageSquare, task: CheckSquare, event: Calendar, ai: Sparkles,
@@ -313,7 +313,8 @@ function FileRow({
               ].map(item => (
                 <button key={item.label}
                   onClick={e => { e.stopPropagation(); setMenu(false); }}
-                  className={`w-full flex items-center gap-2 px-3 py-2 text-[12px] hover:bg-muted transition-colors ${(item as any).danger ? "text-red-500" : "text-foreground"}`}>
+                  className={`w-full flex items-center gap-2 px-3 py-2 text-[12px] hover:bg-muted transition-colors ${(item as any).danger ? "" : "text-foreground"}`}
+                  style={(item as any).danger ? { color: "var(--error-on-light)" } : {}}>
                   <item.icon className="size-3.5" /> {item.label}
                 </button>
               ))}
@@ -377,7 +378,7 @@ function FileCard({
 function FolderTile({ folder, onClick }: { folder: FolderItem; onClick: () => void }) {
   return (
     <button onClick={onClick}
-      className="flex items-center gap-3 px-4 py-3.5 rounded-[12px] border border-border bg-card hover:bg-muted/40 hover:border-[#d1aa99] transition-all text-left w-full group">
+      className="flex items-center gap-3 px-4 py-3.5 rounded-[12px] border border-border bg-card hover:bg-muted/40 hover:border-[var(--border-color)] transition-all text-left w-full group">
       <div className="w-9 h-9 rounded-[10px] flex items-center justify-center flex-shrink-0"
         style={{ background: `${folder.color}18` }}>
         <Folder className="size-5" style={{ color: folder.color }} />
@@ -397,7 +398,7 @@ function ContinueCard({ file, onSelect }: { file: FileItem; onSelect: () => void
   const cfg = EXTS(file.ext);
   return (
     <button onClick={onSelect}
-      className="flex-shrink-0 w-44 rounded-[12px] border border-border bg-card hover:bg-muted/30 hover:border-[#d1aa99] transition-all text-left overflow-hidden group">
+      className="flex-shrink-0 w-44 rounded-[12px] border border-border bg-card hover:bg-muted/30 hover:border-[var(--border-color)] transition-all text-left overflow-hidden group">
       <div className="h-16 flex items-center justify-center" style={{ background: `${cfg.color}10` }}>
         <span className="text-[24px] font-black" style={{ color: `${cfg.color}40` }}>
           {file.ext.toUpperCase()}
@@ -454,9 +455,9 @@ function LeftRail({
           return (
             <button key={item.id} onClick={() => onView(item.id)}
               className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-[8px] text-left text-[12px] transition-colors ${
-                active ? "text-[#c60f08] font-medium" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                active ? "text-[var(--rally-brand-on)] font-medium" : "text-muted-foreground hover:bg-muted hover:text-foreground"
               }`}
-              style={active ? { background: "#fff2ed" } : {}}>
+              style={active ? { background: "var(--rally-brand-soft)" } : {}}>
               <Icon className="size-4 flex-shrink-0" />
               {item.label}
             </button>
@@ -956,7 +957,8 @@ function FileDetailPanel({
               <button className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-[8px] border border-border bg-background text-foreground hover:bg-muted transition-colors text-[12px]">
                 <Pencil className="size-3.5" /> Rename
               </button>
-              <button className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-[8px] border border-border bg-background text-red-500 hover:bg-red-50 transition-colors text-[12px] ml-auto">
+              <button className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-[8px] border border-border bg-background transition-colors text-[12px] ml-auto hover:bg-muted"
+                style={{ color: "var(--error-on-light)" }}>
                 <Trash2 className="size-3.5" />
               </button>
             </>

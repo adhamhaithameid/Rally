@@ -16,10 +16,10 @@ type CreateStep = 1 | 2 | 3;
 // ── Config ────────────────────────────────────────────────────────────────────
 
 const ROLE_CFG: Record<Role, { label: string; color: string; bg: string; Icon: React.ElementType }> = {
-  owner:  { label: "Owner",  color: "var(--rally-brand)", bg: "var(--rally-brand-soft-light)", Icon: Crown },
-  admin:  { label: "Admin",  color: "#0f5fd7", bg: "#eef4ff", Icon: Shield    },
-  member: { label: "Member", color: "#0f6a43", bg: "#eaf7f0", Icon: UserCheck },
-  viewer: { label: "Viewer", color: "#6b7280", bg: "#f3f4f6", Icon: Eye       },
+  owner:  { label: "Owner",  color: "var(--rally-brand-on-light)", bg: "var(--rally-brand-soft-light)", Icon: Crown     },
+  admin:  { label: "Admin",  color: "var(--info-on-light)",        bg: "var(--info-soft-light)",        Icon: Shield    },
+  member: { label: "Member", color: "var(--success-on-light)",     bg: "var(--success-soft-light)",     Icon: UserCheck },
+  viewer: { label: "Viewer", color: "var(--neutral-on-light)",     bg: "var(--neutral-soft-light)",     Icon: Eye       },
 };
 
 // ── Mock data ─────────────────────────────────────────────────────────────────
@@ -179,7 +179,7 @@ function TeamCard({ team, onSelect }: { team: MockTeam; onSelect: (id: number) =
         <div className="flex items-center gap-3">
           {/* Online indicator */}
           <div className="flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#10B981" }} />
+            <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--status-active)" }} />
             <span className="text-[11px] text-muted-foreground">{team.online} online</span>
           </div>
           {/* Last active */}
@@ -251,7 +251,7 @@ function CreatePanel({ onClose, onDone }: { onClose: () => void; onDone: () => v
         {step === 1 && (
           <div className="space-y-4">
             <div>
-              <label className="block text-[11px] font-medium text-foreground mb-1.5">Team Name <span className="text-red-400">*</span></label>
+              <label className="block text-[11px] font-medium text-foreground mb-1.5">Team Name <span style={{ color: "var(--error-on-light)" }}>*</span></label>
               <input value={teamName} onChange={e => setTeamName(e.target.value)}
                 placeholder="e.g. Design Team"
                 autoFocus
@@ -259,7 +259,7 @@ function CreatePanel({ onClose, onDone }: { onClose: () => void; onDone: () => v
               <p className="text-[10px] text-muted-foreground mt-1">The name of your team or department</p>
             </div>
             <div>
-              <label className="block text-[11px] font-medium text-foreground mb-1.5">Project Name <span className="text-red-400">*</span></label>
+              <label className="block text-[11px] font-medium text-foreground mb-1.5">Project Name <span style={{ color: "var(--error-on-light)" }}>*</span></label>
               <input value={projName} onChange={e => setProjName(e.target.value)}
                 placeholder="e.g. Website Redesign"
                 className="w-full px-3 py-2.5 rounded-[8px] border border-border bg-background text-foreground text-[13px] outline-none focus:border-[var(--rally-brand)] transition-colors placeholder:text-muted-foreground" />
@@ -447,7 +447,7 @@ function JoinPanel({ onClose, onDone }: { onClose: () => void; onDone: () => voi
             <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
               <span className="flex items-center gap-1"><Users className="size-3" /> 15 members</span>
               <span className="flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#10B981" }} />
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--status-active)" }} />
                 4 online
               </span>
               <span className="flex items-center gap-1"><Hash className="size-3" /> 3 channels</span>
@@ -582,7 +582,7 @@ export function TeamSelectionV2() {
                   {MOCK_TEAMS.length} workspaces
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full" style={{ background: "#10B981" }} />
+                  <span className="w-2 h-2 rounded-full" style={{ background: "var(--status-active)" }} />
                   {MOCK_TEAMS.reduce((s, t) => s + t.online, 0)} people online
                 </span>
                 <span className="flex items-center gap-1.5">

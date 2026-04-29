@@ -25,6 +25,18 @@
   --rally-brand-soft:     var(--rally-brand-soft-light);
   --rally-brand-on:       var(--rally-brand-on-light);
 
+  /* ── Adaptive semantic shorthand tokens (auto-switch light/dark) ── */
+  --error-soft:    var(--error-soft-light);
+  --error-on:      var(--error-on-light);
+  --warning-soft:  var(--warning-soft-light);
+  --warning-on:    var(--warning-on-light);
+  --success-soft:  var(--success-soft-light);
+  --success-on:    var(--success-on-light);
+  --info-soft:     var(--info-soft-light);
+  --info-on:       var(--info-on-light);
+  --neutral-soft:  var(--neutral-soft-light);
+  --neutral-on:    var(--neutral-on-light);
+
   /* ── Base Layer ─────────────────────────────────── */
   --canvas:     #ffe1d2;
   --surface:    #fff7f3;
@@ -135,8 +147,10 @@
   --secondary-foreground: var(--text-primary);
   --muted: var(--neutral-soft-light);
   --muted-foreground: var(--neutral-on-light);
-  --accent: #ffe1d2;
-  --accent-foreground: var(--text-primary);
+  /* --accent / --accent-foreground reference --selected-bg / --selected-text which
+     PaletteContext overrides inline per theme — makes selection fully theme-adaptive */
+  --accent:             var(--selected-bg);
+  --accent-foreground:  var(--selected-text);
   --destructive: var(--error-solid);
   --destructive-foreground: #ffffff;
   --border: var(--border-color);
@@ -146,6 +160,10 @@
   --ring: var(--focus-ring);
   --font-weight-medium: 500;
   --font-weight-normal: 400;
+
+  /* ── Interaction overlay tokens (neutral, mode-adaptive) ── */
+  --interactive-hover-bg:  rgba(35, 29, 26, 0.07);
+  --interactive-active-bg: rgba(35, 29, 26, 0.13);
 
   /* Charts */
   --chart-1: #ff4615;
@@ -183,6 +201,18 @@
   /* ── Adaptive brand tokens (dark overrides) ─────────────── */
   --rally-brand-soft: var(--rally-brand-soft-dark);
   --rally-brand-on:   var(--rally-brand-on-dark);
+
+  /* ── Adaptive semantic shorthand tokens (dark overrides) ── */
+  --error-soft:    var(--error-soft-dark);
+  --error-on:      var(--error-on-dark);
+  --warning-soft:  var(--warning-soft-dark);
+  --warning-on:    var(--warning-on-dark);
+  --success-soft:  var(--success-soft-dark);
+  --success-on:    var(--success-on-dark);
+  --info-soft:     var(--info-soft-dark);
+  --info-on:       var(--info-on-dark);
+  --neutral-soft:  var(--neutral-soft-dark);
+  --neutral-on:    var(--neutral-on-dark);
 
   /* ── Adaptive text tokens (dark overrides) ──────────────── */
   --text-overline: var(--text-secondary);  /* elevate to secondary in dark for WCAG AA */
@@ -227,8 +257,9 @@
   --secondary-foreground: var(--text-primary);
   --muted: var(--neutral-soft-dark);
   --muted-foreground: var(--neutral-on-dark);
-  --accent: var(--rally-brand-soft-dark);
-  --accent-foreground: var(--text-primary);
+  /* --accent / --accent-foreground cascade from :root (var(--selected-bg) / var(--selected-text))
+     using the dark --selected-bg / --selected-text overrides above, and are further
+     overridden inline per theme by PaletteContext */
   --destructive: var(--error-hover);
   --destructive-foreground: var(--error-on-dark);
   --border: var(--border-color);
@@ -238,6 +269,10 @@
   --ring: var(--focus-ring);
   --font-weight-medium: 500;
   --font-weight-normal: 400;
+
+  /* ── Interaction overlay tokens (dark overrides) ── */
+  --interactive-hover-bg:  rgba(255, 255, 255, 0.09);
+  --interactive-active-bg: rgba(255, 255, 255, 0.16);
 
   /* Charts */
   --chart-1: #ff9571;
@@ -284,6 +319,9 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  /* Interaction overlays — use as bg-[var(--interactive-hover-bg)] etc. */
+  --color-interactive-hover: var(--interactive-hover-bg);
+  --color-interactive-active: var(--interactive-active-bg);
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
@@ -301,6 +339,13 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  *:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--focus-ring);
+    border-radius: var(--radius);
   }
 
   body {

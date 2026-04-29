@@ -43,26 +43,26 @@ const TODAY = "2026-04-21";
 const NOW   = new Date(TODAY).getTime();
 
 const PRIORITY: Record<Priority, { label: string; color: string; bg: string; dot: string }> = {
-  urgent: { label: "Urgent", color: "#d90000", bg: "#fff0ef", dot: "#d90000" },
-  high:   { label: "High",   color: "#8a4f00", bg: "#fff4e5", dot: "#f97316" },
-  medium: { label: "Medium", color: "#0f5fd7", bg: "#eef4ff", dot: "#3b82f6" },
-  low:    { label: "Low",    color: "#0f6a43", bg: "#eaf7f0", dot: "#10b981" },
+  urgent: { label: "Urgent", color: "var(--error-on)",       bg: "var(--error-soft)",       dot: "var(--error-solid)"   },
+  high:   { label: "High",   color: "var(--rally-brand-on)", bg: "var(--rally-brand-soft)", dot: "var(--rally-brand)"   },
+  medium: { label: "Medium", color: "var(--info-on)",        bg: "var(--info-soft)",        dot: "var(--info-solid)"    },
+  low:    { label: "Low",    color: "var(--success-on)",     bg: "var(--success-soft)",     dot: "var(--success-solid)" },
 };
 
 const STATUS: Record<Status, { label: string; color: string; bg: string }> = {
-  "todo":        { label: "To Do",       color: "#6b7280", bg: "#f3f4f6" },
-  "in-progress": { label: "In Progress", color: "#0f5fd7", bg: "#eef4ff" },
-  "blocked":     { label: "Blocked",     color: "#d90000", bg: "#fff0ef" },
-  "done":        { label: "Done",        color: "#0f6a43", bg: "#eaf7f0" },
+  "todo":        { label: "To Do",       color: "var(--neutral-on)",  bg: "var(--neutral-soft)"  },
+  "in-progress": { label: "In Progress", color: "var(--info-on)",     bg: "var(--info-soft)"     },
+  "blocked":     { label: "Blocked",     color: "var(--error-on)",    bg: "var(--error-soft)"    },
+  "done":        { label: "Done",        color: "var(--success-on)",  bg: "var(--success-soft)"  },
 };
 
 const LABEL: Record<LabelKey, { color: string; bg: string }> = {
-  design:      { color: "#6b21a8", bg: "#f5f3ff" },
-  engineering: { color: "#0f5fd7", bg: "#eef4ff" },
-  planning:    { color: "#0f6a43", bg: "#eaf7f0" },
-  review:      { color: "#8a4f00", bg: "#fff4e5" },
-  bug:         { color: "#d90000", bg: "#fff0ef" },
-  feature:     { color: "#374151", bg: "#f3f4f6" },
+  design:      { color: "var(--info-on)",        bg: "var(--info-soft)"        },
+  engineering: { color: "var(--info-on)",        bg: "var(--info-soft)"        },
+  planning:    { color: "var(--success-on)",     bg: "var(--success-soft)"     },
+  review:      { color: "var(--warning-on)",     bg: "var(--warning-soft)"     },
+  bug:         { color: "var(--error-on)",       bg: "var(--error-soft)"       },
+  feature:     { color: "var(--neutral-on)",     bg: "var(--neutral-soft)"     },
 };
 
 // ── Mock data ─────────────────────────────────────────────────────────────────
@@ -197,8 +197,8 @@ function dueDateColor(d?: string) {
   if (!d) return "text-muted-foreground";
   const due = new Date(d).getTime();
   const today = new Date(TODAY).setHours(0,0,0,0);
-  if (due < today) return "text-red-600 dark:text-red-400";
-  if (due === today) return "text-orange-600 dark:text-orange-400";
+  if (due < today) return "text-[var(--error-on)]";
+  if (due === today) return "text-[var(--warning-on)]";
   return "text-muted-foreground";
 }
 
@@ -228,10 +228,10 @@ function FocusStrip({ tasks, onFilter }: { tasks: Task[]; onFilter: (g: TimeGrou
   const doneToday= tasks.filter(t => t.status === "done" && t.completedAt?.startsWith(TODAY)).length;
 
   const cards = [
-    { label: "Overdue",    value: overdue,   color: "#d90000", bg: "#fff0ef", border: "#f5c2c2", action: () => onFilter("overdue") },
-    { label: "Due Today",  value: dueToday,  color: "#8a4f00", bg: "#fff4e5", border: "#f5d6a8", action: () => onFilter("today") },
-    { label: "Blocked",    value: blocked,   color: "#6b21a8", bg: "#f5f3ff", border: "#d8b4fe", action: () => onFilter("blocked") },
-    { label: "Done Today", value: doneToday, color: "#0f6a43", bg: "#eaf7f0", border: "#a7f3d0", action: () => {} },
+    { label: "Overdue",    value: overdue,   color: "var(--error-on)",   bg: "var(--error-soft)",   border: "var(--error-solid)",   action: () => onFilter("overdue")  },
+    { label: "Due Today",  value: dueToday,  color: "var(--warning-on)", bg: "var(--warning-soft)", border: "var(--warning-solid)", action: () => onFilter("today")    },
+    { label: "Blocked",    value: blocked,   color: "var(--neutral-on)", bg: "var(--neutral-soft)", border: "var(--border-color)",  action: () => onFilter("blocked")  },
+    { label: "Done Today", value: doneToday, color: "var(--success-on)", bg: "var(--success-soft)", border: "var(--success-solid)", action: () => {}                   },
   ];
 
   return (
@@ -680,7 +680,7 @@ function BoardView({ tasks, selectedId, onSelect, onAdd, canEdit }: {
               <span className="ml-auto text-[11px]" style={{ color: col.accentColor }}>{colTasks.length}</span>
               {canEdit && (
                 <button onClick={() => onAdd(col.status)}
-                  className="w-5 h-5 flex items-center justify-center rounded transition-colors hover:bg-white/50">
+                  className="w-5 h-5 flex items-center justify-center rounded transition-colors hover:bg-[var(--interactive-hover-bg)]">
                   <Plus className="size-3.5" style={{ color: col.accentColor }} />
                 </button>
               )}

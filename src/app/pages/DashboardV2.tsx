@@ -34,12 +34,12 @@ function Avatar({
 
 function Badge({ label, variant }: { label: string; variant: "brand"|"success"|"warning"|"error"|"info"|"neutral" }) {
   const styles = {
-    brand:   { bg: "#fff2ed", color: "#c60f08" },
-    success: { bg: "#eaf7f0", color: "#0f6a43" },
-    warning: { bg: "#fff4e5", color: "#8a4f00" },
-    error:   { bg: "#fdecec", color: "#b00000" },
-    info:    { bg: "#eef4ff", color: "#0f5fd7" },
-    neutral: { bg: "#f4ece8", color: "#5f514b" },
+    brand:   { bg: "var(--rally-brand-soft)", color: "var(--rally-brand-on)" },
+    success: { bg: "var(--success-soft)",     color: "var(--success-on)"     },
+    warning: { bg: "var(--warning-soft)",     color: "var(--warning-on)"     },
+    error:   { bg: "var(--error-soft)",       color: "var(--error-on)"       },
+    info:    { bg: "var(--info-soft)",        color: "var(--info-on)"        },
+    neutral: { bg: "var(--neutral-soft)",     color: "var(--neutral-on)"     },
   }[variant];
   return (
     <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium flex-shrink-0"
@@ -63,7 +63,7 @@ function CardHeader({ title, icon: Icon, action, iconColor }: {
   return (
     <div className="flex items-center gap-2 px-4 pt-4 pb-3 border-b border-[var(--border-subtle)]">
       {Icon && <Icon className="size-4 flex-shrink-0" style={{ color: iconColor ?? "var(--text-muted)" }} />}
-      <span className="text-[13px] font-medium text-foreground flex-1">{title}</span>
+      <span className="text-[14px] font-medium text-foreground flex-1">{title}</span>
       {action}
     </div>
   );
@@ -123,27 +123,27 @@ const aiSuggestions = [
 ];
 
 const quickActions = [
-  { id: 1, label: "Create Task", icon: CheckSquare, color: "#0f5fd7", bg: "#eef4ff", path: "/app/todo" },
-  { id: 2, label: "Upload File", icon: Upload, color: "#0f6a43", bg: "#eaf7f0", path: "/app/files" },
-  { id: 3, label: "New Event", icon: Calendar, color: "#8a4f00", bg: "#fff4e5", path: "/app/calendar" },
-  { id: 4, label: "Open AI", icon: Bot, color: "#c60f08", bg: "#fff2ed", path: "/app/ai-chat" },
-  { id: 5, label: "Start Chat", icon: MessageSquare, color: "#5f514b", bg: "#f4ece8", path: "/app/chat" },
-  { id: 6, label: "Join Voice", icon: Video, color: "#8B5CF6", bg: "#f5f3ff" },
+  { id: 1, label: "Create Task",  icon: CheckSquare,   color: "var(--info-on)",        bg: "var(--info-soft)",        path: "/app/todo"      },
+  { id: 2, label: "Upload File",  icon: Upload,        color: "var(--success-on)",     bg: "var(--success-soft)",     path: "/app/files"     },
+  { id: 3, label: "New Event",    icon: Calendar,      color: "var(--warning-on)",     bg: "var(--warning-soft)",     path: "/app/calendar"  },
+  { id: 4, label: "Open AI",      icon: Bot,           color: "var(--rally-brand-on)", bg: "var(--rally-brand-soft)", path: "/app/ai-chat"   },
+  { id: 5, label: "Start Chat",   icon: MessageSquare, color: "var(--neutral-on)",     bg: "var(--neutral-soft)",     path: "/app/chat"      },
+  { id: 6, label: "Join Voice",   icon: Video,         color: "var(--info-on)",        bg: "var(--info-soft)"                                },
 ];
 
 const fileIconColor: Record<string, string> = {
-  figma: "#a259ff",
-  pdf: "#d90000",
-  json: "#0f6a43",
+  figma: "var(--neutral-on)",
+  pdf:   "var(--error-solid)",
+  json:  "var(--success-on)",
 };
 
 // ── Subcomponents ─────────────────────────────────────────────────────────────
 
 function TaskStatusIcon({ status }: { status: string }) {
-  if (status === "overdue") return <AlertCircle className="size-4 flex-shrink-0" style={{ color: "#d90000" }} />;
-  if (status === "today") return <Clock className="size-4 flex-shrink-0" style={{ color: "#8a4f00" }} />;
-  if (status === "inprogress") return <RefreshCw className="size-4 flex-shrink-0" style={{ color: "#0f5fd7" }} />;
-  if (status === "blocked") return <PauseCircle className="size-4 flex-shrink-0" style={{ color: "#5f514b" }} />;
+  if (status === "overdue")    return <AlertCircle className="size-4 flex-shrink-0" style={{ color: "var(--error-solid)"  }} />;
+  if (status === "today")      return <Clock       className="size-4 flex-shrink-0" style={{ color: "var(--warning-on)"  }} />;
+  if (status === "inprogress") return <RefreshCw   className="size-4 flex-shrink-0" style={{ color: "var(--info-on)"     }} />;
+  if (status === "blocked")    return <PauseCircle className="size-4 flex-shrink-0" style={{ color: "var(--neutral-on)"  }} />;
   return <Circle className="size-4 flex-shrink-0 text-muted-foreground" />;
 }
 
@@ -188,7 +188,7 @@ function TopNav() {
       <div ref={teamRef} className="relative">
         <button
           onClick={() => setTeamOpen((o) => !o)}
-          className="flex items-center gap-2.5 px-3 py-2 rounded-[10px] border border-border bg-background hover:bg-muted transition-colors"
+          className="flex items-center gap-2.5 px-3 py-2 rounded-[10px] border border-border bg-background hover:bg-muted transition-all duration-[120ms] active:bg-muted active:scale-[0.97]"
         >
           <div className="w-6 h-6 rounded-[6px] flex items-center justify-center flex-shrink-0" style={{ background: "var(--rally-brand)" }}>
             <svg viewBox="27 26 133 127" width="14" height="14" fill="none">
@@ -196,7 +196,7 @@ function TopNav() {
             </svg>
           </div>
           <div className="text-left hidden sm:block">
-            <p className="text-[13px] font-medium text-foreground leading-none">{currentTeam?.name ?? "Select team"}</p>
+            <p className="text-[14px] font-medium text-foreground leading-none">{currentTeam?.name ?? "Select team"}</p>
             <p className="text-[10px] text-muted-foreground mt-0.5">{currentTeam?.projectName ?? ""}</p>
           </div>
           <ChevronDown className="size-3.5 text-muted-foreground flex-shrink-0" />
@@ -207,20 +207,20 @@ function TopNav() {
             <p className="text-[10px] font-medium uppercase tracking-widest px-3 py-2" style={{ color: "var(--text-overline)" }}>Your teams</p>
             {teams.map((t) => (
               <button key={t.teamId}
-                className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-muted transition-colors text-left"
+                className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] text-left"
                 onClick={() => { setTeamOpen(false); }}>
                 <div className="w-7 h-7 rounded-[6px] flex items-center justify-center text-white text-[11px] font-medium" style={{ background: "var(--rally-brand)" }}>
                   {t.teamName.charAt(0)}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[13px] text-foreground truncate">{t.teamName}</p>
+                  <p className="text-[14px] text-foreground truncate">{t.teamName}</p>
                   <p className="text-[11px] text-muted-foreground truncate">{t.projectName}</p>
                 </div>
                 <Badge label={t.role} variant={t.role === "owner" ? "brand" : t.role === "admin" ? "info" : t.role === "member" ? "success" : "neutral"} />
               </button>
             ))}
             <div className="border-t border-[var(--border-subtle)] mt-1 pt-1">
-              <button className="w-full flex items-center gap-2 px-3 py-2 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors text-[13px]">
+              <button className="w-full flex items-center gap-2 px-3 py-2 hover:bg-muted text-muted-foreground hover:text-foreground transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] text-[14px] font-medium">
                 <Plus className="size-4" /> Create or join team
               </button>
             </div>
@@ -235,7 +235,7 @@ function TopNav() {
           <input
             type="text"
             placeholder="Search people, tasks, files, channels..."
-            className="flex-1 bg-transparent text-[13px] text-foreground placeholder:text-muted-foreground outline-none"
+            className="flex-1 bg-transparent text-[14px] text-foreground placeholder:text-muted-foreground outline-none"
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setSearchFocused(false)}
           />
@@ -251,7 +251,7 @@ function TopNav() {
         <div ref={newRef} className="relative">
           <button
             onClick={() => setNewOpen((o) => !o)}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-[10px] text-[13px] font-medium text-white transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-[10px] text-[14px] font-medium text-white transition-all duration-[120ms] active:bg-[var(--rally-brand-pressed)] active:scale-[0.97]"
             style={{ background: "var(--rally-brand)" }}
           >
             <Plus className="size-4" />
@@ -269,7 +269,7 @@ function TopNav() {
               ].map((item) => (
                 <button key={item.label}
                   onClick={() => { setNewOpen(false); navigate(item.path); }}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-muted transition-colors text-[13px] text-foreground">
+                  className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] text-[14px] text-foreground font-medium">
                   <item.icon className="size-4 text-muted-foreground" />
                   {item.label}
                 </button>
@@ -282,7 +282,7 @@ function TopNav() {
         <div ref={notifRef} className="relative">
           <button
             onClick={() => setNotifOpen((o) => !o)}
-            className="relative w-9 h-9 flex items-center justify-center rounded-[10px] border border-border bg-background hover:bg-muted transition-colors"
+            className="relative w-9 h-9 flex items-center justify-center rounded-[10px] border border-border bg-background hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] active:scale-[0.94]"
           >
             <Bell className="size-4 text-foreground" />
             {unreadCount > 0 && (
@@ -295,11 +295,11 @@ function TopNav() {
           {notifOpen && (
             <div className="absolute top-full right-0 mt-1.5 w-80 bg-card border border-border rounded-[12px] shadow-lg z-50 overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-subtle)]">
-                <span className="text-[13px] font-medium text-foreground">Notifications</span>
-                <button className="text-[11px] text-muted-foreground hover:text-foreground transition-colors">Mark all read</button>
+                <span className="text-[14px] font-medium text-foreground">Notifications</span>
+                <button className="text-[11px] font-medium text-muted-foreground hover:text-foreground transition-all duration-[120ms] active:text-foreground">Mark all read</button>
               </div>
               {mentions.map((m) => (
-                <div key={m.id} className={`flex gap-3 px-4 py-3 border-b border-[var(--border-subtle)] last:border-none hover:bg-muted transition-colors cursor-pointer ${m.unread ? "bg-[#fff2ed]/40 dark:bg-[#440608]/20" : ""}`}>
+                <div key={m.id} className={`flex gap-3 px-4 py-3 border-b border-[var(--border-subtle)] last:border-none hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] cursor-pointer ${m.unread ? "bg-[var(--rally-brand-soft-light)]/40 dark:bg-[var(--rally-brand-soft-dark)]/20" : ""}`}>
                   <Avatar name={m.user} size={32} />
                   <div className="flex-1 min-w-0">
                     <p className="text-[12px] text-foreground"><span className="font-medium">{m.user}</span> {m.type === "mention" ? `mentioned you in ${m.channel}` : "sent you a DM"}</p>
@@ -309,7 +309,7 @@ function TopNav() {
                   {m.unread && <div className="w-2 h-2 rounded-full flex-shrink-0 mt-1" style={{ background: "var(--rally-brand)" }} />}
                 </div>
               ))}
-              <button className="w-full px-4 py-3 text-[12px] text-center text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
+              <button className="w-full px-4 py-3 text-[12px] font-medium text-center text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)]">
                 View all notifications
               </button>
             </div>
@@ -339,10 +339,10 @@ function AIDailyBrief() {
   const navigate = useNavigate();
 
   const summary = [
-    { icon: Clock, text: "2 tasks are due today", sub: "Review prototype + weekly report", color: "#8a4f00" },
-    { icon: Calendar, text: "1 meeting in 40 minutes", sub: "Client review at 2:00 PM", color: "#0f5fd7" },
-    { icon: MessageSquare, text: "3 unread mentions", sub: "Sarah, Mike, Emily", color: "#c60f08" },
-    { icon: FileText, text: "Launch brief was updated", sub: "Q2 Launch Brief.pdf — Mike Chen, 2h ago", color: "#0f6a43" },
+    { icon: Clock,         text: "2 tasks are due today",    sub: "Review prototype + weekly report",        color: "var(--warning-on)"     },
+    { icon: Calendar,      text: "1 meeting in 40 minutes",  sub: "Client review at 2:00 PM",               color: "var(--info-on)"         },
+    { icon: MessageSquare, text: "3 unread mentions",        sub: "Sarah, Mike, Emily",                     color: "var(--rally-brand-on)"  },
+    { icon: FileText,      text: "Launch brief was updated", sub: "Q2 Launch Brief.pdf — Mike Chen, 2h ago",color: "var(--success-on)"      },
   ];
 
   return (
@@ -380,7 +380,7 @@ function AIDailyBrief() {
           <p className="text-[11px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-overline)" }}>Suggested actions</p>
           <div className="flex flex-wrap gap-2">
             {aiSuggestions.filter((s) => !dismissed.includes(s.id)).map((s) => (
-              <div key={s.id} className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-full border border-border bg-background hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors group cursor-pointer">
+              <div key={s.id} className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-full border border-border bg-background hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-all duration-[120ms] active:bg-[var(--rally-brand-200)] active:border-[var(--selected-border)] active:scale-[0.96] group cursor-pointer">
                 <span className="text-[12px] text-foreground">{s.label}</span>
                 <button
                   onClick={(e) => { e.stopPropagation(); setDismissed((d) => [...d, s.id]); }}
@@ -411,12 +411,12 @@ function QuickActions() {
           <button
             key={a.id}
             onClick={() => a.path && navigate(a.path)}
-            className="flex items-center gap-2.5 px-3 py-3 rounded-[10px] border border-border bg-background hover:bg-muted transition-colors text-left"
+            className="flex items-center gap-2.5 px-3 py-3 rounded-[10px] border border-border bg-background hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] active:scale-[0.99] text-left"
           >
             <div className="w-7 h-7 rounded-[8px] flex items-center justify-center flex-shrink-0" style={{ background: a.bg }}>
               <a.icon className="size-4" style={{ color: a.color }} />
             </div>
-            <span className="text-[13px] text-foreground">{a.label}</span>
+            <span className="text-[14px] font-medium text-foreground">{a.label}</span>
           </button>
         ))}
       </div>
@@ -454,15 +454,15 @@ function MyWorkNow() {
             <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-overline)" }}>{g.label}</p>
             <div className="space-y-1.5">
               {g.items.filter((t) => !done.includes(t.id)).map((task) => (
-                <div key={task.id} className="group flex items-start gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background hover:border-[#d1aa99] transition-colors">
+                <div key={task.id} className="group flex items-start gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background hover:border-[var(--border-color)] transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)]">
                   <button
                     onClick={() => setDone((d) => [...d, task.id])}
-                    className="mt-0.5 flex-shrink-0 text-muted-foreground hover:text-[#0f6a43] transition-colors"
+                    className="mt-0.5 flex-shrink-0 text-muted-foreground hover:text-[var(--success-on)] transition-all duration-[120ms] active:scale-[0.94]"
                   >
                     <Circle className="size-4" />
                   </button>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[13px] text-foreground leading-snug">{task.title}</p>
+                    <p className="text-[14px] text-foreground leading-snug">{task.title}</p>
                     <p className="text-[11px] text-muted-foreground mt-0.5">{task.ago}</p>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
@@ -485,9 +485,9 @@ function MyWorkNow() {
 
 function NextUp() {
   const statusMeta: Record<string, { label: string; color: string; bg: string }> = {
-    done:     { label: "Done",     color: "#0f6a43", bg: "#eaf7f0" },
-    next:     { label: "Next",     color: "#c60f08", bg: "#fff2ed" },
-    upcoming: { label: "Upcoming", color: "#0f5fd7", bg: "#eef4ff" },
+    done:     { label: "Done",     color: "var(--success-on)",     bg: "var(--success-soft)"     },
+    next:     { label: "Next",     color: "var(--rally-brand-on)", bg: "var(--rally-brand-soft)" },
+    upcoming: { label: "Upcoming", color: "var(--info-on)",        bg: "var(--info-soft)"        },
   };
 
   return (
@@ -495,9 +495,9 @@ function NextUp() {
       <CardHeader
         title="Next Up"
         icon={Calendar}
-        iconColor="#8a4f00"
+        iconColor="var(--warning-on)"
         action={
-          <Link to="/app/calendar" className="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-foreground transition-colors">
+          <Link to="/app/calendar" className="flex items-center gap-1 text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors">
             Calendar <ArrowRight className="size-3" />
           </Link>
         }
@@ -507,17 +507,17 @@ function NextUp() {
           const meta = statusMeta[ev.status];
           return (
             <div key={ev.id}
-              className={`flex items-start gap-3 p-3 rounded-[10px] border transition-colors ${ev.status === "next" ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)] dark:bg-[var(--rally-brand-soft-dark)]/30" : "border-border bg-background"}`}>
+              className={`flex items-start gap-3 p-3 rounded-[10px] border transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] ${ev.status === "next" ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)] dark:bg-[var(--rally-brand-soft-dark)]/30" : "border-border bg-background"}`}>
               <div className="text-center flex-shrink-0 w-10">
                 <p className="text-[11px] font-medium" style={{ color: ev.status === "next" ? "var(--rally-brand)" : "var(--text-muted)" }}>{ev.time}</p>
                 <p className="text-[10px] text-muted-foreground">{ev.duration}</p>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[13px] font-medium text-foreground leading-snug">{ev.title}</p>
+                <p className="text-[14px] font-medium text-foreground leading-snug">{ev.title}</p>
                 <div className="flex items-center gap-1.5 mt-1">
                   <div className="flex -space-x-1">
                     {ev.attendees.slice(0, 3).map((a) => (
-                      <div key={a} className="w-5 h-5 rounded-full border-2 border-card overflow-hidden flex-shrink-0" style={{ background: "#5f514b" }}>
+                      <div key={a} className="w-5 h-5 rounded-full border-2 border-card overflow-hidden flex-shrink-0" style={{ background: "var(--neutral-solid)" }}>
                         <span className="text-white text-[8px] flex items-center justify-center h-full">{a.charAt(0)}</span>
                       </div>
                     ))}
@@ -535,13 +535,13 @@ function NextUp() {
                   {meta.label}
                 </span>
                 {ev.status === "next" && (
-                  <button className="flex items-center gap-1 px-2.5 py-1 rounded-[6px] text-white text-[11px] font-medium transition-colors"
+                  <button className="flex items-center gap-1 px-2.5 py-1 rounded-[6px] text-white text-[11px] font-medium transition-all duration-[120ms] active:bg-[var(--rally-brand-pressed)] active:scale-[0.97]"
                     style={{ background: "var(--rally-brand)" }}>
                     <Play className="size-3" /> Join
                   </button>
                 )}
                 {ev.status === "upcoming" && (
-                  <button className="flex items-center gap-1 px-2.5 py-1 rounded-[6px] border border-border text-muted-foreground text-[11px] transition-colors hover:bg-muted">
+                  <button className="flex items-center gap-1 px-2.5 py-1 rounded-[6px] border border-border text-muted-foreground text-[11px] font-medium transition-all duration-[120ms] hover:bg-muted active:bg-[var(--neutral-soft-light)] active:scale-[0.97]">
                     <Sparkles className="size-3" /> Prep
                   </button>
                 )}
@@ -563,9 +563,9 @@ function MentionsChats() {
       <CardHeader
         title="Mentions & Chats"
         icon={MessageSquare}
-        iconColor="#0f5fd7"
+        iconColor="var(--info-on)"
         action={
-          <Link to="/app/chat" className="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-foreground transition-colors">
+          <Link to="/app/chat" className="flex items-center gap-1 text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors">
             Open Chat <ArrowRight className="size-3" />
           </Link>
         }
@@ -575,7 +575,7 @@ function MentionsChats() {
           const isRead = read.includes(m.id);
           return (
             <div key={m.id}
-              className={`flex gap-3 px-4 py-3 border-b border-[var(--border-subtle)] last:border-none hover:bg-muted transition-colors cursor-pointer ${(!isRead && m.unread) ? "bg-[#fff2ed]/30 dark:bg-[#440608]/10" : ""}`}>
+              className={`flex gap-3 px-4 py-3 border-b border-[var(--border-subtle)] last:border-none hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] cursor-pointer ${(!isRead && m.unread) ? "bg-[var(--rally-brand-soft-light)]/30 dark:bg-[var(--rally-brand-soft-dark)]/10" : ""}`}>
               <Avatar name={m.user} size={34} />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5">
@@ -594,7 +594,7 @@ function MentionsChats() {
                 )}
                 <button
                   onClick={() => setRead((r) => [...r, m.id])}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-muted-foreground hover:text-foreground transition-all duration-[120ms] active:scale-[0.94]"
                   title="Mark as read"
                 >
                   <CheckCircle2 className="size-3.5" />
@@ -621,7 +621,7 @@ function ContinueWorking() {
       <CardHeader
         title="Continue Working"
         icon={RefreshCw}
-        iconColor="#0f6a43"
+        iconColor="var(--success-on)"
         action={
           <Link to="/app/files" className="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-foreground transition-colors">
             All files <ArrowRight className="size-3" />
@@ -648,9 +648,9 @@ function ContinueWorking() {
 
         <div className="pt-2 border-t border-[var(--border-subtle)]">
           <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-overline)" }}>Last active</p>
-          <Link to="/app/chat" className="flex items-center gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background hover:bg-muted transition-colors cursor-pointer">
-            <div className="w-8 h-8 rounded-[8px] flex items-center justify-center bg-[#eef4ff] border border-border flex-shrink-0">
-              <Hash className="size-4" style={{ color: "#0f5fd7" }} />
+          <Link to="/app/chat" className="flex items-center gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] cursor-pointer">
+            <div className="w-8 h-8 rounded-[8px] flex items-center justify-center bg-[var(--info-soft-light)] border border-border flex-shrink-0">
+              <Hash className="size-4" style={{ color: "var(--info-solid)" }} />
             </div>
             <div className="flex-1">
               <p className="text-[12px] font-medium text-foreground">#design</p>
@@ -667,9 +667,9 @@ function ContinueWorking() {
 // ── Section 7: Team Pulse ─────────────────────────────────────────────────────
 
 const statusDot: Record<string, string> = {
-  active: "#0f6a43",
-  idle:   "#8a4f00",
-  dnd:    "#d90000",
+  active: "var(--status-active)",
+  idle:   "var(--status-limited)",
+  dnd:    "var(--status-disabled)",
 };
 
 function TeamPulse() {
@@ -681,7 +681,7 @@ function TeamPulse() {
         iconColor="#8B5CF6"
         action={
           <span className="flex items-center gap-1 text-[11px] text-muted-foreground">
-            <Dot color="#0f6a43" /> {onlineMembers.filter((m) => m.status === "active").length} online
+            <Dot color="var(--status-active)" /> {onlineMembers.filter((m) => m.status === "active").length} online
           </span>
         }
       />
@@ -693,8 +693,8 @@ function TeamPulse() {
           <div className="space-y-2">
             {voiceRooms.map((room) => (
               <div key={room.id} className="flex items-center gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background">
-                <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0" style={{ background: "#f5f3ff" }}>
-                  <Volume2 className="size-4" style={{ color: "#8B5CF6" }} />
+                <div className="w-7 h-7 rounded-[7px] flex items-center justify-center" style={{ background: "var(--info-soft)" }}>
+                  <Volume2 className="size-3.5" style={{ color: "var(--info-on)" }} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[12px] font-medium text-foreground">{room.name}</p>
@@ -752,10 +752,10 @@ function RolePanel() {
         />
         <div className="p-4 space-y-3 flex-1">
           {[
-            { icon: UserPlus, label: "Pending invites", value: "3 pending", color: "#8a4f00", bg: "#fff4e5", action: "Review" },
-            { icon: HardDrive, label: "Storage used", value: "12.4 GB / 50 GB", color: "#0f5fd7", bg: "#eef4ff", action: "Manage" },
-            { icon: Users, label: "Team members", value: "5 active · 1 viewer", color: "#0f6a43", bg: "#eaf7f0", action: "View" },
-            { icon: Lock, label: "Permissions", value: "All roles configured", color: "#5f514b", bg: "#f4ece8", action: null },
+            { icon: UserPlus,  label: "Pending invites", value: "3 pending",            color: "var(--warning-on)",     bg: "var(--warning-soft)",     action: "Review" },
+            { icon: HardDrive, label: "Storage used",    value: "12.4 GB / 50 GB",      color: "var(--info-on)",        bg: "var(--info-soft)",        action: "Manage" },
+            { icon: Users,     label: "Team members",    value: "5 active · 1 viewer",  color: "var(--success-on)",     bg: "var(--success-soft)",     action: "View"   },
+            { icon: Lock,      label: "Permissions",     value: "All roles configured",  color: "var(--neutral-on)",     bg: "var(--neutral-soft)",     action: null     },
           ].map((item) => (
             <div key={item.label} className="flex items-center gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background">
               <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0" style={{ background: item.bg }}>
@@ -778,12 +778,12 @@ function RolePanel() {
   if (userRole === "admin") {
     return (
       <Card className="flex flex-col">
-        <CardHeader title="Admin Notices" icon={AlertTriangle} iconColor="#8a4f00" />
+        <CardHeader title="Admin Notices" icon={AlertTriangle} iconColor="var(--warning-on)" />
         <div className="p-4 space-y-2 flex-1">
           {[
-            { text: "2 channels need descriptions", color: "#8a4f00", bg: "#fff4e5" },
-            { text: "1 restricted-access request pending", color: "#d90000", bg: "#fdecec" },
-            { text: "Calendar permissions need review", color: "#0f5fd7", bg: "#eef4ff" },
+            { text: "2 channels need descriptions",         color: "var(--warning-on)", bg: "var(--warning-soft)" },
+            { text: "1 restricted-access request pending",  color: "var(--error-on)",   bg: "var(--error-soft)"   },
+            { text: "Calendar permissions need review",     color: "var(--info-on)",    bg: "var(--info-soft)"    },
           ].map((n, i) => (
             <div key={i} className="flex items-center gap-2 px-3 py-2.5 rounded-[10px]" style={{ background: n.bg }}>
               <AlertCircle className="size-4 flex-shrink-0" style={{ color: n.color }} />

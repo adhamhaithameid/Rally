@@ -20,16 +20,16 @@ interface MockMember {
 // ── Config ────────────────────────────────────────────────────────────────────
 
 const ROLE_CFG: Record<UserRole, { label: string; color: string; bg: string; Icon: React.ElementType }> = {
-  owner:  { label: "Owner",  color: "var(--rally-brand)", bg: "var(--rally-brand-soft-light)", Icon: Crown },
-  admin:  { label: "Admin",  color: "#0f5fd7", bg: "#eef4ff", Icon: Shield    },
-  member: { label: "Member", color: "#0f6a43", bg: "#eaf7f0", Icon: UserCheck },
-  viewer: { label: "Viewer", color: "#6b7280", bg: "#f3f4f6", Icon: Eye       },
+  owner:  { label: "Owner",  color: "var(--rally-brand-on)", bg: "var(--rally-brand-soft)", Icon: Crown     },
+  admin:  { label: "Admin",  color: "var(--info-on)",        bg: "var(--info-soft)",        Icon: Shield    },
+  member: { label: "Member", color: "var(--success-on)",     bg: "var(--success-soft)",     Icon: UserCheck },
+  viewer: { label: "Viewer", color: "var(--neutral-on)",     bg: "var(--neutral-soft)",     Icon: Eye       },
 };
 
 const STATUS_CFG: Record<OnlineStatus, { label: string; color: string }> = {
-  online:  { label: "Online",  color: "#10B981" },
-  away:    { label: "Away",    color: "#F59E0B" },
-  offline: { label: "Offline", color: "#9CA3AF" },
+  online:  { label: "Online",  color: "var(--status-active)"   },
+  away:    { label: "Away",    color: "var(--status-limited)"  },
+  offline: { label: "Offline", color: "var(--status-disabled)" },
 };
 
 const ROLE_ORDER: UserRole[] = ["owner", "admin", "member", "viewer"];
@@ -50,11 +50,11 @@ const MOCK_STATUSES: Record<string, OnlineStatus> = {
 };
 
 const RECENT_CHANGES = [
-  { id: "r1", text: "Emily Davis joined the workspace",       time: "2h ago",     color: "#0f6a43" },
-  { id: "r2", text: "Alex Rivera's role changed to Viewer",   time: "Yesterday",  color: "#0f5fd7" },
+  { id: "r1", text: "Emily Davis joined the workspace",       time: "2h ago",     color: "var(--success-solid)" },
+  { id: "r2", text: "Alex Rivera's role changed to Viewer",   time: "Yesterday",  color: "var(--info-solid)" },
   { id: "r3", text: "Invite sent to david@example.com",       time: "2 days ago", color: "var(--rally-brand)" },
-  { id: "r4", text: "Sarah Johnson promoted to Admin",        time: "3 days ago", color: "#0f5fd7" },
-  { id: "r5", text: "Team description updated",               time: "1 week ago", color: "#6b7280" },
+  { id: "r4", text: "Sarah Johnson promoted to Admin",        time: "3 days ago", color: "var(--info-solid)" },
+  { id: "r5", text: "Team description updated",               time: "1 week ago", color: "var(--text-tertiary)" },
 ];
 
 const MOCK_INVITES = [
@@ -191,10 +191,14 @@ function LeftRail({
             <button key={item.id} onClick={() => onSection(item.id)}
               className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-[8px] text-left text-[12px] transition-colors ${
                 active
-                  ? item.danger ? "bg-red-50 text-red-600 font-medium" : "text-[#c60f08] font-medium"
-                  : item.danger ? "text-red-400 hover:bg-red-50 hover:text-red-600" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  ? item.danger ? "font-medium" : "font-medium"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
               }`}
-              style={active && !item.danger ? { background: "#fff2ed" } : {}}>
+              style={active
+                ? item.danger
+                  ? { background: "var(--error-soft)", color: "var(--error-on)" }
+                  : { background: "var(--rally-brand-soft)", color: "var(--rally-brand-on)" }
+                : {}}>
               <Icon className="size-4 flex-shrink-0" />
               {item.label}
             </button>
@@ -222,7 +226,7 @@ function MemberRow({
   return (
     <div onClick={onSelect}
       className={`flex items-center gap-3 px-3 py-2.5 rounded-[10px] border cursor-pointer group transition-all ${
-        selected ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)]" : "border-border bg-card hover:bg-muted/30 hover:border-[var(--border)]"
+        selected ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft)]" : "border-border bg-card hover:bg-muted/30 hover:border-[var(--border)]"
       }`}>
       {/* Avatar + status */}
       <div className="relative flex-shrink-0">
@@ -244,7 +248,7 @@ function MemberRow({
           )}
           {recent && (
             <span className="text-[10px] px-1.5 py-0.5 rounded-full flex-shrink-0"
-              style={{ background: "#eaf7f0", color: "#0f6a43" }}>New</span>
+              style={{ background: "var(--success-soft-light)", color: "var(--success-solid)" }}>New</span>
           )}
         </div>
         <p className="text-[10px] text-muted-foreground truncate">{member.email}</p>
@@ -278,7 +282,8 @@ function MemberRow({
                 </button>
                 <div className="h-px bg-border mx-2 my-0.5" />
                 <button onClick={e => { e.stopPropagation(); setMenuOpen(false); }}
-                  className="w-full flex items-center gap-2 px-3 py-2 text-[12px] text-red-500 hover:bg-red-50 transition-colors">
+                  className="w-full flex items-center gap-2 px-3 py-2 text-[12px] transition-colors hover:bg-muted"
+                  style={{ color: "var(--error-on-light)" }}>
                   <UserMinus className="size-3.5" /> Remove
                 </button>
               </div>
@@ -339,7 +344,7 @@ function MemberDetailPanel({
           </div>
           {recent && (
             <span className="mt-2 text-[10px] px-2 py-0.5 rounded-full"
-              style={{ background: "#eaf7f0", color: "#0f6a43" }}>
+              style={{ background: "var(--success-soft-light)", color: "var(--success-solid)" }}>
               Recently joined
             </span>
           )}
@@ -363,7 +368,7 @@ function MemberDetailPanel({
           <div className="space-y-1.5">
             {caps.can.map(item => (
               <div key={item} className="flex items-start gap-2">
-                <Check className="size-3.5 flex-shrink-0 mt-0.5" style={{ color: "#0f6a43" }} />
+                <Check className="size-3.5 flex-shrink-0 mt-0.5" style={{ color: "var(--success-solid)" }} />
                 <span className="text-[11px] text-foreground">{item}</span>
               </div>
             ))}
@@ -397,7 +402,7 @@ function MemberDetailPanel({
               {ROLE_ORDER.filter(r => r !== "owner").map(r => (
                 <button key={r} onClick={() => { onRoleChange(member.userId, r); setShowRolePicker(false); }}
                   className={`w-full flex items-center gap-2 px-2.5 py-2 rounded-[7px] border text-left transition-colors ${
-                    member.role === r ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)]" : "border-border hover:bg-muted"
+                    member.role === r ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft)]" : "border-border hover:bg-muted"
                   }`}>
                   <RoleBadge role={r} size="xs" />
                   <span className="text-[12px] text-foreground flex-1">{ROLE_CFG[r].label}</span>
@@ -424,7 +429,8 @@ function MemberDetailPanel({
           )}
           {!confirmRemove ? (
             <button onClick={() => setConfirmRemove(true)}
-              className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-[8px] border border-border bg-background text-red-500 hover:bg-red-50 text-[12px] transition-colors">
+              className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-[8px] border border-border bg-background text-[12px] transition-colors hover:bg-muted"
+              style={{ color: "var(--error-on-light)" }}>
               <UserMinus className="size-3.5" />
             </button>
           ) : (
@@ -513,7 +519,7 @@ function TeamHome({
             <span className="text-[11px] text-muted-foreground ml-1">members</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full" style={{ background: "#10B981" }} />
+            <span className="w-2 h-2 rounded-full" style={{ background: "var(--success-solid)" }} />
             <span className="text-[12px] text-muted-foreground">{onlineCount} online</span>
           </div>
           {ROLE_ORDER.map(r => roleCounts[r] > 0 && (
@@ -598,7 +604,7 @@ function TeamHome({
                 <div className="space-y-1.5">
                   {caps.can.map(item => (
                     <div key={item} className="flex items-start gap-2">
-                      <Check className="size-3.5 flex-shrink-0 mt-0.5" style={{ color: "#0f6a43" }} />
+                      <Check className="size-3.5 flex-shrink-0 mt-0.5" style={{ color: "var(--success-solid)" }} />
                       <span className="text-[11px] text-foreground">{item}</span>
                     </div>
                   ))}
@@ -706,7 +712,7 @@ function MembersView({
               className={`px-2.5 py-1.5 rounded-[7px] text-[11px] transition-colors capitalize ${
                 roleFilter === r ? "text-white font-medium" : "text-muted-foreground hover:bg-muted"
               }`}
-              style={roleFilter === r ? { background: r === "all" ? "#374151" : ROLE_CFG[r as UserRole].color } : {}}>
+              style={roleFilter === r ? { background: r === "all" ? "var(--neutral-solid)" : ROLE_CFG[r as UserRole].color } : {}}>
               {r === "all" ? "All" : ROLE_CFG[r as UserRole].label}
             </button>
           ))}
@@ -816,7 +822,7 @@ function SettingsView({
         {canEdit ? (
           <button onClick={handleSave}
             className="flex items-center gap-1.5 px-4 py-2 rounded-[8px] text-white text-[12px] font-medium transition-colors"
-            style={{ background: saved ? "#0f6a43" : "var(--rally-brand)" }}>
+            style={{ background: saved ? "var(--success-solid)" : "var(--rally-brand)" }}>
             {saved ? <><Check className="size-3.5" /> Saved</> : "Save Changes"}
           </button>
         ) : (
@@ -885,7 +891,7 @@ function PermissionsView({ userRole }: { userRole: UserRole }) {
                     return (
                       <div key={r} className={`px-3 py-2.5 flex items-center justify-center ${userRole === r ? "bg-card/60" : ""}`}>
                         {has
-                          ? <Check className="size-3.5" style={{ color: "#0f6a43" }} />
+                          ? <Check className="size-3.5" style={{ color: "var(--success-solid)" }} />
                           : <X className="size-3.5 text-muted-foreground opacity-40" />}
                       </div>
                     );
@@ -918,8 +924,8 @@ function DangerZone({ teamName }: { teamName: string }) {
     <div className="flex-1 overflow-y-auto px-5 py-6">
       <div className="max-w-xl">
         <div className="flex items-center gap-2 mb-1">
-          <AlertTriangle className="size-4 text-red-500" />
-          <h2 className="text-[14px] font-medium text-red-500">Danger Zone</h2>
+          <AlertTriangle className="size-4" style={{ color: "var(--error-on-light)" }} />
+          <h2 className="text-[14px] font-medium" style={{ color: "var(--error-on-light)" }}>Danger Zone</h2>
         </div>
         <p className="text-[12px] text-muted-foreground mb-6">These actions are irreversible. Proceed with caution.</p>
 
@@ -958,31 +964,38 @@ function DangerZone({ teamName }: { teamName: string }) {
           </div>
 
           {/* Delete team */}
-          <div className="rounded-[12px] border border-red-200 p-4" style={{ background: "#fff8f8" }}>
+          <div className="rounded-[12px] border p-4" style={{ borderColor: "var(--error-solid)", background: "var(--error-soft-light)" }}>
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-[13px] font-medium text-red-600">Delete Team</p>
+                <p className="text-[13px] font-medium" style={{ color: "var(--error-on-light)" }}>Delete Team</p>
                 <p className="text-[11px] text-muted-foreground mt-0.5">
                   Permanently delete <strong className="text-foreground">{teamName}</strong> and all its data. This cannot be undone.
                 </p>
               </div>
               <button onClick={() => setConfirmDelete(v => !v)}
-                className="flex-shrink-0 px-3 py-1.5 rounded-[7px] bg-red-500 text-white text-[11px] font-medium hover:bg-red-600 transition-colors">
+                className="flex-shrink-0 px-3 py-1.5 rounded-[7px] text-white text-[11px] font-medium transition-all duration-[120ms] active:scale-[0.97]"
+                style={{ background: "var(--error-solid)" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "var(--error-hover)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "var(--error-solid)")}>
                 Delete
               </button>
             </div>
             {confirmDelete && (
-              <div className="mt-3 pt-3 border-t border-red-200">
-                <p className="text-[11px] text-red-600 mb-2">
+              <div className="mt-3 pt-3 border-t" style={{ borderColor: "var(--error-solid)" }}>
+                <p className="text-[11px] mb-2" style={{ color: "var(--error-on-light)" }}>
                   Type <strong>{teamName}</strong> to confirm deletion:
                 </p>
-                <input placeholder={teamName} className="w-full px-3 py-2 rounded-[7px] border border-red-300 bg-white text-[12px] text-foreground outline-none mb-2 placeholder:text-red-300" />
+                <input placeholder={teamName}
+                  className="w-full px-3 py-2 rounded-[7px] text-[12px] text-foreground outline-none mb-2"
+                  style={{ background: "var(--elevated)", border: "1px solid var(--error-solid)" }} />
                 <div className="flex gap-2">
                   <button onClick={() => setConfirmDelete(false)}
                     className="px-3 py-1.5 rounded-[7px] border border-border text-[11px] text-muted-foreground hover:bg-muted transition-colors">
                     Cancel
                   </button>
-                  <button className="px-3 py-1.5 rounded-[7px] bg-red-500 text-white text-[11px] font-medium opacity-50 cursor-not-allowed">
+                  <button
+                    className="px-3 py-1.5 rounded-[7px] text-white text-[11px] font-medium opacity-50 cursor-not-allowed"
+                    style={{ background: "var(--error-solid)" }}>
                     Permanently Delete
                   </button>
                 </div>
@@ -1053,7 +1066,7 @@ function InviteModal({ open, onClose, canInviteAdmins }: { open: boolean; onClos
             </button>
             <button onClick={handleSend}
               className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-[8px] text-white text-[12px] font-medium transition-colors"
-              style={{ background: sent ? "#0f6a43" : "var(--rally-brand)" }}>
+              style={{ background: sent ? "var(--success-solid)" : "var(--rally-brand)" }}>
               {sent ? <><Check className="size-3.5" /> Invite Sent!</> : <><Mail className="size-3.5" /> Send Invite</>}
             </button>
           </div>
@@ -1131,7 +1144,7 @@ export function TeamV2() {
           {/* Copy invite link */}
           <button onClick={copyLink}
             className="flex items-center gap-1.5 h-8 px-3 rounded-[8px] border border-border bg-background text-muted-foreground hover:bg-muted transition-colors text-[12px]">
-            {copied ? <Check className="size-3.5" style={{ color: "#0f6a43" }} /> : <Copy className="size-3.5" />}
+            {copied ? <Check className="size-3.5" style={{ color: "var(--success-solid)" }} /> : <Copy className="size-3.5" />}
             {copied ? "Copied!" : "Copy invite link"}
           </button>
 

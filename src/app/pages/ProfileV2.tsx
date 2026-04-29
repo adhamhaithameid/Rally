@@ -19,17 +19,17 @@ type AvailabilityStatus = "online" | "away" | "dnd" | "offline";
 // ── Config ────────────────────────────────────────────────────────────────────
 
 const ROLE_CFG: Record<UserRole, { label: string; color: string; bg: string }> = {
-  owner:  { label: "Owner",  color: "var(--rally-brand)",          bg: "var(--rally-brand-soft-light)" },
-  admin:  { label: "Admin",  color: "#0f5fd7", bg: "#eef4ff" },
-  member: { label: "Member", color: "#0f6a43", bg: "#eaf7f0" },
-  viewer: { label: "Viewer", color: "#6b7280", bg: "#f3f4f6" },
+  owner:  { label: "Owner",  color: "var(--rally-brand-on-light)", bg: "var(--rally-brand-soft-light)" },
+  admin:  { label: "Admin",  color: "var(--info-on-light)",        bg: "var(--info-soft-light)"        },
+  member: { label: "Member", color: "var(--success-on-light)",     bg: "var(--success-soft-light)"     },
+  viewer: { label: "Viewer", color: "var(--neutral-on-light)",     bg: "var(--neutral-soft-light)"     },
 };
 
 const AVAILABILITY_CFG: Record<AvailabilityStatus, { label: string; color: string; desc: string }> = {
-  online:  { label: "Online",          color: "#10B981", desc: "Visible to everyone" },
-  away:    { label: "Away",            color: "#F59E0B", desc: "Stepped away" },
-  dnd:     { label: "Do not disturb",  color: "#EF4444", desc: "Muted notifications" },
-  offline: { label: "Appear offline",  color: "#9CA3AF", desc: "Hidden presence" },
+  online:  { label: "Online",          color: "var(--status-active)",   desc: "Visible to everyone" },
+  away:    { label: "Away",            color: "var(--status-limited)",  desc: "Stepped away"        },
+  dnd:     { label: "Do not disturb",  color: "var(--error-solid)",     desc: "Muted notifications" },
+  offline: { label: "Appear offline",  color: "var(--status-disabled)", desc: "Hidden presence"     },
 };
 
 const ROLE_CAPS: Record<UserRole, { can: string[]; cannot: string[] }> = {
@@ -67,18 +67,18 @@ const MOCK_WORK_SNAPSHOT = {
 };
 
 const RECENT_ACTIVITY = [
-  { id: "a1", icon: FileText,      label: "Brand guidelines v3.pdf",         sub: "Opened 1h ago",      color: "var(--rally-brand)" },
-  { id: "a2", icon: Bot,           label: "AI thread: Rally nav structure",   sub: "2h ago",             color: "#8B5CF6" },
-  { id: "a3", icon: MessageSquare, label: "#design – mobile header thread",   sub: "4h ago",             color: "#0f5fd7" },
-  { id: "a4", icon: CheckSquare,   label: "Review mobile header spec",        sub: "Viewed yesterday",   color: "#0f6a43" },
-  { id: "a5", icon: FileText,      label: "Q1 Campaign assets",               sub: "Opened 2 days ago",  color: "#F59E0B" },
+  { id: "a1", icon: FileText,      label: "Brand guidelines v3.pdf",         sub: "Opened 1h ago",      color: "var(--rally-brand-on-light)", bg: "var(--rally-brand-soft-light)" },
+  { id: "a2", icon: Bot,           label: "AI thread: Rally nav structure",   sub: "2h ago",             color: "var(--info-on-light)",        bg: "var(--info-soft-light)"        },
+  { id: "a3", icon: MessageSquare, label: "#design – mobile header thread",   sub: "4h ago",             color: "var(--info-on-light)",        bg: "var(--info-soft-light)"        },
+  { id: "a4", icon: CheckSquare,   label: "Review mobile header spec",        sub: "Viewed yesterday",   color: "var(--success-on-light)",     bg: "var(--success-soft-light)"     },
+  { id: "a5", icon: FileText,      label: "Q1 Campaign assets",               sub: "Opened 2 days ago",  color: "var(--warning-on-light)",     bg: "var(--warning-soft-light)"     },
 ];
 
 const SAVED_ITEMS = [
-  { id: "s1", icon: MessageSquare, label: "Chat: Project kickoff",         sub: "Pinned conversation",  color: "#0f5fd7" },
-  { id: "s2", icon: FileText,      label: "Brand guidelines v3.pdf",      sub: "Pinned file",           color: "var(--rally-brand)" },
-  { id: "s3", icon: Bot,           label: "AI: Design system audit",      sub: "Bookmarked thread",     color: "#8B5CF6" },
-  { id: "s4", icon: CheckSquare,   label: "Q1 roadmap tasks",             sub: "Important task group",  color: "#0f6a43" },
+  { id: "s1", icon: MessageSquare, label: "Chat: Project kickoff",         sub: "Pinned conversation",  color: "var(--info-on-light)",        bg: "var(--info-soft-light)"        },
+  { id: "s2", icon: FileText,      label: "Brand guidelines v3.pdf",      sub: "Pinned file",           color: "var(--rally-brand-on-light)", bg: "var(--rally-brand-soft-light)" },
+  { id: "s3", icon: Bot,           label: "AI: Design system audit",      sub: "Bookmarked thread",     color: "var(--info-on-light)",        bg: "var(--info-soft-light)"        },
+  { id: "s4", icon: CheckSquare,   label: "Q1 roadmap tasks",             sub: "Important task group",  color: "var(--success-on-light)",     bg: "var(--success-soft-light)"     },
 ];
 
 const MOCK_SESSIONS = [
@@ -127,7 +127,7 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean
     <button onClick={() => onChange(!checked)} role="switch" aria-checked={checked}
       className="relative w-9 h-5 rounded-full transition-colors flex-shrink-0"
       style={{ background: checked ? "var(--rally-brand)" : "var(--border)" }}>
-      <span className="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform"
+      <span className="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-card shadow transition-transform"
         style={{ transform: checked ? "translateX(16px)" : "translateX(0)" }} />
     </button>
   );
@@ -289,14 +289,14 @@ function OverviewSection({
           {/* Tasks */}
           <div className="rounded-[12px] border border-border bg-card p-4">
             <div className="flex items-center gap-2 mb-3">
-              <CheckSquare className="size-4" style={{ color: "#0f6a43" }} />
+              <CheckSquare className="size-4" style={{ color: "var(--success-on-light)" }} />
               <span className="text-[12px] font-medium text-foreground">Upcoming tasks</span>
             </div>
             <div className="space-y-2">
               {MOCK_WORK_SNAPSHOT.tasks.map(t => (
                 <div key={t.id} className="flex items-start gap-2">
                   <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5"
-                    style={{ background: t.priority === "high" ? "#EF4444" : t.priority === "medium" ? "#F59E0B" : "#9CA3AF" }} />
+                    style={{ background: t.priority === "high" ? "var(--error-solid)" : t.priority === "medium" ? "var(--warning-solid)" : "var(--neutral-solid)" }} />
                   <div className="flex-1 min-w-0">
                     <p className="text-[11px] text-foreground truncate">{t.title}</p>
                     <p className="text-[10px] text-muted-foreground">{t.due}</p>
@@ -309,13 +309,13 @@ function OverviewSection({
           {/* Events */}
           <div className="rounded-[12px] border border-border bg-card p-4">
             <div className="flex items-center gap-2 mb-3">
-              <Calendar className="size-4" style={{ color: "#0f5fd7" }} />
+              <Calendar className="size-4" style={{ color: "var(--info-on-light)" }} />
               <span className="text-[12px] font-medium text-foreground">Upcoming events</span>
             </div>
             <div className="space-y-2">
               {MOCK_WORK_SNAPSHOT.events.map(e => (
                 <div key={e.id} className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5" style={{ background: "#0f5fd7" }} />
+                  <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5" style={{ background: "var(--info-solid)" }} />
                   <div className="flex-1 min-w-0">
                     <p className="text-[11px] text-foreground truncate">{e.title}</p>
                     <p className="text-[10px] text-muted-foreground">{e.time}</p>
@@ -348,7 +348,7 @@ function OverviewSection({
                   <span className="text-[11px] text-muted-foreground">Mentions</span>
                 </div>
                 <span className="w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-medium flex-shrink-0"
-                  style={{ background: "#0f5fd7" }}>
+                  style={{ background: "var(--info-solid)" }}>
                   {MOCK_WORK_SNAPSHOT.unread.mentions}
                 </span>
               </div>
@@ -367,7 +367,7 @@ function OverviewSection({
               <div key={a.id}
                 className="flex items-center gap-3 px-4 py-3 hover:bg-muted/30 transition-colors cursor-pointer group">
                 <div className="w-7 h-7 rounded-[7px] flex items-center justify-center flex-shrink-0"
-                  style={{ background: a.color + "18" }}>
+                  style={{ background: a.bg }}>
                   <Icon className="size-3.5" style={{ color: a.color }} />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -391,7 +391,7 @@ function OverviewSection({
               <div key={s.id}
                 className="flex items-center gap-3 px-3 py-3 rounded-[10px] border border-border bg-card hover:bg-muted/30 transition-colors cursor-pointer group">
                 <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0"
-                  style={{ background: s.color + "18" }}>
+                  style={{ background: s.bg }}>
                   <Icon className="size-4" style={{ color: s.color }} />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -500,7 +500,7 @@ function PreferencesSection({
           <div className="pt-2 border-t border-[var(--border-subtle)] flex justify-end">
             <button onClick={handleSave}
               className="flex items-center gap-1.5 px-4 py-2 rounded-[8px] text-white text-[12px] font-medium transition-colors"
-              style={{ background: saved ? "#0f6a43" : "var(--rally-brand)" }}>
+              style={{ background: saved ? "var(--success-solid)" : "var(--rally-brand)" }}>
               {saved ? <><Check className="size-3.5" /> Saved</> : "Save Changes"}
             </button>
           </div>
@@ -655,7 +655,7 @@ function TeamsSection({
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
                       {teamCaps.can.map(item => (
                         <div key={item} className="flex items-start gap-2">
-                          <Check className="size-3.5 flex-shrink-0 mt-0.5" style={{ color: "#0f6a43" }} />
+                          <Check className="size-3.5 flex-shrink-0 mt-0.5" style={{ color: "var(--success-on-light)" }} />
                           <span className="text-[11px] text-foreground">{item}</span>
                         </div>
                       ))}
@@ -679,7 +679,7 @@ function TeamsSection({
         <button className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[var(--rally-brand)] hover:text-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors text-[12px]">
           <Users className="size-3.5" /> Create another team
         </button>
-        <button className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[#0f5fd7] hover:text-[#0f5fd7] hover:bg-[#eef4ff] transition-colors text-[12px]">
+        <button className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[var(--info-on-light)] hover:text-[var(--info-on-light)] hover:bg-[var(--info-soft-light)] transition-colors text-[12px]">
           <ChevronRight className="size-3.5" /> Join with invite code
         </button>
       </div>
@@ -697,7 +697,7 @@ function TeamsSection({
           <div className="space-y-2">
             {caps.can.map(item => (
               <div key={item} className="flex items-start gap-2">
-                <Check className="size-3.5 flex-shrink-0 mt-0.5" style={{ color: "#0f6a43" }} />
+                <Check className="size-3.5 flex-shrink-0 mt-0.5" style={{ color: "var(--success-on-light)" }} />
                 <span className="text-[12px] text-foreground">{item}</span>
               </div>
             ))}
@@ -767,14 +767,14 @@ function SecuritySection({ onLogout }: { onLogout: () => void }) {
               className={pwInputClass} />
           </div>
           {newPw && confirmPw && newPw !== confirmPw && (
-            <p className="text-[11px] text-red-500 flex items-center gap-1">
+            <p className="text-[11px] flex items-center gap-1" style={{ color: "var(--error-on-light)" }}>
               <AlertCircle className="size-3.5" /> Passwords do not match
             </p>
           )}
           <button onClick={handleChangePw}
             disabled={!currentPw || !newPw || newPw !== confirmPw}
             className="flex items-center gap-1.5 px-4 py-2 rounded-[8px] text-white text-[12px] font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-            style={{ background: pwSaved ? "#0f6a43" : "var(--rally-brand)" }}>
+            style={{ background: pwSaved ? "var(--success-solid)" : "var(--rally-brand)" }}>
             {pwSaved ? <><Check className="size-3.5" /> Password updated</> : "Update Password"}
           </button>
         </div>
@@ -795,7 +795,8 @@ function SecuritySection({ onLogout }: { onLogout: () => void }) {
                   <div className="flex items-center gap-2">
                     <p className="text-[12px] text-foreground">{sess.device}</p>
                     {sess.active && (
-                      <span className="text-[10px] px-1.5 py-0.5 rounded-full" style={{ background: "#eaf7f0", color: "#0f6a43" }}>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium"
+                        style={{ background: "var(--success-soft-light)", color: "var(--success-on-light)" }}>
                         Active now
                       </span>
                     )}
@@ -803,7 +804,8 @@ function SecuritySection({ onLogout }: { onLogout: () => void }) {
                   <p className="text-[10px] text-muted-foreground">{sess.browser} · {sess.location}</p>
                 </div>
                 {!sess.active && (
-                  <button className="text-[11px] text-red-400 hover:text-red-600 transition-colors flex-shrink-0">
+                  <button className="text-[11px] transition-colors flex-shrink-0"
+                    style={{ color: "var(--error-on-light)" }}>
                     Revoke
                   </button>
                 )}
@@ -842,22 +844,24 @@ function SecuritySection({ onLogout }: { onLogout: () => void }) {
           </div>
 
           {/* Delete account */}
-          <div className="rounded-[10px] border p-4" style={{ borderColor: "#fca5a5", background: "#fff8f8" }}>
+          <div className="rounded-[10px] border p-4"
+            style={{ borderColor: "var(--error-solid)", background: "var(--error-soft-light)" }}>
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-[13px] font-medium text-red-600">Delete Account</p>
+                <p className="text-[13px] font-medium" style={{ color: "var(--error-on-light)" }}>Delete Account</p>
                 <p className="text-[11px] text-muted-foreground mt-0.5">Permanently remove your account and all data. This cannot be undone.</p>
               </div>
               <button onClick={() => setDeleteOpen(v => !v)}
-                className="flex-shrink-0 px-3 py-1.5 rounded-[7px] bg-red-500 text-white text-[11px] font-medium hover:bg-red-600 transition-colors">
+                className="flex-shrink-0 px-3 py-1.5 rounded-[7px] text-white text-[11px] font-medium transition-all duration-[120ms] active:scale-[0.97]"
+                style={{ background: "var(--error-solid)" }}>
                 <Trash2 className="size-3.5 inline mr-1" />Delete
               </button>
             </div>
             {deleteOpen && (
-              <div className="mt-4 pt-4 border-t" style={{ borderColor: "#fca5a5" }}>
-                <div className="rounded-[8px] p-3 mb-3" style={{ background: "#fee2e2", border: "1px solid #fca5a5" }}>
-                  <p className="text-[11px] text-red-600 font-medium mb-1">This will permanently delete:</p>
-                  <ul className="text-[11px] text-red-500 space-y-1 list-disc list-inside">
+              <div className="mt-4 pt-4 border-t" style={{ borderColor: "var(--error-solid)" }}>
+                <div className="rounded-[8px] p-3 mb-3" style={{ background: "var(--error-soft-light)", border: "1px solid var(--error-solid)" }}>
+                  <p className="text-[11px] font-medium mb-1" style={{ color: "var(--error-on-light)" }}>This will permanently delete:</p>
+                  <ul className="text-[11px] space-y-1 list-disc list-inside" style={{ color: "var(--error-on-light)" }}>
                     <li>Your profile and personal information</li>
                     <li>All your messages and conversations</li>
                     <li>Your tasks, files, and to-do lists</li>
@@ -869,14 +873,16 @@ function SecuritySection({ onLogout }: { onLogout: () => void }) {
                 </label>
                 <input value={deleteInput} onChange={e => setDeleteInput(e.target.value)}
                   placeholder="DELETE"
-                  className="w-full px-3 py-2 rounded-[7px] border border-red-300 bg-white text-[12px] text-foreground outline-none mb-2 placeholder:text-red-300" />
+                  className="w-full px-3 py-2 rounded-[7px] text-[12px] text-foreground outline-none mb-2"
+                  style={{ background: "var(--elevated)", border: "1px solid var(--error-solid)" }} />
                 <div className="flex gap-2">
                   <button onClick={() => { setDeleteOpen(false); setDeleteInput(""); }}
                     className="px-3 py-1.5 rounded-[7px] border border-border text-[11px] text-muted-foreground hover:bg-muted transition-colors">
                     Cancel
                   </button>
                   <button disabled={deleteInput !== "DELETE"}
-                    className="px-3 py-1.5 rounded-[7px] bg-red-500 text-white text-[11px] font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-red-600">
+                    className="px-3 py-1.5 rounded-[7px] text-white text-[11px] font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    style={{ background: "var(--error-solid)" }}>
                     Permanently Delete
                   </button>
                 </div>

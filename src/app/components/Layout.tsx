@@ -15,6 +15,7 @@ import {
   Palette,
   Home,
   Check,
+  Layers,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useTheme } from "../contexts/ThemeContext";
@@ -35,7 +36,8 @@ interface NavItem {
 
 // Nav items shared across both versions (only design-system is fully static now)
 const sharedNavItems: NavItem[] = [
-  { path: "/app/design-system", label: "System", icon: Palette, id: "nav-design-system", shortcut: "S" },
+  { path: "/app/design-system",  label: "System", icon: Palette, id: "nav-design-system",  shortcut: "S" },
+  { path: "/app/theme-settings", label: "Themes", icon: Layers,  id: "nav-theme-settings", shortcut: "Y" },
 ];
 
 const profileItem: NavItem = {
@@ -115,7 +117,7 @@ function VersionSwitcher({
                 className="w-full flex items-start gap-3 px-3 py-2.5 rounded-[10px] text-left transition-colors"
                 style={
                   active
-                    ? { background: "var(--rally-brand-soft-light)", border: "1px solid var(--rally-brand)" }
+                    ? { background: "var(--rally-brand-soft)", border: "1px solid var(--rally-brand)" }
                     : { border: "1px solid transparent" }
                 }
               >
@@ -125,7 +127,7 @@ function VersionSwitcher({
                   style={
                     active
                       ? { background: "var(--rally-brand)", color: "#fff" }
-                      : { background: "var(--muted)", color: "var(--text-muted)" }
+                      : { background: "var(--muted)", color: "var(--muted-foreground)" }
                   }
                 >
                   {v.id === "v1" ? "1" : "2"}
@@ -144,7 +146,7 @@ function VersionSwitcher({
                       style={
                         active
                           ? { background: "var(--rally-brand)", color: "#fff" }
-                          : { background: "var(--muted)", color: "var(--text-muted)" }
+                          : { background: "var(--muted)", color: "var(--muted-foreground)" }
                       }
                     >
                       {v.sub}
@@ -183,7 +185,8 @@ function ShortcutCornerBadge({ letter }: { letter: string }) {
   return (
     <span
       aria-hidden="true"
-      className="absolute -top-1.5 -right-1.5 min-w-[15px] h-[15px] flex items-center justify-center rounded bg-blue-600 text-white text-[8px] font-mono font-bold leading-none border border-background pointer-events-none"
+      className="absolute -top-1.5 -right-1.5 min-w-[15px] h-[15px] flex items-center justify-center rounded text-white text-[8px] font-mono font-bold leading-none border border-background pointer-events-none"
+      style={{ background: "var(--info-solid)" }}
     >
       {letter}
     </span>
@@ -444,7 +447,7 @@ function LayoutInner() {
           title={`Profile (${modKey}P)`}
         >
           <div className="relative">
-            <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
+            <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "var(--rally-brand)" }}>
               <span className="text-white text-xs font-medium">
                 {user?.name?.charAt(0)?.toUpperCase() ?? "U"}
               </span>
@@ -484,7 +487,7 @@ function LayoutInner() {
         className={[
           sidebarOpen ? "fixed inset-y-0 left-0 z-40 m-3" : "hidden lg:flex",
           "rounded-2xl bg-card border overflow-hidden flex-shrink-0 flex flex-row mr-3 transition-[border-color] duration-150",
-          shortcutMode ? "border-blue-400 dark:border-blue-500" : "border-border",
+          shortcutMode ? "border-[var(--info-solid)]" : "border-border",
         ].join(" ")}
       >
         {sidebarContent}

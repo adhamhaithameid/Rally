@@ -210,7 +210,7 @@ export function Landing() {
             Join thousands of teams already using Rally
           </p>
           <Link to="/signup">
-            <Button size="lg" variant="outline" className="bg-white text-blue-600 hover:bg-blue-50 text-lg px-8 py-6">
+            <Button size="lg" variant="outline" className="bg-card text-[var(--rally-brand)] hover:bg-muted text-lg px-8 py-6">
               Start Your Free Trial
               <ArrowRight className="ml-2 size-5" />
             </Button>

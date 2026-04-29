@@ -265,7 +265,7 @@ export function Todo() {
               } ${(!readOnly && canCreate) ? "rounded-xl rounded-r-none border-r-0" : "rounded-xl"}`}
               style={selectedList === list.id ? { backgroundColor: list.color, borderColor: list.color } : {}}
             >
-              <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: selectedList === list.id ? "white" : list.color }} />
+              <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: selectedList === list.id ? "currentColor" : list.color }} />
               {list.name}
             </button>
             {!readOnly && canCreate && (
