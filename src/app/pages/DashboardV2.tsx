@@ -207,7 +207,7 @@ function TopNav() {
             <p className="text-[10px] font-medium uppercase tracking-widest px-3 py-2" style={{ color: "var(--text-overline)" }}>Your teams</p>
             {teams.map((t) => (
               <button key={t.teamId}
-                className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] text-left"
+                className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft)] text-left"
                 onClick={() => { setTeamOpen(false); }}>
                 <div className="w-7 h-7 rounded-[6px] flex items-center justify-center text-white text-[11px] font-medium" style={{ background: "var(--rally-brand)" }}>
                   {t.teamName.charAt(0)}
@@ -220,7 +220,7 @@ function TopNav() {
               </button>
             ))}
             <div className="border-t border-[var(--border-subtle)] mt-1 pt-1">
-              <button className="w-full flex items-center gap-2 px-3 py-2 hover:bg-muted text-muted-foreground hover:text-foreground transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] text-[14px] font-medium">
+              <button className="w-full flex items-center gap-2 px-3 py-2 hover:bg-muted text-muted-foreground hover:text-foreground transition-all duration-[120ms] active:bg-[var(--neutral-soft)] text-[14px] font-medium">
                 <Plus className="size-4" /> Create or join team
               </button>
             </div>
@@ -269,7 +269,7 @@ function TopNav() {
               ].map((item) => (
                 <button key={item.label}
                   onClick={() => { setNewOpen(false); navigate(item.path); }}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] text-[14px] text-foreground font-medium">
+                  className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft)] text-[14px] text-foreground font-medium">
                   <item.icon className="size-4 text-muted-foreground" />
                   {item.label}
                 </button>
@@ -282,7 +282,7 @@ function TopNav() {
         <div ref={notifRef} className="relative">
           <button
             onClick={() => setNotifOpen((o) => !o)}
-            className="relative w-9 h-9 flex items-center justify-center rounded-[10px] border border-border bg-background hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] active:scale-[0.94]"
+            className="relative w-9 h-9 flex items-center justify-center rounded-[10px] border border-border bg-background hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft)] active:scale-[0.94]"
           >
             <Bell className="size-4 text-foreground" />
             {unreadCount > 0 && (
@@ -299,7 +299,7 @@ function TopNav() {
                 <button className="text-[11px] font-medium text-muted-foreground hover:text-foreground transition-all duration-[120ms] active:text-foreground">Mark all read</button>
               </div>
               {mentions.map((m) => (
-                <div key={m.id} className={`flex gap-3 px-4 py-3 border-b border-[var(--border-subtle)] last:border-none hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] cursor-pointer ${m.unread ? "bg-[var(--rally-brand-soft-light)]/40 dark:bg-[var(--rally-brand-soft-dark)]/20" : ""}`}>
+                <div key={m.id} className={`flex gap-3 px-4 py-3 border-b border-[var(--border-subtle)] last:border-none hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft)] cursor-pointer ${m.unread ? "bg-[var(--rally-brand-soft)]/40" : ""}`}>
                   <Avatar name={m.user} size={32} />
                   <div className="flex-1 min-w-0">
                     <p className="text-[12px] text-foreground"><span className="font-medium">{m.user}</span> {m.type === "mention" ? `mentioned you in ${m.channel}` : "sent you a DM"}</p>
@@ -309,7 +309,7 @@ function TopNav() {
                   {m.unread && <div className="w-2 h-2 rounded-full flex-shrink-0 mt-1" style={{ background: "var(--rally-brand)" }} />}
                 </div>
               ))}
-              <button className="w-full px-4 py-3 text-[12px] font-medium text-center text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)]">
+              <button className="w-full px-4 py-3 text-[12px] font-medium text-center text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft)]">
                 View all notifications
               </button>
             </div>
@@ -380,7 +380,7 @@ function AIDailyBrief() {
           <p className="text-[11px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-overline)" }}>Suggested actions</p>
           <div className="flex flex-wrap gap-2">
             {aiSuggestions.filter((s) => !dismissed.includes(s.id)).map((s) => (
-              <div key={s.id} className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-full border border-border bg-background hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-all duration-[120ms] active:bg-[var(--rally-brand-200)] active:border-[var(--selected-border)] active:scale-[0.96] group cursor-pointer">
+              <div key={s.id} className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-full border border-border bg-background hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft)] transition-all duration-[120ms] active:bg-[var(--rally-brand-soft)] active:border-[var(--selected-border)] active:scale-[0.96] group cursor-pointer">
                 <span className="text-[12px] text-foreground">{s.label}</span>
                 <button
                   onClick={(e) => { e.stopPropagation(); setDismissed((d) => [...d, s.id]); }}
@@ -411,7 +411,7 @@ function QuickActions() {
           <button
             key={a.id}
             onClick={() => a.path && navigate(a.path)}
-            className="flex items-center gap-2.5 px-3 py-3 rounded-[10px] border border-border bg-background hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] active:scale-[0.99] text-left"
+            className="flex items-center gap-2.5 px-3 py-3 rounded-[10px] border border-border bg-background hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft)] active:scale-[0.99] text-left"
           >
             <div className="w-7 h-7 rounded-[8px] flex items-center justify-center flex-shrink-0" style={{ background: a.bg }}>
               <a.icon className="size-4" style={{ color: a.color }} />
@@ -454,7 +454,7 @@ function MyWorkNow() {
             <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-overline)" }}>{g.label}</p>
             <div className="space-y-1.5">
               {g.items.filter((t) => !done.includes(t.id)).map((task) => (
-                <div key={task.id} className="group flex items-start gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background hover:border-[var(--border-color)] transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)]">
+                <div key={task.id} className="group flex items-start gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background hover:border-[var(--border-color)] transition-all duration-[120ms] active:bg-[var(--neutral-soft)]">
                   <button
                     onClick={() => setDone((d) => [...d, task.id])}
                     className="mt-0.5 flex-shrink-0 text-muted-foreground hover:text-[var(--success-on)] transition-all duration-[120ms] active:scale-[0.94]"
@@ -507,7 +507,7 @@ function NextUp() {
           const meta = statusMeta[ev.status];
           return (
             <div key={ev.id}
-              className={`flex items-start gap-3 p-3 rounded-[10px] border transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] ${ev.status === "next" ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)] dark:bg-[var(--rally-brand-soft-dark)]/30" : "border-border bg-background"}`}>
+              className={`flex items-start gap-3 p-3 rounded-[10px] border transition-all duration-[120ms] active:bg-[var(--neutral-soft)] ${ev.status === "next" ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft)]" : "border-border bg-background"}`}>
               <div className="text-center flex-shrink-0 w-10">
                 <p className="text-[11px] font-medium" style={{ color: ev.status === "next" ? "var(--rally-brand)" : "var(--text-muted)" }}>{ev.time}</p>
                 <p className="text-[10px] text-muted-foreground">{ev.duration}</p>
@@ -541,7 +541,7 @@ function NextUp() {
                   </button>
                 )}
                 {ev.status === "upcoming" && (
-                  <button className="flex items-center gap-1 px-2.5 py-1 rounded-[6px] border border-border text-muted-foreground text-[11px] font-medium transition-all duration-[120ms] hover:bg-muted active:bg-[var(--neutral-soft-light)] active:scale-[0.97]">
+                  <button className="flex items-center gap-1 px-2.5 py-1 rounded-[6px] border border-border text-muted-foreground text-[11px] font-medium transition-all duration-[120ms] hover:bg-muted active:bg-[var(--neutral-soft)] active:scale-[0.97]">
                     <Sparkles className="size-3" /> Prep
                   </button>
                 )}
@@ -575,7 +575,7 @@ function MentionsChats() {
           const isRead = read.includes(m.id);
           return (
             <div key={m.id}
-              className={`flex gap-3 px-4 py-3 border-b border-[var(--border-subtle)] last:border-none hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] cursor-pointer ${(!isRead && m.unread) ? "bg-[var(--rally-brand-soft-light)]/30 dark:bg-[var(--rally-brand-soft-dark)]/10" : ""}`}>
+              className={`flex gap-3 px-4 py-3 border-b border-[var(--border-subtle)] last:border-none hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft)] cursor-pointer ${(!isRead && m.unread) ? "bg-[var(--rally-brand-soft)]/30" : ""}`}>
               <Avatar name={m.user} size={34} />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5">
@@ -648,8 +648,8 @@ function ContinueWorking() {
 
         <div className="pt-2 border-t border-[var(--border-subtle)]">
           <p className="text-[10px] font-medium uppercase tracking-widest mb-2" style={{ color: "var(--text-overline)" }}>Last active</p>
-          <Link to="/app/chat" className="flex items-center gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] cursor-pointer">
-            <div className="w-8 h-8 rounded-[8px] flex items-center justify-center bg-[var(--info-soft-light)] border border-border flex-shrink-0">
+          <Link to="/app/chat" className="flex items-center gap-3 px-3 py-2.5 rounded-[10px] border border-border bg-background hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft)] cursor-pointer">
+            <div className="w-8 h-8 rounded-[8px] flex items-center justify-center bg-[var(--info-soft)] border border-border flex-shrink-0">
               <Hash className="size-4" style={{ color: "var(--info-solid)" }} />
             </div>
             <div className="flex-1">
@@ -678,7 +678,7 @@ function TeamPulse() {
       <CardHeader
         title="Team Pulse"
         icon={Activity}
-        iconColor="#8B5CF6"
+        iconColor="var(--info-on)"
         action={
           <span className="flex items-center gap-1 text-[11px] text-muted-foreground">
             <Dot color="var(--status-active)" /> {onlineMembers.filter((m) => m.status === "active").length} online
@@ -702,7 +702,7 @@ function TeamPulse() {
                 </div>
                 <div className="flex -space-x-1 mr-2">
                   {room.members.slice(0, 3).map((m) => (
-                    <div key={m} title={m} className="w-5 h-5 rounded-full border-2 border-card overflow-hidden flex-shrink-0 bg-[#5f514b] flex items-center justify-center">
+                    <div key={m} title={m} className="w-5 h-5 rounded-full border-2 border-card overflow-hidden flex-shrink-0 flex items-center justify-center" style={{ background: "var(--neutral-solid)" }}>
                       <span className="text-white text-[8px]">{m.charAt(0)}</span>
                     </div>
                   ))}
@@ -798,7 +798,7 @@ function RolePanel() {
   if (userRole === "member") {
     return (
       <Card className="flex flex-col">
-        <CardHeader title="Assigned to Me" icon={CheckSquare} iconColor="#0f5fd7" />
+        <CardHeader title="Assigned to Me" icon={CheckSquare} iconColor="var(--info-solid)" />
         <div className="p-4 space-y-2 flex-1">
           {tasks.map((t) => (
             <div key={t.id} className="flex items-center gap-2 px-3 py-2.5 rounded-[10px] border border-border bg-background">

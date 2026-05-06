@@ -25,19 +25,141 @@ export interface ThemePalette {
 }
 
 // ── CSS vars this system manages (cleared on every palette switch) ─────────────
+// This list must cover every token set by any palette's brand/light/dark objects.
 
 export const MANAGED_VARS = [
+  // Brand / focus / selection
   '--rally-brand', '--rally-brand-hover', '--rally-brand-pressed',
   '--rally-brand-soft-light', '--rally-brand-soft-dark',
   '--rally-brand-on-light', '--rally-brand-on-dark',
   '--focus-ring', '--selected-border',
+
+  // Base layer
   '--canvas', '--surface', '--elevated', '--border-color',
   '--text-primary', '--text-secondary',
-  '--neutral-solid', '--neutral-soft-light', '--neutral-soft-dark',
+
+  // Neutral
+  '--neutral-solid',
+  '--neutral-soft-light', '--neutral-soft-dark',
   '--neutral-on-light', '--neutral-on-dark',
+
+  // Interaction states
   '--disabled-bg', '--disabled-border', '--disabled-text',
   '--selected-bg', '--selected-text',
+
+  // Semantic: Error
+  '--error-solid', '--error-hover', '--error-pressed',
+  '--error-soft-light', '--error-soft-dark',
+  '--error-on-light', '--error-on-dark',
+
+  // Semantic: Success
+  '--success-solid',
+  '--success-soft-light', '--success-soft-dark',
+  '--success-on-light', '--success-on-dark',
+
+  // Semantic: Warning
+  '--warning-solid',
+  '--warning-soft-light', '--warning-soft-dark',
+  '--warning-on-light', '--warning-on-dark',
+
+  // Semantic: Info
+  '--info-solid',
+  '--info-soft-light', '--info-soft-dark',
+  '--info-on-light', '--info-on-dark',
+
+  // Status dots
+  '--status-active', '--status-limited', '--status-disabled',
+
+  // Badge pairs (text + bg)
+  '--badge-tasks-text', '--badge-tasks-bg',
+  '--badge-calendar-text', '--badge-calendar-bg',
+  '--badge-files-text', '--badge-files-bg',
+  '--badge-chat-text', '--badge-chat-bg',
+  '--badge-team-text', '--badge-team-bg',
+  '--badge-web-text', '--badge-web-bg',
 ] as const;
+
+// ── Shared semantic token values (universal across all palettes) ──────────────
+// Error, success, warning, info are semantic meanings that stay consistent.
+// Only badge-calendar and neutral-based tokens vary per palette.
+
+const SEMANTIC_LIGHT: Record<string, string> = {
+  // Error
+  '--error-solid':      '#d90000',
+  '--error-hover':      '#b00000',
+  '--error-pressed':    '#8e0000',
+  '--error-soft-light': '#fdecec',
+  '--error-soft-dark':  '#341111',
+  '--error-on-light':   '#b00000',
+  '--error-on-dark':    '#ff8a8a',
+  // Success
+  '--success-solid':      '#0f6a43',
+  '--success-soft-light': '#eaf7f0',
+  '--success-soft-dark':  '#10261c',
+  '--success-on-light':   '#0f6a43',
+  '--success-on-dark':    '#7ad6a7',
+  // Warning
+  '--warning-solid':      '#8a4f00',
+  '--warning-soft-light': '#fff4e5',
+  '--warning-soft-dark':  '#33210a',
+  '--warning-on-light':   '#8a4f00',
+  '--warning-on-dark':    '#ffd08a',
+  // Info
+  '--info-solid':      '#0f5fd7',
+  '--info-soft-light': '#eef4ff',
+  '--info-soft-dark':  '#101d36',
+  '--info-on-light':   '#0f5fd7',
+  '--info-on-dark':    '#a9cbff',
+  // Status (light = solid colours)
+  '--status-active':   '#0f6a43',
+  '--status-disabled': '#d90000',
+  // Badge: semantic colours are fixed
+  '--badge-tasks-text': '#0f6a43',
+  '--badge-tasks-bg':   '#eaf7f0',
+  '--badge-files-text': '#0f5fd7',
+  '--badge-files-bg':   '#eef4ff',
+  '--badge-web-text':   '#0f5fd7',
+  '--badge-web-bg':     '#eef4ff',
+};
+
+const SEMANTIC_DARK: Record<string, string> = {
+  // Error (solids stay same; on/soft switch to dark variants)
+  '--error-solid':      '#d90000',
+  '--error-hover':      '#b00000',
+  '--error-pressed':    '#8e0000',
+  '--error-soft-light': '#fdecec',
+  '--error-soft-dark':  '#341111',
+  '--error-on-light':   '#b00000',
+  '--error-on-dark':    '#ff8a8a',
+  // Success
+  '--success-solid':      '#0f6a43',
+  '--success-soft-light': '#eaf7f0',
+  '--success-soft-dark':  '#10261c',
+  '--success-on-light':   '#0f6a43',
+  '--success-on-dark':    '#7ad6a7',
+  // Warning
+  '--warning-solid':      '#8a4f00',
+  '--warning-soft-light': '#fff4e5',
+  '--warning-soft-dark':  '#33210a',
+  '--warning-on-light':   '#8a4f00',
+  '--warning-on-dark':    '#ffd08a',
+  // Info
+  '--info-solid':      '#0f5fd7',
+  '--info-soft-light': '#eef4ff',
+  '--info-soft-dark':  '#101d36',
+  '--info-on-light':   '#0f5fd7',
+  '--info-on-dark':    '#a9cbff',
+  // Status (dark = on-dark = lighter colours for visibility)
+  '--status-active':   '#7ad6a7',
+  '--status-disabled': '#ff8a8a',
+  // Badge: semantic fixed (dark variants)
+  '--badge-tasks-text': '#7ad6a7',
+  '--badge-tasks-bg':   '#10261c',
+  '--badge-files-text': '#a9cbff',
+  '--badge-files-bg':   '#101d36',
+  '--badge-web-text':   '#a9cbff',
+  '--badge-web-bg':     '#101d36',
+};
 
 // ── Palette Definitions ───────────────────────────────────────────────────────
 
@@ -75,6 +197,15 @@ export const PALETTES: ThemePalette[] = [
       '--disabled-text':      '#70635d',
       '--selected-bg':        '#ffe2d4',
       '--selected-text':      '#c60f08',
+      // Status & badge (palette-specific)
+      '--status-limited':       '#5f514b',
+      '--badge-calendar-text':  '#c60f08',
+      '--badge-calendar-bg':    '#fff2ed',
+      '--badge-chat-text':      '#5f514b',
+      '--badge-chat-bg':        '#f4ece8',
+      '--badge-team-text':      '#5f514b',
+      '--badge-team-bg':        '#f4ece8',
+      ...SEMANTIC_LIGHT,
     },
     dark: {
       '--canvas':            '#191919',
@@ -90,6 +221,15 @@ export const PALETTES: ThemePalette[] = [
       '--disabled-text':     '#8a807c',
       '--selected-bg':       '#440608',
       '--selected-text':     '#ff9571',
+      // Status & badge (palette-specific)
+      '--status-limited':       '#c7b8b2',
+      '--badge-calendar-text':  '#ff9571',
+      '--badge-calendar-bg':    '#440608',
+      '--badge-chat-text':      '#c7b8b2',
+      '--badge-chat-bg':        '#262322',
+      '--badge-team-text':      '#c7b8b2',
+      '--badge-team-bg':        '#262322',
+      ...SEMANTIC_DARK,
     },
   },
 
@@ -126,6 +266,15 @@ export const PALETTES: ThemePalette[] = [
       '--disabled-text':      '#6b7fa0',
       '--selected-bg':        '#dbeafe',
       '--selected-text':      '#1d4ed8',
+      // Status & badge
+      '--status-limited':       '#3b5a8a',
+      '--badge-calendar-text':  '#1d4ed8',
+      '--badge-calendar-bg':    '#eff6ff',
+      '--badge-chat-text':      '#3b5a8a',
+      '--badge-chat-bg':        '#e8f1ff',
+      '--badge-team-text':      '#3b5a8a',
+      '--badge-team-bg':        '#e8f1ff',
+      ...SEMANTIC_LIGHT,
     },
     dark: {
       '--canvas':            '#0a1628',
@@ -141,6 +290,15 @@ export const PALETTES: ThemePalette[] = [
       '--disabled-text':     '#4a6a90',
       '--selected-bg':       '#1e3a5f',
       '--selected-text':     '#93c5fd',
+      // Status & badge
+      '--status-limited':       '#7da0c8',
+      '--badge-calendar-text':  '#93c5fd',
+      '--badge-calendar-bg':    '#1e3a5f',
+      '--badge-chat-text':      '#7da0c8',
+      '--badge-chat-bg':        '#142040',
+      '--badge-team-text':      '#7da0c8',
+      '--badge-team-bg':        '#142040',
+      ...SEMANTIC_DARK,
     },
   },
 
@@ -177,6 +335,15 @@ export const PALETTES: ThemePalette[] = [
       '--disabled-text':      '#5a8065',
       '--selected-bg':        '#bbf7d0',
       '--selected-text':      '#15803d',
+      // Status & badge
+      '--status-limited':       '#2d5c3a',
+      '--badge-calendar-text':  '#15803d',
+      '--badge-calendar-bg':    '#f0fdf4',
+      '--badge-chat-text':      '#2d5c3a',
+      '--badge-chat-bg':        '#e2f4e8',
+      '--badge-team-text':      '#2d5c3a',
+      '--badge-team-bg':        '#e2f4e8',
+      ...SEMANTIC_LIGHT,
     },
     dark: {
       '--canvas':            '#0a1f0f',
@@ -192,6 +359,15 @@ export const PALETTES: ThemePalette[] = [
       '--disabled-text':     '#3d7050',
       '--selected-bg':       '#14532d',
       '--selected-text':     '#86efac',
+      // Status & badge
+      '--status-limited':       '#6dba87',
+      '--badge-calendar-text':  '#86efac',
+      '--badge-calendar-bg':    '#14532d',
+      '--badge-chat-text':      '#6dba87',
+      '--badge-chat-bg':        '#0e2614',
+      '--badge-team-text':      '#6dba87',
+      '--badge-team-bg':        '#0e2614',
+      ...SEMANTIC_DARK,
     },
   },
 
@@ -228,6 +404,15 @@ export const PALETTES: ThemePalette[] = [
       '--disabled-text':      '#7c7ab0',
       '--selected-bg':        '#e0e7ff',
       '--selected-text':      '#4f46e5',
+      // Status & badge
+      '--status-limited':       '#4c4880',
+      '--badge-calendar-text':  '#4f46e5',
+      '--badge-calendar-bg':    '#eef2ff',
+      '--badge-chat-text':      '#4c4880',
+      '--badge-chat-bg':        '#ede9fe',
+      '--badge-team-text':      '#4c4880',
+      '--badge-team-bg':        '#ede9fe',
+      ...SEMANTIC_LIGHT,
     },
     dark: {
       '--canvas':            '#0d0c1a',
@@ -243,6 +428,15 @@ export const PALETTES: ThemePalette[] = [
       '--disabled-text':     '#605e90',
       '--selected-bg':       '#312e81',
       '--selected-text':     '#a5b4fc',
+      // Status & badge
+      '--status-limited':       '#9290c0',
+      '--badge-calendar-text':  '#a5b4fc',
+      '--badge-calendar-bg':    '#312e81',
+      '--badge-chat-text':      '#9290c0',
+      '--badge-chat-bg':        '#1a192e',
+      '--badge-team-text':      '#9290c0',
+      '--badge-team-bg':        '#1a192e',
+      ...SEMANTIC_DARK,
     },
   },
 
@@ -279,6 +473,15 @@ export const PALETTES: ThemePalette[] = [
       '--disabled-text':      '#9a5060',
       '--selected-bg':        '#ffd0d6',
       '--selected-text':      '#be123c',
+      // Status & badge
+      '--status-limited':       '#7a3040',
+      '--badge-calendar-text':  '#be123c',
+      '--badge-calendar-bg':    '#fff1f2',
+      '--badge-chat-text':      '#7a3040',
+      '--badge-chat-bg':        '#ffe4e6',
+      '--badge-team-text':      '#7a3040',
+      '--badge-team-bg':        '#ffe4e6',
+      ...SEMANTIC_LIGHT,
     },
     dark: {
       '--canvas':            '#1a0810',
@@ -294,6 +497,15 @@ export const PALETTES: ThemePalette[] = [
       '--disabled-text':     '#8c5060',
       '--selected-bg':       '#4c0519',
       '--selected-text':     '#fda4af',
+      // Status & badge
+      '--status-limited':       '#d48090',
+      '--badge-calendar-text':  '#fda4af',
+      '--badge-calendar-bg':    '#4c0519',
+      '--badge-chat-text':      '#d48090',
+      '--badge-chat-bg':        '#2e1020',
+      '--badge-team-text':      '#d48090',
+      '--badge-team-bg':        '#2e1020',
+      ...SEMANTIC_DARK,
     },
   },
 
@@ -330,6 +542,15 @@ export const PALETTES: ThemePalette[] = [
       '--disabled-text':      '#8a6a20',
       '--selected-bg':        '#fde68a',
       '--selected-text':      '#b45309',
+      // Status & badge
+      '--status-limited':       '#6b4a10',
+      '--badge-calendar-text':  '#b45309',
+      '--badge-calendar-bg':    '#fffbeb',
+      '--badge-chat-text':      '#6b4a10',
+      '--badge-chat-bg':        '#fef3c7',
+      '--badge-team-text':      '#6b4a10',
+      '--badge-team-bg':        '#fef3c7',
+      ...SEMANTIC_LIGHT,
     },
     dark: {
       '--canvas':            '#170f00',
@@ -345,6 +566,15 @@ export const PALETTES: ThemePalette[] = [
       '--disabled-text':     '#8a6a20',
       '--selected-bg':       '#451a03',
       '--selected-text':     '#fcd34d',
+      // Status & badge
+      '--status-limited':       '#c49530',
+      '--badge-calendar-text':  '#fcd34d',
+      '--badge-calendar-bg':    '#451a03',
+      '--badge-chat-text':      '#c49530',
+      '--badge-chat-bg':        '#281c00',
+      '--badge-team-text':      '#c49530',
+      '--badge-team-bg':        '#281c00',
+      ...SEMANTIC_DARK,
     },
   },
 ];
@@ -412,14 +642,14 @@ export function usePalette() {
   return ctx;
 }
 
-// ── CSS-variable helper strings (use in inline styles) ────────────────────────
+// ─�� CSS-variable helper strings (use in inline styles) ────────────────────────
 // Instead of hardcoding "#ff4615", import these and use e.g. style={{ color: cv.brand }}
 
 export const cv = {
   brand:         'var(--rally-brand)',
   brandHover:    'var(--rally-brand-hover)',
   brandPressed:  'var(--rally-brand-pressed)',
-  brandSoft:     'var(--rally-brand-soft-light)',
+  brandSoft:     'var(--rally-brand-soft)',
   brandSoftDark: 'var(--rally-brand-soft-dark)',
   brandOnLight:  'var(--rally-brand-on-light)',
   brandOnDark:   'var(--rally-brand-on-dark)',

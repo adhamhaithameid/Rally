@@ -361,7 +361,7 @@ function Av({ name, size = 22 }: { name: string; size?: number }) {
 
 function linkIcon(type: LinkType) {
   const Icon = type === "chat" ? MessageSquare : type === "voice" ? Mic2 : type === "file" ? FileText : CheckSquare;
-  const colors: Record<LinkType, string> = { chat: "var(--info-solid)", voice: "var(--success-solid)", file: "#6b21a8", task: "var(--warning-on-light)" };
+  const colors: Record<LinkType, string> = { chat: "var(--info-solid)", voice: "var(--success-solid)", file: "#6b21a8", task: "var(--warning-on)" };
   return <Icon className="size-3.5 flex-shrink-0" style={{ color: colors[type] }} />;
 }
 
@@ -610,7 +610,7 @@ function LeftRail({
       {/* Quick create */}
       <div className="px-3 pb-3">
         <button onClick={onNewEvent}
-          className="w-full flex items-center justify-center gap-1.5 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[var(--rally-brand)] hover:text-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors text-[11px]">
+          className="w-full flex items-center justify-center gap-1.5 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[var(--rally-brand)] hover:text-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft)] transition-colors text-[11px]">
           <Plus className="size-3.5" /> Quick Create
         </button>
       </div>
@@ -948,7 +948,7 @@ function MonthView({
             <div key={i} onClick={() => onDayClick(d)}
               className={`rounded-[8px] p-1.5 cursor-pointer border transition-colors min-h-[72px] ${
                 isTodayD
-                  ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)]"
+                  ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft)]"
                   : "border-border bg-card hover:bg-muted/40"
               }`}>
               <div className={`w-6 h-6 flex items-center justify-center rounded-full text-[11px] font-medium mb-1 ${
@@ -1025,7 +1025,7 @@ function EventDetailPanel({
       <div className="flex-shrink-0 flex items-center gap-2 px-4 py-3 border-b border-[var(--border-subtle)]">
         <span className="flex-1 text-[12px] font-medium text-muted-foreground">Event detail</span>
         <button onClick={() => setShowAI(v => !v)} title="AI Assist"
-          className={`w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors ${showAI ? "bg-[var(--rally-brand-soft-light)]" : "hover:bg-muted text-muted-foreground"}`}
+          className={`w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors ${showAI ? "bg-[var(--rally-brand-soft)]" : "hover:bg-muted text-muted-foreground"}`}
           style={{ color: showAI ? "var(--rally-brand)" : undefined }}>
           <Sparkles className="size-4" />
         </button>
@@ -1038,14 +1038,14 @@ function EventDetailPanel({
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
         {/* AI Assist */}
         {showAI && (
-          <div className="p-3 rounded-[10px] border" style={{ borderColor: "var(--rally-brand-200)", background: "var(--rally-brand-soft-light)" }}>
+          <div className="p-3 rounded-[10px] border" style={{ borderColor: "var(--border-color)", background: "var(--rally-brand-soft)" }}>
             <div className="flex items-center gap-1.5 mb-2">
               <Sparkles className="size-3.5" style={{ color: "var(--rally-brand)" }} />
               <span className="text-[11px] font-medium" style={{ color: "var(--rally-brand)" }}>AI Assist</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {aiActions.map(a => (
-                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors">
+                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft)] transition-colors">
                   {a}
                 </button>
               ))}
@@ -1148,7 +1148,7 @@ function EventDetailPanel({
             <div className="space-y-1.5">
               {event.links.map((lk, i) => {
                 const labelColors: Record<LinkType, string> = {
-                  chat:  "var(--info-solid)", voice: "var(--success-solid)", file: "#6b21a8", task: "var(--warning-on-light)",
+                  chat:  "var(--info-solid)", voice: "var(--success-solid)", file: "#6b21a8", task: "var(--warning-on)",
                 };
                 return (
                   <div key={i} className="flex items-center gap-2 px-2.5 py-2 rounded-[8px] border border-border bg-background hover:bg-muted transition-colors cursor-pointer">

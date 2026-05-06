@@ -339,7 +339,7 @@ function ActionPreviewCard({
   };
   return (
     <div className="flex items-start gap-3 p-3 rounded-[10px] border bg-card"
-      style={{ borderColor: "var(--rally-brand-200)", background: "var(--rally-brand-soft)" }}>
+      style={{ borderColor: "var(--border-color)", background: "var(--rally-brand-soft)" }}>
       <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0" style={{ background: "var(--rally-brand-soft)" }}>
         {iconMap[action.type]}
       </div>
@@ -500,8 +500,8 @@ function ContextPanel({
         <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Current Context</p>
         <div className="space-y-2.5">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-[7px] flex items-center justify-center flex-shrink-0" style={{ background: "var(--info-soft-light)" }}>
-              <Users className="size-3.5" style={{ color: "var(--info-on-light)" }} />
+            <div className="w-7 h-7 rounded-[7px] flex items-center justify-center flex-shrink-0" style={{ background: "var(--info-soft)" }}>
+              <Users className="size-3.5" style={{ color: "var(--info-on)" }} />
             </div>
             <div>
               <p className="text-[11px] font-medium text-foreground">Design Team</p>
@@ -509,7 +509,7 @@ function ContextPanel({
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-[7px] flex items-center justify-center flex-shrink-0" style={{ background:"var(--rally-brand-soft-light)" }}>
+            <div className="w-7 h-7 rounded-[7px] flex items-center justify-center flex-shrink-0" style={{ background:"var(--rally-brand-soft)" }}>
               <Sparkles className="size-3.5" style={{ color:"var(--rally-brand)" }} />
             </div>
             <div>
@@ -795,7 +795,7 @@ function AIHome({
   );
 }
 
-// ── Thread View ───────────────────────────────────────────────────────────────
+// ── Thread View ──────────────────────────────────────────────────────────���────
 
 function ThreadView({
   thread, user, input, onInputChange, onSend, isStreaming, enabledSources, onToggleSource, onFollowUp,
@@ -890,7 +890,7 @@ function ThreadView({
                   <div className="flex flex-wrap gap-1.5 mt-3">
                     {msg.followUps.map((fu, i) => (
                       <button key={i} onClick={() => onFollowUp(fu.prompt)}
-                        className="flex items-center gap-1 px-3 py-1 rounded-full border border-border bg-card hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] text-[11px] text-foreground transition-colors">
+                        className="flex items-center gap-1 px-3 py-1 rounded-full border border-border bg-card hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft)] text-[11px] text-foreground transition-colors">
                         {fu.label} <ChevronRight className="size-3 text-muted-foreground" />
                       </button>
                     ))}

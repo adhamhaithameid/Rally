@@ -51,7 +51,7 @@ const EXT: Record<string, { color: string; bg: string; label: string }> = {
 const EXTS = (ext: string) => EXT[ext] ?? { color: "#6B7280", bg: "#f3f4f6", label: "File" };
 
 const LINK_COLOR: Record<LinkKind, string> = {
-  chat: "var(--info-solid)", task: "var(--warning-on-light)", event: "var(--error-solid)", ai: "var(--rally-brand)",
+  chat: "var(--info-on)", task: "var(--warning-on)", event: "var(--error-on)", ai: "var(--rally-brand-on)",
 };
 const LINK_ICON: Record<LinkKind, React.ElementType> = {
   chat: MessageSquare, task: CheckSquare, event: Calendar, ai: Sparkles,
@@ -258,7 +258,7 @@ function FileRow({
   return (
     <div onClick={onSelect}
       className={`flex items-center gap-3 px-3 py-2.5 rounded-[10px] border cursor-pointer group transition-all ${
-        selected ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)]" : "border-border bg-card hover:bg-muted/30 hover:border-[var(--border)]"
+        selected ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft)]" : "border-border bg-card hover:bg-muted/30 hover:border-[var(--border)]"
       }`}>
       <FileTypeIcon ext={file.ext} size={32} />
 
@@ -314,7 +314,7 @@ function FileRow({
                 <button key={item.label}
                   onClick={e => { e.stopPropagation(); setMenu(false); }}
                   className={`w-full flex items-center gap-2 px-3 py-2 text-[12px] hover:bg-muted transition-colors ${(item as any).danger ? "" : "text-foreground"}`}
-                  style={(item as any).danger ? { color: "var(--error-on-light)" } : {}}>
+                  style={(item as any).danger ? { color: "var(--error-on)" } : {}}>
                   <item.icon className="size-3.5" /> {item.label}
                 </button>
               ))}
@@ -337,7 +337,7 @@ function FileCard({
   return (
     <div onClick={onSelect}
       className={`rounded-[12px] border cursor-pointer group transition-all hover:shadow-sm ${
-        selected ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)]" : "border-border bg-card hover:bg-muted/30"
+        selected ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft)]" : "border-border bg-card hover:bg-muted/30"
       }`}>
       {/* Preview area */}
       <div className="rounded-t-[12px] h-24 flex items-center justify-center"
@@ -556,7 +556,7 @@ function FilesHome({
             return (
               <div key={file.id} onClick={() => onFileSelect(file)}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-[10px] border cursor-pointer transition-all ${
-                  selectedId === file.id ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)]" : "border-border bg-card hover:bg-muted/30 hover:border-[var(--border)]"
+                  selectedId === file.id ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft)]" : "border-border bg-card hover:bg-muted/30 hover:border-[var(--border)]"
                 }`}>
                 <FileTypeIcon ext={file.ext} size={30} />
                 <div className="flex-1 min-w-0">
@@ -593,7 +593,7 @@ function FilesHome({
           {linkedFiles.map(f => (
             <div key={f.id} onClick={() => onFileSelect(f)}
               className={`flex items-start gap-3 px-3 py-3 rounded-[10px] border cursor-pointer transition-all ${
-                selectedId === f.id ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)]" : "border-border bg-card hover:bg-muted/30 hover:border-[var(--border)]"
+                selectedId === f.id ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft)]" : "border-border bg-card hover:bg-muted/30 hover:border-[var(--border)]"
               }`}>
               <FileTypeIcon ext={f.ext} size={28} />
               <div className="flex-1 min-w-0">
@@ -772,7 +772,7 @@ function SimpleFileList({
   );
 }
 
-// ── File detail panel ─────────────────────────────────────────────────────────
+// ── File detail panel ─────────────────────────────────────────────────────��───
 
 function FileDetailPanel({
   file, folders, onClose, onStar, canEdit,
@@ -797,7 +797,7 @@ function FileDetailPanel({
       <div className="flex-shrink-0 flex items-center gap-2 px-4 py-3 border-b border-[var(--border-subtle)]">
         <span className="flex-1 text-[12px] font-medium text-muted-foreground">File details</span>
         <button onClick={() => setShowAI(v => !v)}
-          className={`w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors ${showAI ? "bg-[var(--rally-brand-soft-light)]" : "hover:bg-muted text-muted-foreground"}`}
+          className={`w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors ${showAI ? "bg-[var(--rally-brand-soft)]" : "hover:bg-muted text-muted-foreground"}`}
           style={{ color: showAI ? "var(--rally-brand)" : undefined }}>
           <Sparkles className="size-4" />
         </button>
@@ -815,14 +815,14 @@ function FileDetailPanel({
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
         {/* AI Assist */}
         {showAI && (
-          <div className="p-3 rounded-[10px] border" style={{ borderColor: "var(--rally-brand-soft-light)", background: "var(--rally-brand-soft-light)" }}>
+          <div className="p-3 rounded-[10px] border border-border" style={{ background: "var(--rally-brand-soft)" }}>
             <div className="flex items-center gap-1.5 mb-2">
               <Sparkles className="size-3.5" style={{ color: "var(--rally-brand)" }} />
               <span className="text-[11px] font-medium" style={{ color: "var(--rally-brand)" }}>AI Assist</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {AI_ACTIONS.slice(0, 4).map(a => (
-                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors">
+                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft)] transition-colors">
                   {a}
                 </button>
               ))}
@@ -958,7 +958,7 @@ function FileDetailPanel({
                 <Pencil className="size-3.5" /> Rename
               </button>
               <button className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-[8px] border border-border bg-background transition-colors text-[12px] ml-auto hover:bg-muted"
-                style={{ color: "var(--error-on-light)" }}>
+                style={{ color: "var(--error-on)" }}>
                 <Trash2 className="size-3.5" />
               </button>
             </>
@@ -1013,7 +1013,7 @@ function NewItemModal({
               return (
                 <button key={t.id} onClick={() => setType(t.id)}
                   className={`flex-1 flex flex-col items-center gap-1.5 py-3 rounded-[8px] border text-[11px] transition-colors ${
-                    type === t.id ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)] text-[var(--rally-brand)]" : "border-border text-muted-foreground hover:bg-muted"
+                    type === t.id ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft)] text-[var(--rally-brand-on)]" : "border-border text-muted-foreground hover:bg-muted"
                   }`}>
                   <Icon className="size-4" />
                   {t.label}
@@ -1121,7 +1121,7 @@ export function FilesV2() {
 
       {/* Drag-over overlay */}
       {isDragOver && (
-        <div className="absolute inset-0 z-50 m-3 rounded-[16px] border-2 border-dashed border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)]/90 flex items-center justify-center pointer-events-none">
+        <div className="absolute inset-0 z-50 m-3 rounded-[16px] border-2 border-dashed border-[var(--rally-brand)] bg-[var(--rally-brand-soft)]/90 flex items-center justify-center pointer-events-none">
           <div className="text-center">
             <Upload className="size-10 mx-auto mb-2" style={{ color: "var(--rally-brand)" }} />
             <p className="text-[14px] font-medium" style={{ color: "var(--rally-brand)" }}>Drop files to upload</p>
@@ -1146,7 +1146,7 @@ export function FilesV2() {
           {/* Ask AI */}
           <button onClick={() => setShowAIBar(v => !v)}
             className={`flex items-center gap-1.5 h-8 px-3 rounded-[8px] border border-border text-[12px] transition-colors ${
-              showAIBar ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)] text-[var(--rally-brand)]" : "bg-background text-muted-foreground hover:bg-muted"
+              showAIBar ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft)] text-[var(--rally-brand-on)]" : "bg-background text-muted-foreground hover:bg-muted"
             }`}>
             <Sparkles className="size-3.5" style={{ color: "var(--rally-brand)" }} /> Ask AI
           </button>
@@ -1177,7 +1177,7 @@ export function FilesV2() {
         {showAIBar && (
           <div className="mt-3 pt-3 border-t border-[var(--border-subtle)] flex flex-wrap gap-1.5">
             {AI_ACTIONS.map(a => (
-              <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-background text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors">
+              <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-background text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft)] transition-colors">
                 {a}
               </button>
             ))}

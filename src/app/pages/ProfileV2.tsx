@@ -19,10 +19,10 @@ type AvailabilityStatus = "online" | "away" | "dnd" | "offline";
 // ── Config ────────────────────────────────────────────────────────────────────
 
 const ROLE_CFG: Record<UserRole, { label: string; color: string; bg: string }> = {
-  owner:  { label: "Owner",  color: "var(--rally-brand-on-light)", bg: "var(--rally-brand-soft-light)" },
-  admin:  { label: "Admin",  color: "var(--info-on-light)",        bg: "var(--info-soft-light)"        },
-  member: { label: "Member", color: "var(--success-on-light)",     bg: "var(--success-soft-light)"     },
-  viewer: { label: "Viewer", color: "var(--neutral-on-light)",     bg: "var(--neutral-soft-light)"     },
+  owner:  { label: "Owner",  color: "var(--rally-brand-on)", bg: "var(--rally-brand-soft)" },
+  admin:  { label: "Admin",  color: "var(--info-on)",        bg: "var(--info-soft)"        },
+  member: { label: "Member", color: "var(--success-on)",     bg: "var(--success-soft)"     },
+  viewer: { label: "Viewer", color: "var(--neutral-on)",     bg: "var(--neutral-soft)"     },
 };
 
 const AVAILABILITY_CFG: Record<AvailabilityStatus, { label: string; color: string; desc: string }> = {
@@ -67,18 +67,18 @@ const MOCK_WORK_SNAPSHOT = {
 };
 
 const RECENT_ACTIVITY = [
-  { id: "a1", icon: FileText,      label: "Brand guidelines v3.pdf",         sub: "Opened 1h ago",      color: "var(--rally-brand-on-light)", bg: "var(--rally-brand-soft-light)" },
-  { id: "a2", icon: Bot,           label: "AI thread: Rally nav structure",   sub: "2h ago",             color: "var(--info-on-light)",        bg: "var(--info-soft-light)"        },
-  { id: "a3", icon: MessageSquare, label: "#design – mobile header thread",   sub: "4h ago",             color: "var(--info-on-light)",        bg: "var(--info-soft-light)"        },
-  { id: "a4", icon: CheckSquare,   label: "Review mobile header spec",        sub: "Viewed yesterday",   color: "var(--success-on-light)",     bg: "var(--success-soft-light)"     },
-  { id: "a5", icon: FileText,      label: "Q1 Campaign assets",               sub: "Opened 2 days ago",  color: "var(--warning-on-light)",     bg: "var(--warning-soft-light)"     },
+  { id: "a1", icon: FileText,      label: "Brand guidelines v3.pdf",         sub: "Opened 1h ago",      color: "var(--rally-brand-on)", bg: "var(--rally-brand-soft)" },
+  { id: "a2", icon: Bot,           label: "AI thread: Rally nav structure",   sub: "2h ago",             color: "var(--info-on)",        bg: "var(--info-soft)"        },
+  { id: "a3", icon: MessageSquare, label: "#design – mobile header thread",   sub: "4h ago",             color: "var(--info-on)",        bg: "var(--info-soft)"        },
+  { id: "a4", icon: CheckSquare,   label: "Review mobile header spec",        sub: "Viewed yesterday",   color: "var(--success-on)",     bg: "var(--success-soft)"     },
+  { id: "a5", icon: FileText,      label: "Q1 Campaign assets",               sub: "Opened 2 days ago",  color: "var(--warning-on)",     bg: "var(--warning-soft)"     },
 ];
 
 const SAVED_ITEMS = [
-  { id: "s1", icon: MessageSquare, label: "Chat: Project kickoff",         sub: "Pinned conversation",  color: "var(--info-on-light)",        bg: "var(--info-soft-light)"        },
-  { id: "s2", icon: FileText,      label: "Brand guidelines v3.pdf",      sub: "Pinned file",           color: "var(--rally-brand-on-light)", bg: "var(--rally-brand-soft-light)" },
-  { id: "s3", icon: Bot,           label: "AI: Design system audit",      sub: "Bookmarked thread",     color: "var(--info-on-light)",        bg: "var(--info-soft-light)"        },
-  { id: "s4", icon: CheckSquare,   label: "Q1 roadmap tasks",             sub: "Important task group",  color: "var(--success-on-light)",     bg: "var(--success-soft-light)"     },
+  { id: "s1", icon: MessageSquare, label: "Chat: Project kickoff",         sub: "Pinned conversation",  color: "var(--info-on)",        bg: "var(--info-soft)"        },
+  { id: "s2", icon: FileText,      label: "Brand guidelines v3.pdf",      sub: "Pinned file",           color: "var(--rally-brand-on)", bg: "var(--rally-brand-soft)" },
+  { id: "s3", icon: Bot,           label: "AI: Design system audit",      sub: "Bookmarked thread",     color: "var(--info-on)",        bg: "var(--info-soft)"        },
+  { id: "s4", icon: CheckSquare,   label: "Q1 roadmap tasks",             sub: "Important task group",  color: "var(--success-on)",     bg: "var(--success-soft)"     },
 ];
 
 const MOCK_SESSIONS = [
@@ -169,7 +169,7 @@ function LeftRail({ section, onSection }: { section: NavSection; onSection: (s: 
           return (
             <button key={item.id} onClick={() => onSection(item.id)}
               className="w-full flex items-center gap-2.5 px-3 py-2 rounded-[8px] text-left text-[12px] transition-colors"
-              style={active ? { background: "var(--rally-brand-soft-light)", color: "var(--rally-brand-on-light)", fontWeight: 500 } : { color: "var(--muted-foreground)" }}>
+              style={active ? { background: "var(--rally-brand-soft)", color: "var(--rally-brand-on)", fontWeight: 500 } : { color: "var(--muted-foreground)" }}>
               <Icon className="size-4 flex-shrink-0" />
               {item.label}
             </button>
@@ -289,7 +289,7 @@ function OverviewSection({
           {/* Tasks */}
           <div className="rounded-[12px] border border-border bg-card p-4">
             <div className="flex items-center gap-2 mb-3">
-              <CheckSquare className="size-4" style={{ color: "var(--success-on-light)" }} />
+              <CheckSquare className="size-4" style={{ color: "var(--success-on)" }} />
               <span className="text-[12px] font-medium text-foreground">Upcoming tasks</span>
             </div>
             <div className="space-y-2">
@@ -309,7 +309,7 @@ function OverviewSection({
           {/* Events */}
           <div className="rounded-[12px] border border-border bg-card p-4">
             <div className="flex items-center gap-2 mb-3">
-              <Calendar className="size-4" style={{ color: "var(--info-on-light)" }} />
+              <Calendar className="size-4" style={{ color: "var(--info-on)" }} />
               <span className="text-[12px] font-medium text-foreground">Upcoming events</span>
             </div>
             <div className="space-y-2">
@@ -516,7 +516,7 @@ function PreferencesSection({
             {(["light", "dark"] as const).map(t => (
               <button key={t} onClick={() => onTheme(t)}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-[8px] border transition-all text-[12px]"
-                style={theme === t ? { borderColor: "var(--rally-brand)", background: "var(--rally-brand-soft-light)", color: "var(--rally-brand)", fontWeight: 500 } : { borderColor: "var(--border)", color: "var(--foreground)" }}>
+                style={theme === t ? { borderColor: "var(--rally-brand)", background: "var(--rally-brand-soft)", color: "var(--rally-brand)", fontWeight: 500 } : { borderColor: "var(--border)", color: "var(--foreground)" }}>
                 {t === "light" ? <Sun className="size-3.5" /> : <Moon className="size-3.5" />}
                 {t === "light" ? "Light" : "Dark"}
                 {theme === t && <Check className="size-3 ml-1" />}
@@ -655,7 +655,7 @@ function TeamsSection({
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
                       {teamCaps.can.map(item => (
                         <div key={item} className="flex items-start gap-2">
-                          <Check className="size-3.5 flex-shrink-0 mt-0.5" style={{ color: "var(--success-on-light)" }} />
+                          <Check className="size-3.5 flex-shrink-0 mt-0.5" style={{ color: "var(--success-on)" }} />
                           <span className="text-[11px] text-foreground">{item}</span>
                         </div>
                       ))}
@@ -679,7 +679,7 @@ function TeamsSection({
         <button className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[var(--rally-brand)] hover:text-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors text-[12px]">
           <Users className="size-3.5" /> Create another team
         </button>
-        <button className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[var(--info-on-light)] hover:text-[var(--info-on-light)] hover:bg-[var(--info-soft-light)] transition-colors text-[12px]">
+        <button className="flex items-center gap-1.5 px-3 py-2 rounded-[8px] border border-dashed border-border text-muted-foreground hover:border-[var(--info-on)] hover:text-[var(--info-on)] hover:bg-[var(--info-soft)] transition-colors text-[12px]">
           <ChevronRight className="size-3.5" /> Join with invite code
         </button>
       </div>
@@ -697,7 +697,7 @@ function TeamsSection({
           <div className="space-y-2">
             {caps.can.map(item => (
               <div key={item} className="flex items-start gap-2">
-                <Check className="size-3.5 flex-shrink-0 mt-0.5" style={{ color: "var(--success-on-light)" }} />
+                <Check className="size-3.5 flex-shrink-0 mt-0.5" style={{ color: "var(--success-on)" }} />
                 <span className="text-[12px] text-foreground">{item}</span>
               </div>
             ))}
@@ -767,7 +767,7 @@ function SecuritySection({ onLogout }: { onLogout: () => void }) {
               className={pwInputClass} />
           </div>
           {newPw && confirmPw && newPw !== confirmPw && (
-            <p className="text-[11px] flex items-center gap-1" style={{ color: "var(--error-on-light)" }}>
+            <p className="text-[11px] flex items-center gap-1" style={{ color: "var(--error-on)" }}>
               <AlertCircle className="size-3.5" /> Passwords do not match
             </p>
           )}
@@ -796,7 +796,7 @@ function SecuritySection({ onLogout }: { onLogout: () => void }) {
                     <p className="text-[12px] text-foreground">{sess.device}</p>
                     {sess.active && (
                       <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium"
-                        style={{ background: "var(--success-soft-light)", color: "var(--success-on-light)" }}>
+                        style={{ background: "var(--success-soft)", color: "var(--success-on)" }}>
                         Active now
                       </span>
                     )}

@@ -156,7 +156,7 @@ function Av({ name, size = 28, online }: { name: string; size?: number; online?:
       </div>
       {online !== undefined && (
         <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-card"
-          style={{ background: online ? "var(--success-solid)" : "var(--warning-on-light)" }} />
+          style={{ background: online ? "var(--status-active)" : "var(--status-limited)" }} />
       )}
     </div>
   );
@@ -238,7 +238,7 @@ function ChatSidebar({
         <div className="px-2 mb-1">
           <button
             onClick={() => onSelect(null)}
-            className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[9px] transition-colors ${selectedId === null ? "bg-[var(--rally-brand-soft-light)] text-[var(--rally-brand-on-light)] dark:bg-[var(--rally-brand-soft-dark)]/40 dark:text-[var(--rally-brand-on-dark)]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}
+            className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[9px] transition-colors ${selectedId === null ? "bg-[var(--rally-brand-soft)] text-[var(--rally-brand-on)]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}
           >
             <Inbox className="size-4 flex-shrink-0" />
             <span className="text-[13px]">Inbox</span>
@@ -261,7 +261,7 @@ function ChatSidebar({
             <div className="space-y-0.5 mt-0.5">
               {dms.map(dm => (
                 <button key={dm.id} onClick={() => onSelect(dm.id)}
-                  className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[9px] transition-colors group ${selectedId === dm.id ? "bg-[var(--rally-brand-soft-light)] text-[var(--rally-brand-on-light)] dark:bg-[var(--rally-brand-soft-dark)]/40 dark:text-[var(--rally-brand-on-dark)]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}
+                  className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[9px] transition-colors group ${selectedId === dm.id ? "bg-[var(--rally-brand-soft)] text-[var(--rally-brand-on)]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}
                 >
                   <Av name={dm.name} size={22} online={["Sarah Johnson","Mike Chen","Emily Davis"].includes(dm.name)} />
                   <span className={`flex-1 text-[13px] text-left truncate ${dm.unread ? "font-medium text-foreground" : ""}`}>{dm.name}</span>
@@ -292,7 +292,7 @@ function ChatSidebar({
             <div className="space-y-0.5 mt-0.5">
               {textChs.map(ch => (
                 <button key={ch.id} onClick={() => onSelect(ch.id)}
-                  className={`w-full flex items-center gap-2 px-2.5 py-2 rounded-[9px] transition-colors group ${selectedId === ch.id ? "bg-[var(--rally-brand-soft-light)] text-[var(--rally-brand-on-light)] dark:bg-[var(--rally-brand-soft-dark)]/40 dark:text-[var(--rally-brand-on-dark)]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}
+                  className={`w-full flex items-center gap-2 px-2.5 py-2 rounded-[9px] transition-colors group ${selectedId === ch.id ? "bg-[var(--rally-brand-soft)] text-[var(--rally-brand-on)]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}
                 >
                   <Hash className="size-3.5 flex-shrink-0" />
                   <span className={`flex-1 text-[13px] text-left truncate ${ch.unread ? "font-medium text-foreground" : ""}`}>{ch.name}</span>
@@ -319,7 +319,7 @@ function ChatSidebar({
                 return (
                   <div key={room.id} className="rounded-[9px] border border-border bg-background overflow-hidden">
                     <div className="flex items-center gap-2 px-2.5 py-2">
-                      <Volume2 className="size-3.5 flex-shrink-0" style={{ color: room.participants.length > 0 ? "var(--success-solid)" : "var(--text-secondary)" }} />
+                      <Volume2 className="size-3.5 flex-shrink-0" style={{ color: room.participants.length > 0 ? "var(--status-active)" : "var(--text-secondary)" }} />
                       <span className="flex-1 text-[13px] text-foreground text-left truncate">{room.name}</span>
                       {room.participants.length > 0 && (
                         <span className="text-[10px] text-muted-foreground">{room.participants.length}</span>
@@ -347,7 +347,7 @@ function ChatSidebar({
                               <span className="flex gap-0.5 items-end h-3">
                                 {[1,2,3].map(i => (
                                   <span key={i} className="w-0.5 rounded-full"
-                                    style={{ height: [6,10,7][i-1], background: "var(--success-solid)", animation: `pulse ${0.6+i*0.15}s ease-in-out infinite alternate` }} />
+                                    style={{ height: [6,10,7][i-1], background: "var(--status-active)", animation: `pulse ${0.6+i*0.15}s ease-in-out infinite alternate` }} />
                                 ))}
                               </span>
                             )}
@@ -366,9 +366,9 @@ function ChatSidebar({
       {/* Me / Voice Controls */}
       <div className="flex-shrink-0 border-t border-border px-3 py-2.5">
         {inVoiceRoom && (
-          <div className="mb-2 px-2.5 py-2 rounded-[9px] border bg-[var(--success-soft-light)] border-[var(--success-solid)]/30 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: "var(--success-solid)" }} />
-            <span className="text-[11px] flex-1 truncate" style={{ color: "var(--success-on-light)" }}>
+          <div className="mb-2 px-2.5 py-2 rounded-[9px] border bg-[var(--success-soft)] border-[var(--status-active)]/30 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: "var(--status-active)" }} />
+            <span className="text-[11px] flex-1 truncate" style={{ color: "var(--success-on)" }}>
               {voiceRooms.find(r => r.id === inVoiceRoom)?.name}
             </span>
             <button onClick={onToggleMic} className="text-muted-foreground hover:text-foreground transition-colors">
@@ -465,8 +465,8 @@ function InboxView({
           {voiceRooms.map(room => (
             <div key={room.id} className="p-3 rounded-[12px] border border-border bg-card">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-7 h-7 rounded-[7px] flex items-center justify-center" style={{ background: "var(--info-soft-light)" }}>
-                  <Volume2 className="size-3.5" style={{ color: "var(--info-on-light)" }} />
+                <div className="w-7 h-7 rounded-[7px] flex items-center justify-center" style={{ background: "var(--info-soft)" }}>
+                  <Volume2 className="size-3.5" style={{ color: "var(--info-on)" }} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[12px] font-medium text-foreground truncate">{room.name}</p>
@@ -534,7 +534,7 @@ function InboxView({
         <h2 className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Important & Pinned</h2>
         <div className="p-3 rounded-[12px] border border-border bg-card">
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0" style={{ background:"var(--rally-brand-soft-light)" }}>
+            <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0" style={{ background:"var(--rally-brand-soft)" }}>
               <Pin className="size-4" style={{ color:"var(--rally-brand)" }} />
             </div>
             <div className="flex-1">
@@ -559,7 +559,7 @@ function InboxView({
           </div>
           <div className="flex flex-wrap gap-2">
             {aiActions.filter(a => !aiDismissed.includes(a)).map(action => (
-              <div key={action} className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-full border border-border bg-card hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors group cursor-pointer">
+              <div key={action} className="flex items-center gap-1 pl-3 pr-2 py-1.5 rounded-full border border-border bg-card hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft)] transition-colors group cursor-pointer">
                 <span className="text-[12px] text-foreground">{action}</span>
                 <button onClick={e => { e.stopPropagation(); setAiDismissed(d => [...d, action]); }}
                   className="text-muted-foreground hover:text-foreground opacity-0 group-hover:opacity-100 transition-opacity">
@@ -579,9 +579,9 @@ function InboxView({
           {sharedItems.map(item => {
             const iconMap = { file: FileText, task: CheckSquare, event: Calendar };
             const colorMap = {
-              file:  { bg: "var(--info-soft-light)",    color: "var(--info-on-light)"    },
-              task:  { bg: "var(--success-soft-light)", color: "var(--success-on-light)" },
-              event: { bg: "var(--warning-soft-light)", color: "var(--warning-on-light)" },
+              file:  { bg: "var(--info-soft)",    color: "var(--info-on)"    },
+              task:  { bg: "var(--success-soft)", color: "var(--success-on)" },
+              event: { bg: "var(--warning-soft)", color: "var(--warning-on)" },
             };
             const Icon = iconMap[item.type];
             const clr = colorMap[item.type];
@@ -656,7 +656,7 @@ function MessageItem({
               <button key={i}
                 onClick={() => setReactions(prev => prev.map((rx, ri) => ri === i ? { ...rx, count: rx.count + (rx.reacted ? -1 : 1), reacted: !rx.reacted } : rx))}
                 className="flex items-center gap-1 px-2 py-0.5 rounded-full border text-[11px] transition-colors"
-                style={r.reacted ? { borderColor:"var(--rally-brand)", background:"var(--rally-brand-soft-light)", color:"var(--rally-brand-on-light)" } : { borderColor:"var(--border)", background:"var(--muted)", color:"var(--foreground)" }}>
+                style={r.reacted ? { borderColor:"var(--rally-brand)", background:"var(--rally-brand-soft)", color:"var(--rally-brand-on)" } : { borderColor:"var(--border)", background:"var(--muted)", color:"var(--foreground)" }}>
                 {r.emoji} {r.count}
               </button>
             ))}
@@ -826,7 +826,7 @@ function ChannelView({
             {i === unreadDividerIndex + 1 && (
               <div className="flex items-center gap-3 px-4 my-2">
                 <div className="flex-1 h-px" style={{ background: "var(--rally-brand)" }} />
-                <span className="text-[10px] font-medium px-2 py-0.5 rounded-full flex-shrink-0" style={{ background:"var(--rally-brand-soft-light)", color:"var(--rally-brand-on-light)" }}>
+                <span className="text-[10px] font-medium px-2 py-0.5 rounded-full flex-shrink-0" style={{ background:"var(--rally-brand-soft)", color:"var(--rally-brand-on)" }}>
                   New messages
                 </span>
                 <div className="flex-1 h-px" style={{ background:"var(--rally-brand)" }} />
@@ -928,7 +928,7 @@ function ChannelView({
 // ── Right Panel ───────────────────────────────────────────────────────────────
 
 function RightPanel({ selectedChannelId }: { selectedChannelId: string | null }) {
-  const statusDot: Record<string, string> = { active:"var(--success-solid)", idle:"var(--warning-on-light)", dnd:"var(--error-solid)" };
+  const statusDot: Record<string, string> = { active:"var(--status-active)", idle:"var(--status-limited)", dnd:"var(--status-disabled)" };
   const channelPins = mockMessages.filter(m => m.channelId === selectedChannelId && m.pinned);
   const channelFiles = sharedItems.filter(s => s.channelId === selectedChannelId && s.type === "file");
 

@@ -103,6 +103,14 @@ const VIOLATIONS: Violation[] = [
   // ── TeamSelectionV2 ──────────────────────────────────────────────────────────
   { id:"ts1", page:"TeamSelectionV2", file:"TeamSelectionV2.tsx", layer:"CreatePanel > required field asterisk", type:"tailwind-semantic", severity:"Medium", current:"text-red-400", correct:"style={{ color: 'var(--error-on-light)' }}", line:254 },
 
+  // ── CalendarV2 ───────────────────────────────────────────────────────────────
+  { id:"cal1", page:"CalendarV2", file:"CalendarV2.tsx", layer:"linkIcon / EventDetailPanel > link type colors > task",  type:"semantic-misuse",   severity:"Medium",   current:"var(--warning-on-light)", correct:"var(--warning-on)",                                   line:364, notes:"Non-adaptive -on-light token. Fixed in both linkIcon and EventDetailPanel labelColors." },
+  { id:"cal2", page:"CalendarV2", file:"CalendarV2.tsx", layer:"LeftRail > Quick Create button > hover bg",              type:"dark-mode-failure",  severity:"High",     current:"var(--rally-brand-200)",  correct:"var(--rally-brand-soft)",                              line:613, notes:"--rally-brand-200 is a fixed light-mode hex (#ffd0be); has no dark counterpart." },
+  { id:"cal3", page:"CalendarV2", file:"CalendarV2.tsx", layer:"MonthView > today cell background",                      type:"dark-mode-failure",  severity:"Critical", current:"var(--rally-brand-soft-light)", correct:"var(--rally-brand-soft)",                     line:951, notes:"Non-adaptive soft token — light-mode only; today cell renders light-cream in dark mode." },
+  { id:"cal4", page:"CalendarV2", file:"CalendarV2.tsx", layer:"EventDetailPanel > AI Assist toggle button > active bg", type:"dark-mode-failure",  severity:"High",     current:"var(--rally-brand-soft-light)", correct:"var(--rally-brand-soft)",                     line:1028, notes:"AI toggle active state uses light-only token; fails in dark and non-Rally themes." },
+  { id:"cal5", page:"CalendarV2", file:"CalendarV2.tsx", layer:"EventDetailPanel > AI Assist panel > bg + border",       type:"dark-mode-failure",  severity:"High",     current:"var(--rally-brand-soft-light) / var(--rally-brand-200)", correct:"var(--rally-brand-soft) / var(--border-color)", line:1041, notes:"Both bg and border use non-adaptive light tokens; AI panel appears bright in dark mode." },
+  { id:"cal6", page:"CalendarV2", file:"CalendarV2.tsx", layer:"EventDetailPanel > AI Assist chip buttons > hover bg",   type:"dark-mode-failure",  severity:"High",     current:"var(--rally-brand-200)",  correct:"var(--rally-brand-soft)",                              line:1048, notes:"Same --rally-brand-200 issue as Quick Create; fixed to adaptive --rally-brand-soft." },
+
   // ── Global / Cross-cutting ────────────────────────────────────────────────────
   { id:"g1",  page:"All pages",  file:"*(V2).tsx", layer:"Interactive elements — no focus ring",  type:"missing-state",      severity:"High",     current:"No :focus-visible ring defined", correct:"box-shadow: 0 0 0 2px var(--focus-ring) — add to all buttons/inputs", notes:"Focus ring token exists but is not applied via className or CSS on interactive elements." },
   { id:"g2",  page:"All pages",  file:"*(V2).tsx", layer:"Interactive elements — no pressing state", type:"missing-state",   severity:"High",     current:"No active: scale/bg classes",  correct:"active:scale-[0.97] active:bg-[var(--rally-brand-pressed)] per element type", notes:"Part 4 of the audit — pressing states defined in tokens but not yet applied." },
@@ -112,27 +120,27 @@ const VIOLATIONS: Violation[] = [
 // ── Config ────────────────────────────────────────────────────────────────────
 
 const TYPE_LABELS: Record<ViolationType, { label: string; Icon: React.ElementType; color: string }> = {
-  "hardcoded-color":  { label: "Hardcoded Color",       Icon: Palette,       color: "var(--rally-brand-on-light)"  },
-  "dark-mode-failure":{ label: "Dark Mode Failure",     Icon: Moon,          color: "var(--info-on-light)"         },
-  "semantic-misuse":  { label: "Semantic Misuse",       Icon: AlertTriangle, color: "var(--warning-on-light)"      },
-  "theme-isolation":  { label: "Theme Isolation Fail",  Icon: Layers,        color: "var(--error-on-light)"        },
-  "missing-state":    { label: "Missing Interaction",   Icon: Zap,           color: "var(--neutral-on-light)"      },
-  "tailwind-semantic":{ label: "Tailwind Semantic Class",Icon: Eye,          color: "var(--success-on-light)"      },
+  "hardcoded-color":  { label: "Hardcoded Color",       Icon: Palette,       color: "var(--rally-brand-on)"  },
+  "dark-mode-failure":{ label: "Dark Mode Failure",     Icon: Moon,          color: "var(--info-on)"         },
+  "semantic-misuse":  { label: "Semantic Misuse",       Icon: AlertTriangle, color: "var(--warning-on)"      },
+  "theme-isolation":  { label: "Theme Isolation Fail",  Icon: Layers,        color: "var(--error-on)"        },
+  "missing-state":    { label: "Missing Interaction",   Icon: Zap,           color: "var(--neutral-on)"      },
+  "tailwind-semantic":{ label: "Tailwind Semantic Class",Icon: Eye,          color: "var(--success-on)"      },
 };
 
 const TYPE_BG: Record<ViolationType, string> = {
-  "hardcoded-color":   "var(--rally-brand-soft-light)",
-  "dark-mode-failure": "var(--info-soft-light)",
-  "semantic-misuse":   "var(--warning-soft-light)",
-  "theme-isolation":   "var(--error-soft-light)",
-  "missing-state":     "var(--neutral-soft-light)",
-  "tailwind-semantic": "var(--success-soft-light)",
+  "hardcoded-color":   "var(--rally-brand-soft)",
+  "dark-mode-failure": "var(--info-soft)",
+  "semantic-misuse":   "var(--warning-soft)",
+  "theme-isolation":   "var(--error-soft)",
+  "missing-state":     "var(--neutral-soft)",
+  "tailwind-semantic": "var(--success-soft)",
 };
 
 const SEV_CFG: Record<Severity, { color: string; bg: string; Icon: React.ElementType }> = {
-  Critical: { color: "var(--error-on-light)",   bg: "var(--error-soft-light)",   Icon: AlertCircle   },
-  High:     { color: "var(--warning-on-light)",  bg: "var(--warning-soft-light)", Icon: AlertTriangle },
-  Medium:   { color: "var(--info-on-light)",     bg: "var(--info-soft-light)",    Icon: Info          },
+  Critical: { color: "var(--error-on)",   bg: "var(--error-soft)",   Icon: AlertCircle   },
+  High:     { color: "var(--warning-on)",  bg: "var(--warning-soft)", Icon: AlertTriangle },
+  Medium:   { color: "var(--info-on)",     bg: "var(--info-soft)",    Icon: Info          },
 };
 
 const ALL_PAGES = [...new Set(VIOLATIONS.map(v => v.page))];
@@ -170,8 +178,8 @@ function ColorSwatch({ value }: { value: string }) {
   return (
     <code className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[5px] text-[11px] font-mono"
       style={{
-        background: isVar ? "var(--neutral-soft-light)" : isHex ? "var(--error-soft-light)" : isTW ? "var(--warning-soft-light)" : "var(--info-soft-light)",
-        color:      isVar ? "var(--neutral-on-light)"   : isHex ? "var(--error-on-light)"   : isTW ? "var(--warning-on-light)"   : "var(--info-on-light)",
+        background: isVar ? "var(--neutral-soft)" : isHex ? "var(--error-soft)" : isTW ? "var(--warning-soft)" : "var(--info-soft)",
+        color:      isVar ? "var(--neutral-on)"   : isHex ? "var(--error-on)"   : isTW ? "var(--warning-on)"   : "var(--info-on)",
       }}>
       {isHex && (
         <span className="w-3 h-3 rounded-full border border-border flex-shrink-0"
@@ -188,7 +196,7 @@ function ViolationRow({ v }: { v: Violation }) {
     <div className="border-b border-[var(--border-subtle)] last:border-none">
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-full flex items-start gap-3 px-4 py-3 hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] text-left"
+        className="w-full flex items-start gap-3 px-4 py-3 hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft)] text-left"
       >
         <div className="mt-0.5 flex-shrink-0">
           {open
@@ -226,9 +234,9 @@ function ViolationRow({ v }: { v: Violation }) {
             </div>
           </div>
           {v.notes && (
-            <div className="flex gap-2 px-3 py-2.5 rounded-[8px]" style={{ background: "var(--warning-soft-light)" }}>
-              <Info className="size-3.5 flex-shrink-0 mt-0.5" style={{ color: "var(--warning-on-light)" }} />
-              <p className="text-[12px] leading-normal" style={{ color: "var(--warning-on-light)" }}>{v.notes}</p>
+            <div className="flex gap-2 px-3 py-2.5 rounded-[8px]" style={{ background: "var(--warning-soft)" }}>
+              <Info className="size-3.5 flex-shrink-0 mt-0.5" style={{ color: "var(--warning-on)" }} />
+              <p className="text-[12px] leading-normal" style={{ color: "var(--warning-on)" }}>{v.notes}</p>
             </div>
           )}
         </div>
@@ -247,7 +255,7 @@ function PageGroup({ page, violations }: { page: string; violations: Violation[]
     <div className="rounded-[14px] border border-border bg-card overflow-hidden">
       <button
         onClick={() => setCollapsed(c => !c)}
-        className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft-light)] border-b border-[var(--border-subtle)] text-left"
+        className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft)] border-b border-[var(--border-subtle)] text-left"
       >
         <div className="w-7 h-7 rounded-[8px] flex items-center justify-center text-[13px] font-medium text-white flex-shrink-0"
           style={{ background: critCount > 0 ? "var(--error-solid)" : highCount > 0 ? "var(--warning-solid)" : "var(--info-solid)" }}>
@@ -256,9 +264,9 @@ function PageGroup({ page, violations }: { page: string; violations: Violation[]
         <div className="flex-1 min-w-0">
           <p className="text-[14px] font-medium text-foreground">{page}</p>
           <div className="flex items-center gap-3 mt-0.5">
-            {critCount > 0 && <span className="text-[11px] font-medium" style={{ color: "var(--error-on-light)" }}>{critCount} Critical</span>}
-            {highCount > 0 && <span className="text-[11px] font-medium" style={{ color: "var(--warning-on-light)" }}>{highCount} High</span>}
-            {medCount  > 0 && <span className="text-[11px] font-medium" style={{ color: "var(--info-on-light)" }}>{medCount} Medium</span>}
+            {critCount > 0 && <span className="text-[11px] font-medium" style={{ color: "var(--error-on)" }}>{critCount} Critical</span>}
+            {highCount > 0 && <span className="text-[11px] font-medium" style={{ color: "var(--warning-on)" }}>{highCount} High</span>}
+            {medCount  > 0 && <span className="text-[11px] font-medium" style={{ color: "var(--info-on)" }}>{medCount} Medium</span>}
           </div>
         </div>
         {collapsed
@@ -334,7 +342,7 @@ export function ColorAuditV2() {
                 </span>
               </div>
               <p className="text-[14px] text-muted-foreground">
-                Full token-binding audit across all V2 pages — all 46 violations from the initial sweep have been resolved. This page documents the fixes applied and serves as a reference for future audits.
+                Full token-binding audit across all V2 pages — all violations resolved across DashboardV2, ChatV2, AIChatV2, TodoV2, FilesV2, TeamV2, ProfileV2, and CalendarV2. This page documents the fixes applied and serves as a reference for future audits.
               </p>
             </div>
             <div className="flex items-center gap-2 text-[12px] text-muted-foreground">
@@ -349,10 +357,10 @@ export function ColorAuditV2() {
           {/* Summary stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
             {[
-              { label: "Total Violations", value: VIOLATIONS.length, color: "var(--text-primary)", bg: "var(--neutral-soft-light)" },
-              { label: "Critical",          value: totalCrit,          color: "var(--error-on-light)",   bg: "var(--error-soft-light)"   },
-              { label: "High",              value: totalHigh,          color: "var(--warning-on-light)", bg: "var(--warning-soft-light)" },
-              { label: "Medium",            value: totalMed,           color: "var(--info-on-light)",    bg: "var(--info-soft-light)"    },
+              { label: "Total Violations", value: VIOLATIONS.length, color: "var(--text-primary)", bg: "var(--neutral-soft)" },
+              { label: "Critical",          value: totalCrit,          color: "var(--error-on)",   bg: "var(--error-soft)"   },
+              { label: "High",              value: totalHigh,          color: "var(--warning-on)", bg: "var(--warning-soft)" },
+              { label: "Medium",            value: totalMed,           color: "var(--info-on)",    bg: "var(--info-soft)"    },
             ].map(s => (
               <div key={s.label} className="rounded-[10px] px-4 py-3" style={{ background: s.bg }}>
                 <p className="text-[24px] font-medium leading-none mb-1" style={{ color: s.color }}>{s.value}</p>
@@ -458,13 +466,13 @@ export function ColorAuditV2() {
                   <tr key={page} className="border-b border-[var(--border-subtle)] last:border-none hover:bg-muted/30 transition-colors">
                     <td className="px-4 py-2.5 text-[13px] font-medium text-foreground">{page}</td>
                     <td className="px-4 py-2.5">
-                      {c > 0 && <span className="text-[11px] font-medium" style={{ color: "var(--error-on-light)" }}>{c}</span>}
+                      {c > 0 && <span className="text-[11px] font-medium" style={{ color: "var(--error-on)" }}>{c}</span>}
                     </td>
                     <td className="px-4 py-2.5">
-                      {h > 0 && <span className="text-[11px] font-medium" style={{ color: "var(--warning-on-light)" }}>{h}</span>}
+                      {h > 0 && <span className="text-[11px] font-medium" style={{ color: "var(--warning-on)" }}>{h}</span>}
                     </td>
                     <td className="px-4 py-2.5">
-                      {m > 0 && <span className="text-[11px] font-medium" style={{ color: "var(--info-on-light)" }}>{m}</span>}
+                      {m > 0 && <span className="text-[11px] font-medium" style={{ color: "var(--info-on)" }}>{m}</span>}
                     </td>
                     <td className="px-4 py-2.5 text-[13px] text-foreground font-medium">{pvs.length}</td>
                   </tr>
@@ -472,9 +480,9 @@ export function ColorAuditV2() {
               })}
               <tr className="bg-muted/50">
                 <td className="px-4 py-2.5 text-[13px] font-medium text-foreground">Total</td>
-                <td className="px-4 py-2.5 text-[11px] font-medium" style={{ color: "var(--error-on-light)" }}>{totalCrit}</td>
-                <td className="px-4 py-2.5 text-[11px] font-medium" style={{ color: "var(--warning-on-light)" }}>{totalHigh}</td>
-                <td className="px-4 py-2.5 text-[11px] font-medium" style={{ color: "var(--info-on-light)" }}>{totalMed}</td>
+                <td className="px-4 py-2.5 text-[11px] font-medium" style={{ color: "var(--error-on)" }}>{totalCrit}</td>
+                <td className="px-4 py-2.5 text-[11px] font-medium" style={{ color: "var(--warning-on)" }}>{totalHigh}</td>
+                <td className="px-4 py-2.5 text-[11px] font-medium" style={{ color: "var(--info-on)" }}>{totalMed}</td>
                 <td className="px-4 py-2.5 text-[13px] font-medium text-foreground">{VIOLATIONS.length}</td>
               </tr>
             </tbody>

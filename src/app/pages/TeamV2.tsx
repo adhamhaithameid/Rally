@@ -248,7 +248,7 @@ function MemberRow({
           )}
           {recent && (
             <span className="text-[10px] px-1.5 py-0.5 rounded-full flex-shrink-0"
-              style={{ background: "var(--success-soft-light)", color: "var(--success-solid)" }}>New</span>
+              style={{ background: "var(--success-soft)", color: "var(--success-on)" }}>New</span>
           )}
         </div>
         <p className="text-[10px] text-muted-foreground truncate">{member.email}</p>
@@ -283,7 +283,7 @@ function MemberRow({
                 <div className="h-px bg-border mx-2 my-0.5" />
                 <button onClick={e => { e.stopPropagation(); setMenuOpen(false); }}
                   className="w-full flex items-center gap-2 px-3 py-2 text-[12px] transition-colors hover:bg-muted"
-                  style={{ color: "var(--error-on-light)" }}>
+                  style={{ color: "var(--error-on)" }}>
                   <UserMinus className="size-3.5" /> Remove
                 </button>
               </div>
@@ -344,7 +344,7 @@ function MemberDetailPanel({
           </div>
           {recent && (
             <span className="mt-2 text-[10px] px-2 py-0.5 rounded-full"
-              style={{ background: "var(--success-soft-light)", color: "var(--success-solid)" }}>
+              style={{ background: "var(--success-soft)", color: "var(--success-on)" }}>
               Recently joined
             </span>
           )}
@@ -430,12 +430,13 @@ function MemberDetailPanel({
           {!confirmRemove ? (
             <button onClick={() => setConfirmRemove(true)}
               className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-[8px] border border-border bg-background text-[12px] transition-colors hover:bg-muted"
-              style={{ color: "var(--error-on-light)" }}>
+              style={{ color: "var(--error-on)" }}>
               <UserMinus className="size-3.5" />
             </button>
           ) : (
             <button onClick={() => setConfirmRemove(false)}
-              className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-[8px] bg-red-500 text-white text-[12px] transition-colors hover:bg-red-600">
+              className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-[8px] text-white text-[12px] transition-colors"
+              style={{ background: "var(--error-solid)" }}>
               Confirm Remove
             </button>
           )}
@@ -650,7 +651,7 @@ function TeamHome({
               </div>
             ))}
             <button onClick={onInvite}
-              className="w-full flex items-center justify-center gap-1.5 py-2 rounded-[10px] border border-dashed border-border text-muted-foreground hover:border-[var(--rally-brand)] hover:text-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors text-[11px]">
+              className="w-full flex items-center justify-center gap-1.5 py-2 rounded-[10px] border border-dashed border-border text-muted-foreground hover:border-[var(--rally-brand)] hover:text-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft)] transition-colors text-[11px]">
               <Plus className="size-3.5" /> Send new invite
             </button>
           </div>
@@ -751,7 +752,7 @@ function MembersView({
   );
 }
 
-// ── Settings View ─────────────────────────────────────────────────────────────
+// ── Settings View ────────────────────────────────────────────���────────────────
 
 function SettingsView({
   teamName, projectName, description,
@@ -924,8 +925,8 @@ function DangerZone({ teamName }: { teamName: string }) {
     <div className="flex-1 overflow-y-auto px-5 py-6">
       <div className="max-w-xl">
         <div className="flex items-center gap-2 mb-1">
-          <AlertTriangle className="size-4" style={{ color: "var(--error-on-light)" }} />
-          <h2 className="text-[14px] font-medium" style={{ color: "var(--error-on-light)" }}>Danger Zone</h2>
+          <AlertTriangle className="size-4" style={{ color: "var(--error-on)" }} />
+          <h2 className="text-[14px] font-medium" style={{ color: "var(--error-on)" }}>Danger Zone</h2>
         </div>
         <p className="text-[12px] text-muted-foreground mb-6">These actions are irreversible. Proceed with caution.</p>
 
@@ -964,10 +965,10 @@ function DangerZone({ teamName }: { teamName: string }) {
           </div>
 
           {/* Delete team */}
-          <div className="rounded-[12px] border p-4" style={{ borderColor: "var(--error-solid)", background: "var(--error-soft-light)" }}>
+          <div className="rounded-[12px] border p-4" style={{ borderColor: "var(--error-solid)", background: "var(--error-soft)" }}>
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-[13px] font-medium" style={{ color: "var(--error-on-light)" }}>Delete Team</p>
+                <p className="text-[13px] font-medium" style={{ color: "var(--error-on)" }}>Delete Team</p>
                 <p className="text-[11px] text-muted-foreground mt-0.5">
                   Permanently delete <strong className="text-foreground">{teamName}</strong> and all its data. This cannot be undone.
                 </p>
@@ -982,7 +983,7 @@ function DangerZone({ teamName }: { teamName: string }) {
             </div>
             {confirmDelete && (
               <div className="mt-3 pt-3 border-t" style={{ borderColor: "var(--error-solid)" }}>
-                <p className="text-[11px] mb-2" style={{ color: "var(--error-on-light)" }}>
+                <p className="text-[11px] mb-2" style={{ color: "var(--error-on)" }}>
                   Type <strong>{teamName}</strong> to confirm deletion:
                 </p>
                 <input placeholder={teamName}

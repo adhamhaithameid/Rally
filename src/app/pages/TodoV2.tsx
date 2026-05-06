@@ -322,7 +322,7 @@ function TaskRow({
   return (
     <div onClick={onSelect}
       className={`flex items-center gap-3 px-3 py-2.5 rounded-[10px] border transition-all cursor-pointer group ${
-        selected ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft-light)]" : "border-border bg-card hover:border-[var(--border)] hover:bg-muted/30"
+        selected ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft)]" : "border-border bg-card hover:border-[var(--border)] hover:bg-muted/30"
       }`}>
       {/* Done toggle */}
       <button onClick={e => { e.stopPropagation(); canEdit && onToggleDone(); }}
@@ -442,7 +442,7 @@ function DetailPanel({
       <div className="flex-shrink-0 flex items-center gap-2 px-4 py-3 border-b border-[var(--border-subtle)]">
         <span className="flex-1 text-[12px] font-medium text-muted-foreground">Task detail</span>
         <button onClick={() => setShowAI(v => !v)} title="AI assist"
-          className={`w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors ${showAI ? "bg-[var(--rally-brand-soft-light)]" : "hover:bg-muted text-muted-foreground"}`}
+          className={`w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors ${showAI ? "bg-[var(--rally-brand-soft)]" : "hover:bg-muted text-muted-foreground"}`}
           style={{ color: showAI ? "var(--rally-brand)" : undefined }}>
           <Sparkles className="size-4" />
         </button>
@@ -454,14 +454,14 @@ function DetailPanel({
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
         {/* AI assist */}
         {showAI && (
-          <div className="p-3 rounded-[10px] border" style={{ borderColor: "var(--rally-brand-200)", background: "var(--rally-brand-soft-light)" }}>
+          <div className="p-3 rounded-[10px] border border-border" style={{ background: "var(--rally-brand-soft)" }}>
             <div className="flex items-center gap-1.5 mb-2">
               <Sparkles className="size-3.5" style={{ color: "var(--rally-brand)" }} />
               <span className="text-[11px] font-medium" style={{ color: "var(--rally-brand)" }}>AI Assist</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {aiActions.map(a => (
-                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-200)] transition-colors">
+                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft)] transition-colors">
                   {a}
                 </button>
               ))}
@@ -606,7 +606,7 @@ function DetailPanel({
 
         {/* AI badge */}
         {task.aiGenerated && (
-          <div className="flex items-center gap-2 px-2.5 py-2 rounded-[8px]" style={{ background:"var(--rally-brand-soft-light)", border:"1px solid var(--rally-brand-200)" }}>
+          <div className="flex items-center gap-2 px-2.5 py-2 rounded-[8px] border border-border" style={{ background:"var(--rally-brand-soft)" }}>
             <Sparkles className="size-3.5 flex-shrink-0" style={{ color:"var(--rally-brand)" }} />
             <span className="text-[11px]" style={{ color:"var(--rally-brand)" }}>Created by Rally AI</span>
           </div>
@@ -877,7 +877,7 @@ export function TodoV2() {
             <button key={tab.id} onClick={() => { setActiveTab(tab.id); setFocusFilter(null); }}
               className={`px-3 py-1.5 rounded-[7px] text-[12px] transition-colors ${
                 activeTab === tab.id
-                  ? "bg-[var(--rally-brand-soft-light)] text-[var(--rally-brand)] font-medium"
+                  ? "bg-[var(--rally-brand-soft)] text-[var(--rally-brand-on)] font-medium"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
               }`}>
               {tab.label}
@@ -889,7 +889,7 @@ export function TodoV2() {
           {focusFilter && (
             <button onClick={() => setFocusFilter(null)}
               className="ml-2 flex items-center gap-1 px-2 py-1 rounded-full text-[10px] border"
-              style={{ borderColor: "var(--rally-brand)", background: "var(--rally-brand-soft-light)", color: "var(--rally-brand)" }}>
+              style={{ borderColor: "var(--rally-brand)", background: "var(--rally-brand-soft)", color: "var(--rally-brand-on)" }}>
               <X className="size-3" /> Clear filter
             </button>
           )}
