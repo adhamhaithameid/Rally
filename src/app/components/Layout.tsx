@@ -16,6 +16,7 @@ import {
   Home,
   Check,
   Layers,
+  Boxes,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useTheme } from "../contexts/ThemeContext";
@@ -36,8 +37,9 @@ interface NavItem {
 
 // Nav items shared across both versions (only design-system is fully static now)
 const sharedNavItems: NavItem[] = [
-  { path: "/app/design-system",  label: "System", icon: Palette, id: "nav-design-system",  shortcut: "S" },
-  { path: "/app/theme-settings", label: "Themes", icon: Layers,  id: "nav-theme-settings", shortcut: "Y" },
+  { path: "/app/design-system",      label: "System",    icon: Palette, id: "nav-design-system",      shortcut: "S" },
+  { path: "/app/theme-settings",     label: "Themes",    icon: Layers,  id: "nav-theme-settings",     shortcut: "Y" },
+  { path: "/app/element-inventory",  label: "Elements",  icon: Boxes,   id: "nav-element-inventory",  shortcut: "E" },
 ];
 
 const profileItem: NavItem = {
