@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import svgPaths from "../../imports/svg-gyowvurp60";
+import headerSvg from "../../imports/Header/svg-jwg80ao7oc";
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -155,72 +156,103 @@ function TaskStatusBadge({ status }: { status: string }) {
   return null;
 }
 
-// ── Top Navbar ────────────────────────────────────────────────────────────────
+// ── Top Navbar (Figma-matched) ─────────────────────────────────────────────────
 
 function TopNav() {
-  const { user, currentTeam, userRole } = useAuth();
-  const [teamOpen, setTeamOpen] = useState(false);
-  const [notifOpen, setNotifOpen] = useState(false);
-  const [newOpen, setNewOpen] = useState(false);
+  const { user, currentTeam } = useAuth();
+  const [teamOpen,      setTeamOpen]      = useState(false);
+  const [notifOpen,     setNotifOpen]     = useState(false);
+  const [newOpen,       setNewOpen]       = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
-  const teamRef = useRef<HTMLDivElement>(null);
+  const teamRef  = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
-  const newRef = useRef<HTMLDivElement>(null);
+  const newRef   = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
-      if (teamRef.current && !teamRef.current.contains(e.target as Node)) setTeamOpen(false);
+      if (teamRef.current  && !teamRef.current.contains(e.target as Node))  setTeamOpen(false);
       if (notifRef.current && !notifRef.current.contains(e.target as Node)) setNotifOpen(false);
-      if (newRef.current && !newRef.current.contains(e.target as Node)) setNewOpen(false);
+      if (newRef.current   && !newRef.current.contains(e.target as Node))   setNewOpen(false);
     }
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  const teams = user?.teams ?? [];
+  const teams       = user?.teams ?? [];
   const unreadCount = 3;
 
   return (
-    <header className="flex-shrink-0 flex items-center gap-3 px-5 py-3 bg-card border-b border-border">
+    <header
+      className="flex-shrink-0 flex items-center gap-4 px-5"
+      style={{
+        height: 73,
+        background: "#2c2c2c",
+        borderBottom: "1px solid #4a403c",
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+      }}>
 
-      {/* Team switcher */}
-      <div ref={teamRef} className="relative">
+      {/* ── Workspace button ── */}
+      <div ref={teamRef} className="relative flex-shrink-0">
         <button
-          onClick={() => setTeamOpen((o) => !o)}
-          className="flex items-center gap-2.5 px-3 py-2 rounded-[10px] border border-border bg-background hover:bg-muted transition-all duration-[120ms] active:bg-muted active:scale-[0.97]"
-        >
-          <div className="w-6 h-6 rounded-[6px] flex items-center justify-center flex-shrink-0" style={{ background: "var(--rally-brand)" }}>
-            <svg viewBox="27 26 133 127" width="14" height="14" fill="none">
-              <path d={svgPaths.p6b466c0} fill="#fff" />
+          onClick={() => setTeamOpen(o => !o)}
+          className="flex items-center gap-[10px] transition-opacity hover:opacity-80 active:opacity-60"
+          style={{
+            background: "#232323",
+            border: "1px solid #4a403c",
+            borderRadius: 10,
+            height: 49,
+            padding: "9px 13px",
+          }}>
+          {/* Rally "R" in orange rounded square */}
+          <div className="flex-shrink-0 flex items-center justify-center"
+            style={{ width: 24, height: 24, background: "#ff4615", borderRadius: 6 }}>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <g clipPath="url(#tnClip)">
+                <path d={headerSvg.pca582c0} fill="white" />
+              </g>
+              <defs><clipPath id="tnClip"><rect width="14" height="14" fill="white" /></clipPath></defs>
             </svg>
           </div>
-          <div className="text-left hidden sm:block">
-            <p className="text-[14px] font-medium text-foreground leading-none">{currentTeam?.name ?? "Select team"}</p>
-            <p className="text-[10px] text-muted-foreground mt-0.5">{currentTeam?.projectName ?? ""}</p>
+          {/* Name & sub */}
+          <div className="flex flex-col gap-[2px] text-left">
+            <span className="whitespace-nowrap leading-[14px]"
+              style={{ color: "#fff2ed", fontSize: 14, fontWeight: 500 }}>
+              {currentTeam?.name ?? "Design Team"}
+            </span>
+            <span className="whitespace-nowrap leading-[15px]"
+              style={{ color: "#c7b8b2", fontSize: 10, fontWeight: 500 }}>
+              {currentTeam?.projectName ?? "Website Redesign"}
+            </span>
           </div>
-          <ChevronDown className="size-3.5 text-muted-foreground flex-shrink-0" />
+          {/* Chevron */}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="flex-shrink-0">
+            <path d="M3.5 5.25L7 8.75L10.5 5.25" stroke="#c7b8b2" strokeWidth="1.16667" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </button>
 
+        {/* Team dropdown */}
         {teamOpen && (
-          <div className="absolute top-full left-0 mt-1.5 w-60 bg-card border border-border rounded-[12px] shadow-lg z-50 py-1 overflow-hidden">
-            <p className="text-[10px] font-medium uppercase tracking-widest px-3 py-2" style={{ color: "var(--text-overline)" }}>Your teams</p>
-            {teams.map((t) => (
+          <div className="absolute top-full left-0 mt-2 w-64 rounded-[12px] shadow-2xl z-50 py-1.5 overflow-hidden"
+            style={{ background: "#232323", border: "1px solid #4a403c" }}>
+            <p className="text-[10px] font-medium uppercase tracking-widest px-3 py-2"
+              style={{ color: "#c7b8b2" }}>Your teams</p>
+            {teams.map(t => (
               <button key={t.teamId}
-                className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft)] text-left"
-                onClick={() => { setTeamOpen(false); }}>
-                <div className="w-7 h-7 rounded-[6px] flex items-center justify-center text-white text-[11px] font-medium" style={{ background: "var(--rally-brand)" }}>
-                  {t.teamName.charAt(0)}
-                </div>
+                className="w-full flex items-center gap-3 px-3 py-2.5 text-left transition-colors hover:bg-white/5 active:bg-white/10"
+                onClick={() => setTeamOpen(false)}>
+                <div className="w-7 h-7 rounded-[6px] flex items-center justify-center text-white text-[11px] font-medium flex-shrink-0"
+                  style={{ background: "#ff4615" }}>{t.teamName.charAt(0)}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[14px] text-foreground truncate">{t.teamName}</p>
-                  <p className="text-[11px] text-muted-foreground truncate">{t.projectName}</p>
+                  <p style={{ color: "#fff2ed", fontSize: 14 }} className="truncate">{t.teamName}</p>
+                  <p style={{ color: "#c7b8b2", fontSize: 11 }} className="truncate">{t.projectName}</p>
                 </div>
-                <Badge label={t.role} variant={t.role === "owner" ? "brand" : t.role === "admin" ? "info" : t.role === "member" ? "success" : "neutral"} />
               </button>
             ))}
-            <div className="border-t border-[var(--border-subtle)] mt-1 pt-1">
-              <button className="w-full flex items-center gap-2 px-3 py-2 hover:bg-muted text-muted-foreground hover:text-foreground transition-all duration-[120ms] active:bg-[var(--neutral-soft)] text-[14px] font-medium">
+            <div style={{ borderTop: "1px solid #4a403c", marginTop: 4, paddingTop: 4 }}>
+              <button className="w-full flex items-center gap-2 px-3 py-2 transition-colors hover:bg-white/5 active:bg-white/10"
+                style={{ color: "#c7b8b2", fontSize: 14, fontWeight: 500 }}>
                 <Plus className="size-4" /> Create or join team
               </button>
             </div>
@@ -228,49 +260,68 @@ function TopNav() {
         )}
       </div>
 
-      {/* Search bar */}
-      <div className="flex-1 max-w-lg relative">
-        <div className={`flex items-center gap-2 px-3 py-2 rounded-[10px] border transition-colors ${searchFocused ? "border-[var(--rally-brand)] bg-card" : "border-border bg-background"}`}>
-          <Search className="size-4 flex-shrink-0 text-muted-foreground" />
-          <input
-            type="text"
+      {/* ── Search bar (centred, max 512px) ── */}
+      <div className="flex-1 flex justify-center">
+        <div className="flex items-center gap-[8px] px-[13px] w-full"
+          style={{
+            background: "#232323",
+            border: `1px solid ${searchFocused ? "#ff4615" : "#4a403c"}`,
+            borderRadius: 10,
+            height: 39,
+            maxWidth: 512,
+            transition: "border-color 120ms",
+          }}>
+          {/* Search icon */}
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
+            <path d={headerSvg.p107a080} stroke="#c7b8b2" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M14 14L11.1333 11.1333" stroke="#c7b8b2" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          {/* Input */}
+          <input type="text"
             placeholder="Search people, tasks, files, channels..."
-            className="flex-1 bg-transparent text-[14px] text-foreground placeholder:text-muted-foreground outline-none"
+            className="flex-1 bg-transparent outline-none text-[14px]"
+            style={{ color: "#fff2ed" }}
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setSearchFocused(false)}
           />
-          <kbd className="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 rounded-[4px] bg-muted border border-border text-[10px] text-muted-foreground">
-            ⌘K
-          </kbd>
+          {/* ⌘K badge */}
+          <div className="flex-shrink-0 flex items-center justify-center px-[7px] rounded-[4px]"
+            style={{ background: "#262322", border: "1px solid #4a403c", height: 21 }}>
+            <span style={{ color: "#c7b8b2", fontSize: 10, lineHeight: "15px" }}>⌘K</span>
+          </div>
         </div>
       </div>
 
-      <div className="flex items-center gap-2 ml-auto">
+      {/* ── Right actions ── */}
+      <div className="flex items-center gap-[8px] flex-shrink-0">
 
-        {/* New button */}
+        {/* + New */}
         <div ref={newRef} className="relative">
-          <button
-            onClick={() => setNewOpen((o) => !o)}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-[10px] text-[14px] font-medium text-white transition-all duration-[120ms] active:bg-[var(--rally-brand-pressed)] active:scale-[0.97]"
-            style={{ background: "var(--rally-brand)" }}
-          >
-            <Plus className="size-4" />
-            <span className="hidden sm:inline">New</span>
+          <button onClick={() => setNewOpen(o => !o)}
+            className="flex items-center gap-[6px] font-medium text-white transition-opacity hover:opacity-90 active:opacity-70"
+            style={{ background: "#ff4615", borderRadius: 10, height: 37, padding: "8px 12px", fontSize: 14 }}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
+              <path d="M3.33333 8H12.6667" stroke="white" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M8 3.33333V12.6667" stroke="white" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span>New</span>
           </button>
 
           {newOpen && (
-            <div className="absolute top-full right-0 mt-1.5 w-48 bg-card border border-border rounded-[12px] shadow-lg z-50 py-1">
+            <div className="absolute top-full right-0 mt-2 w-48 rounded-[12px] shadow-2xl z-50 py-1.5 overflow-hidden"
+              style={{ background: "#232323", border: "1px solid #4a403c" }}>
               {[
-                { label: "Task", icon: CheckSquare, path: "/app/todo" },
-                { label: "Event", icon: Calendar, path: "/app/calendar" },
-                { label: "Message", icon: MessageSquare, path: "/app/chat" },
-                { label: "Upload file", icon: Upload, path: "/app/files" },
-                { label: "AI chat", icon: Bot, path: "/app/ai-chat" },
-              ].map((item) => (
+                { label: "Task",        icon: CheckSquare,   path: "/app/todo"     },
+                { label: "Event",       icon: Calendar,      path: "/app/calendar" },
+                { label: "Message",     icon: MessageSquare, path: "/app/chat"     },
+                { label: "Upload file", icon: Upload,        path: "/app/files"    },
+                { label: "AI chat",     icon: Bot,           path: "/app/ai-chat"  },
+              ].map(item => (
                 <button key={item.label}
                   onClick={() => { setNewOpen(false); navigate(item.path); }}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft)] text-[14px] text-foreground font-medium">
-                  <item.icon className="size-4 text-muted-foreground" />
+                  className="w-full flex items-center gap-3 px-3 py-2.5 text-[14px] font-medium transition-colors hover:bg-white/5 active:bg-white/10 text-left"
+                  style={{ color: "#fff2ed" }}>
+                  <item.icon className="size-4 flex-shrink-0" style={{ color: "#c7b8b2" }} />
                   {item.label}
                 </button>
               ))}
@@ -278,55 +329,67 @@ function TopNav() {
           )}
         </div>
 
-        {/* Notifications */}
+        {/* Bell */}
         <div ref={notifRef} className="relative">
-          <button
-            onClick={() => setNotifOpen((o) => !o)}
-            className="relative w-9 h-9 flex items-center justify-center rounded-[10px] border border-border bg-background hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft)] active:scale-[0.94]"
-          >
-            <Bell className="size-4 text-foreground" />
+          <button onClick={() => setNotifOpen(o => !o)}
+            className="relative flex items-center justify-center transition-opacity hover:opacity-80 active:opacity-60"
+            style={{
+              width: 38, height: 38,
+              background: "#232323",
+              border: "1.028px solid #4a403c",
+              borderRadius: 10,
+            }}>
+            <svg width="16.444" height="16.444" viewBox="0 0 16.4444 16.4444" fill="none">
+              <path d={headerSvg.p35a5e100} stroke="#FFF2ED" strokeWidth="1.37037" strokeLinecap="round" strokeLinejoin="round" />
+              <path d={headerSvg.p13ce8800} stroke="#FFF2ED" strokeWidth="1.37037" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            {/* Badge */}
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[16px] h-4 flex items-center justify-center rounded-full text-white text-[10px] font-medium px-1" style={{ background: "var(--rally-brand)" }}>
+              <div className="absolute flex items-center justify-center text-white font-medium"
+                style={{
+                  top: -4, right: -4,
+                  width: 16, height: 16,
+                  background: "#ff4615",
+                  borderRadius: "50%",
+                  fontSize: 10,
+                }}>
                 {unreadCount}
-              </span>
+              </div>
             )}
           </button>
 
           {notifOpen && (
-            <div className="absolute top-full right-0 mt-1.5 w-80 bg-card border border-border rounded-[12px] shadow-lg z-50 overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-subtle)]">
-                <span className="text-[14px] font-medium text-foreground">Notifications</span>
-                <button className="text-[11px] font-medium text-muted-foreground hover:text-foreground transition-all duration-[120ms] active:text-foreground">Mark all read</button>
+            <div className="absolute top-full right-0 mt-2 w-80 rounded-[12px] shadow-2xl z-50 overflow-hidden"
+              style={{ background: "#232323", border: "1px solid #4a403c" }}>
+              <div className="flex items-center justify-between px-4 py-3"
+                style={{ borderBottom: "1px solid #4a403c" }}>
+                <span style={{ color: "#fff2ed", fontSize: 14, fontWeight: 500 }}>Notifications</span>
+                <button className="transition-colors hover:text-white"
+                  style={{ color: "#c7b8b2", fontSize: 11, fontWeight: 500 }}>Mark all read</button>
               </div>
-              {mentions.map((m) => (
-                <div key={m.id} className={`flex gap-3 px-4 py-3 border-b border-[var(--border-subtle)] last:border-none hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft)] cursor-pointer ${m.unread ? "bg-[var(--rally-brand-soft)]/40" : ""}`}>
+              {mentions.map(m => (
+                <div key={m.id}
+                  className="flex gap-3 px-4 py-3 cursor-pointer transition-colors hover:bg-white/5"
+                  style={{ borderBottom: "1px solid #4a403c" }}>
                   <Avatar name={m.user} size={32} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-[12px] text-foreground"><span className="font-medium">{m.user}</span> {m.type === "mention" ? `mentioned you in ${m.channel}` : "sent you a DM"}</p>
-                    <p className="text-[11px] text-muted-foreground truncate mt-0.5">{m.text}</p>
-                    <p className="text-[10px] text-muted-foreground mt-1">{m.time}</p>
+                    <p style={{ color: "#fff2ed", fontSize: 12 }}>
+                      <span className="font-medium">{m.user}</span>{" "}
+                      {m.type === "mention" ? `mentioned you in ${m.channel}` : "sent you a DM"}
+                    </p>
+                    <p className="truncate mt-0.5" style={{ color: "#c7b8b2", fontSize: 11 }}>{m.text}</p>
+                    <p className="mt-1" style={{ color: "#c7b8b2", fontSize: 10 }}>{m.time}</p>
                   </div>
-                  {m.unread && <div className="w-2 h-2 rounded-full flex-shrink-0 mt-1" style={{ background: "var(--rally-brand)" }} />}
+                  {m.unread && <div className="w-2 h-2 rounded-full flex-shrink-0 mt-1" style={{ background: "#ff4615" }} />}
                 </div>
               ))}
-              <button className="w-full px-4 py-3 text-[12px] font-medium text-center text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-[120ms] active:bg-[var(--neutral-soft)]">
+              <button className="w-full px-4 py-3 text-center transition-colors hover:bg-white/5"
+                style={{ color: "#c7b8b2", fontSize: 12, fontWeight: 500 }}>
                 View all notifications
               </button>
             </div>
           )}
         </div>
-
-        {/* Role badge */}
-        {userRole && (
-          <div className="hidden md:block">
-            <Badge label={userRole} variant={userRole === "owner" ? "brand" : userRole === "admin" ? "info" : userRole === "member" ? "success" : "neutral"} />
-          </div>
-        )}
-
-        {/* Profile */}
-        <Link to="/app/profile" className="flex-shrink-0">
-          <Avatar name={user?.name ?? "User"} size={34} color="var(--rally-brand)" />
-        </Link>
       </div>
     </header>
   );

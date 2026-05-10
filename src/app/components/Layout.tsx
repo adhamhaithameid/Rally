@@ -505,9 +505,15 @@ function LayoutInner() {
         )}
       </aside>
 
-      {/* Main content */}
-      <main className="flex-1 overflow-auto rounded-xl bg-background min-w-0">
-        <Outlet />
+      {/* Main content — wrapped with #4A403C stroke */}
+      <main
+        className="flex-1 overflow-hidden rounded-xl bg-background min-w-0"
+        style={{ boxShadow: "0 0 0 1px #4a403c" }}
+      >
+        {/* Inner scroll container so the border-radius isn't clipped */}
+        <div className="h-full overflow-auto">
+          <Outlet />
+        </div>
       </main>
     </div>
   );
