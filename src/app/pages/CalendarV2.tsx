@@ -806,7 +806,7 @@ function WeekView({
                 ))}
                 {/* Half-hour lines */}
                 {HOURS.map(h => (
-                  <div key={`h${h}`} className="absolute w-full border-b border-[var(--border-subtle)]/40"
+                  <div key={`h${h}`} className="absolute w-full border-b border-[var(--border-subtle)]"
                     style={{ top: (h - START_HOUR) * HOUR_HEIGHT + HOUR_HEIGHT / 2 }} />
                 ))}
 

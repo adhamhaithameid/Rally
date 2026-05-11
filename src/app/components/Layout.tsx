@@ -209,6 +209,16 @@ function LayoutInner() {
   const [shortcutMode, setShortcutMode] = useState(false);
   const [versionPopoverOpen, setVersionPopoverOpen] = useState(false);
 
+  type UserStatus = "online" | "away" | "dnd" | "offline";
+  const [userStatus, setUserStatus] = useState<UserStatus>("online");
+  const [showStatusPicker, setShowStatusPicker] = useState(false);
+  const statusColor: Record<UserStatus, string> = {
+    online:  "#22c55e",
+    away:    "#f59e0b",
+    dnd:     "#ef4444",
+    offline: "#6b7280",
+  };
+
   const isIconOnly = false;
 
   // Home nav item — path depends on active version
@@ -454,6 +464,48 @@ function LayoutInner() {
                 {user?.name?.charAt(0)?.toUpperCase() ?? "U"}
               </span>
             </div>
+
+            {/* Status dot — click to open picker */}
+            <button
+              type="button"
+              title={`Status: ${userStatus === "dnd" ? "Do Not Disturb" : userStatus.charAt(0).toUpperCase() + userStatus.slice(1)}`}
+              className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 transition-transform hover:scale-125 z-10"
+              style={{ background: statusColor[userStatus], borderColor: "var(--card)" }}
+              onClick={e => { e.preventDefault(); e.stopPropagation(); setShowStatusPicker(v => !v); }}
+            />
+
+            {/* Status picker popover */}
+            {showStatusPicker && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowStatusPicker(false)} />
+                <div
+                  className="absolute bottom-9 left-1/2 -translate-x-1/2 z-50 rounded-[11px] p-1.5 min-w-[168px]"
+                  style={{ background: "var(--card)", border: "1px solid var(--border)", boxShadow: "0 8px 24px rgba(0,0,0,0.18)" }}>
+                  <p className="text-[10px] font-medium uppercase tracking-widest px-2 pt-1 pb-1.5" style={{ color: "var(--text-overline, var(--muted-foreground))" }}>
+                    Set status
+                  </p>
+                  {(
+                    [
+                      { id: "online",  label: "Online",         color: "#22c55e" },
+                      { id: "away",    label: "Away",           color: "#f59e0b" },
+                      { id: "dnd",     label: "Do Not Disturb", color: "#ef4444" },
+                      { id: "offline", label: "Offline",        color: "#6b7280" },
+                    ] as { id: "online"|"away"|"dnd"|"offline"; label: string; color: string }[]
+                  ).map(s => (
+                    <button
+                      key={s.id}
+                      type="button"
+                      className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[8px] transition-colors hover:bg-muted text-left"
+                      onClick={e => { e.preventDefault(); e.stopPropagation(); setUserStatus(s.id); setShowStatusPicker(false); }}>
+                      <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: s.color }} />
+                      <span className="text-[12px] text-foreground flex-1">{s.label}</span>
+                      {userStatus === s.id && <Check className="size-3 flex-shrink-0" style={{ color: "var(--rally-brand)" }} />}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+
             {shortcutMode && <ShortcutCornerBadge letter={profileNavItem.shortcut} />}
           </div>
           <span className="text-[10px] leading-tight font-medium text-center truncate w-full" style={{ color: "var(--text-tertiary)" }}>
@@ -505,15 +557,12 @@ function LayoutInner() {
         )}
       </aside>
 
-      {/* Main content — wrapped with #4A403C stroke */}
+      {/* Main content — #4A403C stroke wraps the entire area */}
       <main
-        className="flex-1 overflow-hidden rounded-xl bg-background min-w-0"
-        style={{ boxShadow: "0 0 0 1px #4a403c" }}
+        className="flex-1 overflow-auto rounded-xl bg-background min-w-0"
+        style={{ boxShadow: "0 0 0 1px var(--border)" }}
       >
-        {/* Inner scroll container so the border-radius isn't clipped */}
-        <div className="h-full overflow-auto">
-          <Outlet />
-        </div>
+        <Outlet />
       </main>
     </div>
   );

@@ -255,7 +255,7 @@ function PanelDivider() {
   return <div className="mx-4 my-3" style={{ height:1, background:"var(--border-subtle)" }} />;
 }
 
-// ── Voice Room Screen ─────────────────────────────────────────────────────────
+// ── Voice Room Screen ────────────────────────────────────────────���────────────
 
 function VoiceRoomScreen({
   room, user, micMuted, onToggleMic, onLeave, onOpenChannel, notify,
@@ -443,7 +443,7 @@ function RightPanel({
       style={{ width:240, background:"var(--card)", borderLeft:"1px solid var(--border)" }}>
 
       {/* Panel header */}
-      <div className="flex-shrink-0 flex items-center justify-between px-4 py-3"
+      <div className="flex-shrink-0 flex items-center justify-between px-[16px] py-[14px]"
         style={{ borderBottom:"1px solid var(--border)" }}>
         <p className="text-[12px] font-medium text-foreground truncate">{panelTitles[mode]}</p>
         <button onClick={onClose} className="w-6 h-6 flex items-center justify-center rounded-[5px] transition-colors text-muted-foreground hover:text-foreground hover:bg-muted flex-shrink-0">
@@ -797,14 +797,8 @@ function ChatSidebar({
               style={searchOpen ? { background:"var(--rally-brand-soft)" } : {}}>
               <Search className="size-4" />
             </button>
-            <button title="New DM" onClick={() => notify("Opening new direct message…", "info")}
-              className="w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors text-muted-foreground hover:text-foreground hover:bg-muted">
-              <Plus className="size-4" />
-            </button>
-            <button title="Mark all read" onClick={() => { onMarkAllRead(); notify("All messages marked as read ✓", "success"); }}
-              className="w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors text-muted-foreground hover:text-foreground hover:bg-muted">
-              <CheckCheck className="size-4" />
-            </button>
+            
+            
           </div>
         </div>
 
@@ -1004,39 +998,79 @@ function ChatSidebar({
             </div>
           )}
         </div>
+
       </div>
 
-      {/* Me bar */}
-      <div className="flex-shrink-0 px-3 py-2.5" style={{ borderTop:"1px solid var(--border)" }}>
-        {inVoiceRoom && (
-          <div className="mb-2 px-2.5 py-2 rounded-[9px] flex items-center gap-2"
-            style={{ background:"var(--success-soft)", border:"1px solid var(--status-active)" }}>
-            <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background:"var(--status-active)" }} />
-            <span className="text-[11px] flex-1 truncate" style={{ color:"var(--success-on)" }}>
-              {voiceRooms.find(r=>r.id===inVoiceRoom)?.name}
-            </span>
-            <button onClick={onToggleMic} title={micMuted ? "Unmute" : "Mute"}
-              className="text-muted-foreground hover:text-foreground transition-colors">
-              {micMuted ? <MicOff className="size-3.5" /> : <Volume2 className="size-3.5" />}
-            </button>
-            <button onClick={onLeaveVoice} title="Leave voice"
-              className="text-muted-foreground hover:text-foreground transition-colors">
-              <PhoneOff className="size-3.5" />
-            </button>
+      {/* ── Active call mini-bar — pinned at bottom, outside scroll area ── */}
+      {inVoiceRoom && (
+        <div className="flex-shrink-0 px-2 pt-1 pb-2" style={{ borderTop: "1px solid var(--border-subtle)" }}>
+          <div
+            className="rounded-[10px] p-2.5"
+            style={{
+              background: "var(--card)",
+              border: "1px solid var(--border)",
+              boxShadow: "0 -4px 16px rgba(0,0,0,0.18)",
+            }}>
+
+            {/* Room name + live indicator */}
+            <div className="flex items-center gap-1.5 px-0.5 mb-2">
+              <Volume2 className="size-3 flex-shrink-0" style={{ color: "var(--status-active)" }} />
+              <span className="text-[11px] font-medium text-foreground flex-1 truncate">
+                {voiceRooms.find(r => r.id === inVoiceRoom)?.name ?? "Voice"}
+              </span>
+              <span
+                className="inline-flex items-center gap-1 text-[10px] font-medium flex-shrink-0"
+                style={{ color: "var(--status-active)" }}>
+                <Circle className="size-1.5 fill-current" /> Live
+              </span>
+            </div>
+
+            {/* Controls row */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-0.5">
+                <button
+                  title="Mute / Unmute"
+                  onClick={() => notify("Microphone toggled", "info")}
+                  className="w-8 h-8 flex items-center justify-center rounded-[8px] transition-colors hover:bg-muted"
+                  style={{ color: "var(--text-secondary)" }}>
+                  <Mic className="size-3.5" />
+                </button>
+                <button
+                  title="Deafen / Undeafen"
+                  onClick={() => notify("Headphones toggled", "info")}
+                  className="w-8 h-8 flex items-center justify-center rounded-[8px] transition-colors hover:bg-muted"
+                  style={{ color: "var(--text-secondary)" }}>
+                  <Headphones className="size-3.5" />
+                </button>
+                <button
+                  title="Camera on / off"
+                  onClick={() => notify("Camera toggled", "info")}
+                  className="w-8 h-8 flex items-center justify-center rounded-[8px] transition-colors hover:bg-muted"
+                  style={{ color: "var(--text-secondary)" }}>
+                  <Video className="size-3.5" />
+                </button>
+                <button
+                  title="Share screen"
+                  onClick={() => notify("Screen share toggled", "info")}
+                  className="w-8 h-8 flex items-center justify-center rounded-[8px] transition-colors hover:bg-muted"
+                  style={{ color: "var(--text-secondary)" }}>
+                  <Monitor className="size-3.5" />
+                </button>
+              </div>
+              <button
+                title="Leave call"
+                onClick={onLeaveVoice}
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-[8px] text-white text-[11px] font-medium transition-opacity hover:opacity-90 flex-shrink-0"
+                style={{ background: "#dc2626" }}>
+                <PhoneOff className="size-3" /> Leave
+              </button>
+            </div>
           </div>
-        )}
-        <div className="flex items-center gap-2">
-          <Av name={user?.name ?? "User"} size={28} online />
-          <div className="flex-1 min-w-0">
-            <p className="text-[12px] font-medium text-foreground truncate">{user?.name}</p>
-            <p className="text-[10px] text-muted-foreground">Active</p>
-          </div>
-          <button onClick={() => navigate("/app/profile")} title="Settings"
-            className="text-muted-foreground hover:text-foreground transition-colors">
-            <Settings className="size-3.5" />
-          </button>
         </div>
-      </div>
+      )}
+
+      {/* Me bar */}
+      
     </aside>
   );
 }
@@ -1090,7 +1124,7 @@ function InboxView({
                 <p className="text-[12px] text-muted-foreground truncate">{item.preview}</p>
               </div>
               <button
-                className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-[7px] text-white text-[11px] opacity-0 group-hover:opacity-100 transition-opacity"
+                className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-[7px] text-white text-[11px]"
                 style={{ background:"var(--rally-brand)" }}
                 onClick={e => { e.stopPropagation(); onOpenChannel(item.id); }}>
                 <Reply className="size-3" /> Reply
@@ -1332,7 +1366,7 @@ function ChannelView({
   return (
     <div className="h-full flex flex-col overflow-hidden">
       {/* Header */}
-      <div className="flex-shrink-0 flex items-center gap-3 px-4 py-3"
+      <div className="flex-shrink-0 flex items-center gap-3 px-[16px] py-[10px]"
         style={{ borderBottom:"1px solid var(--border)", background:"var(--card)" }}>
         {channel.type === "text" && <Hash className="size-4 text-muted-foreground flex-shrink-0" />}
         {channel.type === "dm"   && <Av name={channel.name} size={24} online />}
@@ -1506,10 +1540,7 @@ function ChannelView({
               </button>
             </div>
           </div>
-          <p className="text-[10px] text-muted-foreground mt-1.5 px-1">
-            <kbd className="px-1 py-0.5 rounded text-[10px]" style={{ border:"1px solid var(--border)" }}>Enter</kbd> to send ·{" "}
-            <kbd className="px-1 py-0.5 rounded text-[10px]" style={{ border:"1px solid var(--border)" }}>Shift+Enter</kbd> for new line
-          </p>
+          
         </div>
       ) : (
         <div className="flex-shrink-0 px-4 pb-4 pt-2">

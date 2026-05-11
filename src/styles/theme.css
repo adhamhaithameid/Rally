@@ -42,7 +42,7 @@
   --surface:    #fff7f3;
   --elevated:   #ffffff;
   --border-color: #d1aa99;
-  --border-subtle: rgba(209, 170, 153, 0.5);
+  --border-subtle: rgb(209 170 153 / 0.5);
   --border-color-dark: rgba(255, 255, 255, 0.10);
   --text-primary:   #231d1a;
   --text-secondary: #5f514b;
@@ -94,7 +94,7 @@
   --info-on-light:    #0f5fd7;
   --info-on-dark:     #a9cbff;
 
-  /* ── Semantic: Warning ──────────────────────────── */
+  /* ── Semantic: Warning ───────���──────────────────── */
   --warning-solid:       #8a4f00;
   --warning-soft-light:  #fff4e5;
   --warning-soft-dark:   #33210a;
@@ -196,7 +196,7 @@
   --rally-brand-mid-dark: #2a100e;
   --text-tertiary:    #8a807c;
   --text-placeholder: #5f514b;
-  --border-subtle:    rgba(255, 255, 255, 0.06);
+  --border-subtle:    rgb(255 255 255 / 0.06);
 
   /* ── Adaptive brand tokens (dark overrides) ─────────────── */
   --rally-brand-soft: var(--rally-brand-soft-dark);

@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { useSecondarySidebar } from "../contexts/SecondarySidebarContext";
+import { getGreeting } from "../utils/greetings";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -702,7 +703,8 @@ function AIHome({
   onToggleSource: (k: SourceKey) => void;
   onPrompt: (p: string) => void;
 }) {
-  const firstName = user?.name.split(" ")[0] ?? "there";
+  const firstName = user?.name.split(" ")[0] ?? undefined;
+  const greeting  = getGreeting(firstName);
 
   return (
     <div className="h-full overflow-y-auto">
@@ -713,7 +715,7 @@ function AIHome({
           <div className="flex items-center justify-center gap-2 mb-3">
             <AIAvatar size={36} />
           </div>
-          <h1 className="text-[22px] font-medium text-foreground mb-1">Good morning, {firstName}</h1>
+          <h1 className="text-[22px] font-medium text-foreground mb-1">{greeting}</h1>
           <p className="text-[13px] text-muted-foreground">Rally AI is ready. What would you like to do today?</p>
         </div>
 
