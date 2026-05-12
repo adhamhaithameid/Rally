@@ -7,6 +7,8 @@ import {
   ArrowRight, Clock, AlarmClock, Bell, RefreshCw, Mic,
   Bookmark, Share2, RotateCcw, CheckCircle2, XCircle,
   ChevronRight, ExternalLink, Zap, PenLine, Inbox, Bot,
+  SquarePen, PanelLeft, Rewind, CirclePlus, HelpCircle, CalendarClock,
+  Folder, Settings,
 } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { useSecondarySidebar } from "../contexts/SecondarySidebarContext";
@@ -160,55 +162,13 @@ const mockThreads: AIThread[] = [
   },
 ];
 
-const todayStrip = [
-  { icon: <CheckSquare className="size-4" />, color: "var(--success-on)",     bg: "var(--success-soft)",     label: "2 tasks due today",      action: "Prepare me",  prompt: "Summarize my tasks due today and help me prioritize" },
-  { icon: <AlarmClock  className="size-4" />, color: "var(--info-on)",        bg: "var(--info-soft)",        label: "Team standup in 30 min", action: "Prep notes",  prompt: "Prepare short talking points for today's team standup" },
-  { icon: <Bell        className="size-4" />, color: "var(--warning-on)",     bg: "var(--warning-soft)",     label: "3 unread mentions",      action: "Catch me up", prompt: "Summarize the messages where I was mentioned today" },
-  { icon: <FileText    className="size-4" />, color: "var(--info-on)",        bg: "var(--info-soft)",        label: "1 file updated",         action: "Review it",   prompt: "Summarize recent changes to files updated today" },
-];
-
-const starterGroups = [
-  {
-    label: "Catch up", color: "var(--info-on)",        bg: "var(--info-soft)",
-    prompts: [
-      "What changed since yesterday?",
-      "Summarize unread chats",
-      "What needs my attention today?",
-    ],
-  },
-  {
-    label: "Find",    color: "var(--success-on)",     bg: "var(--success-soft)",
-    prompts: [
-      "Find the latest file about the launch",
-      "Show tasks related to onboarding",
-      "What meeting notes mention the API?",
-    ],
-  },
-  {
-    label: "Create",  color: "var(--info-on)",        bg: "var(--info-soft)",
-    prompts: [
-      "Draft a team status update",
-      "Turn this discussion into tasks",
-      "Create an agenda for today's meeting",
-    ],
-  },
-  {
-    label: "Act",     color: "var(--warning-on)",     bg: "var(--warning-soft)",
-    prompts: [
-      "Suggest what I should do next",
-      "Prepare follow-ups from my last meeting",
-      "Organize this work into a sprint plan",
-    ],
-  },
-];
-
-const quickActions = [
-  { icon: <MessageSquare className="size-4" />, color: "var(--info-on)",        bg: "var(--info-soft)",        label: "Summarize recent chat activity",  prompt: "Summarize what happened in chat today across all channels" },
-  { icon: <FileText      className="size-4" />, color: "var(--info-on)",        bg: "var(--info-soft)",        label: "Find a file fast",                prompt: "Help me find a recently updated file" },
-  { icon: <PenLine       className="size-4" />, color: "var(--success-on)",     bg: "var(--success-soft)",     label: "Draft a status update",           prompt: "Draft a concise team status update for this week" },
-  { icon: <CheckSquare   className="size-4" />, color: "var(--warning-on)",     bg: "var(--warning-soft)",     label: "Turn notes into tasks",           prompt: "Convert my meeting notes into actionable tasks" },
-  { icon: <Calendar      className="size-4" />, color: "var(--warning-on)",     bg: "var(--warning-soft)",     label: "Prepare for next meeting",        prompt: "Prepare talking points for my next scheduled meeting" },
-  { icon: <Globe         className="size-4" />, color: "var(--neutral-on)",     bg: "var(--neutral-soft)",     label: "Search web + team knowledge",     prompt: "Search both the web and team docs for best practices on remote collaboration" },
+// Quick prompt chips shown on the home screen
+const homePromptChips = [
+  { icon: <FileText className="size-3.5" />,     label: "Summarize",      prompt: "Summarize the recent conversation in this channel for me." },
+  { icon: <PenLine className="size-3.5" />,       label: "Draft a Reply",  prompt: "Draft a reply to the last message in this conversation." },
+  { icon: <Rewind className="size-3.5" />,        label: "Catchup",        prompt: "What did I miss? Give me a quick catchup on what happened while I was away." },
+  { icon: <CirclePlus className="size-3.5" />,    label: "Create a Task",  prompt: "Create a task based on the last thing discussed in this conversation." },
+  { icon: <CalendarClock className="size-3.5" />, label: "What's Due",     prompt: "What tasks and calendar events are due or coming up soon for this team?" },
 ];
 
 const sourceDefs: SourceChip[] = [
@@ -252,7 +212,7 @@ function UserAv({ name, size = 28 }: { name: string; size?: number }) {
 
 function AIAvatar({ size = 28, thinking = false }: { size?: number; thinking?: boolean }) {
   return (
-    <div className="rounded-[8px] flex items-center justify-center flex-shrink-0"
+    <div className="rounded-[10px] flex items-center justify-center flex-shrink-0"
       style={{ width: size, height: size, background: thinking ? "#f97316" : "var(--rally-brand)" }}>
       <Sparkles className="text-white" style={{ width: size * 0.5, height: size * 0.5 }} />
     </div>
@@ -373,230 +333,187 @@ function AISidebar({
   onSelect: (id: string | null) => void;
   onNewThread: () => void;
 }) {
+  const [collapsed, setCollapsed] = useState(false);
+  const [pinnedOpen, setPinnedOpen] = useState(true);
+  const [recentsOpen, setRecentsOpen] = useState(true);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [searchVal, setSearchVal] = useState("");
-  const [searchFocused, setSearchFocused] = useState(false);
+  const searchRef = useRef<HTMLInputElement>(null);
 
-  const pinned = threads.filter(t => t.pinned);
-  const today_ = threads.filter(t => !t.pinned && new Date(t.lastUpdated) > new Date(Date.now() - 86400000));
-  const older  = threads.filter(t => !t.pinned && new Date(t.lastUpdated) <= new Date(Date.now() - 86400000));
+  const pinned  = threads.filter(t => t.pinned);
+  const recents = threads.filter(t => !t.pinned);
 
   const filtered = searchVal.trim()
     ? threads.filter(t => t.title.toLowerCase().includes(searchVal.toLowerCase()))
     : null;
 
+  useEffect(() => {
+    if (searchOpen) searchRef.current?.focus();
+  }, [searchOpen]);
+
   function ThreadRow({ thread }: { thread: AIThread }) {
     const active = selectedId === thread.id;
     return (
-      <button onClick={() => onSelect(thread.id)}
-        className={`w-full flex flex-col gap-1 px-2.5 py-2 rounded-[9px] transition-colors text-left group ${active ? "bg-[var(--rally-brand-soft)]" : "hover:bg-muted"}`}>
-        <div className="flex items-center gap-2">
-          <span className={`flex-1 text-[12px] truncate ${active ? "text-[var(--rally-brand-on)] font-medium" : "text-foreground"}`}>{thread.title}</span>
-          {thread.pinned && <Pin className="size-3 text-muted-foreground flex-shrink-0" />}
-          <span className="text-[10px] font-normal text-muted-foreground flex-shrink-0">{timeLabel(thread.lastUpdated)}</span>
-        </div>
-        <div className="flex items-center gap-1 flex-wrap">
-          {thread.scopeBadges.slice(0, 3).map(b => <SourceBadge key={b} source={b} />)}
-        </div>
+      <button
+        onClick={() => onSelect(thread.id)}
+        className={`w-full flex items-center gap-2 px-3 py-2 rounded-[8px] transition-colors text-left group ${
+          active ? "bg-[var(--rally-brand-soft)]" : "hover:bg-muted"
+        }`}
+      >
+        <span className={`flex-1 text-[13px] truncate ${
+          active ? "text-[var(--rally-brand-on)] font-medium" : "text-foreground"
+        }`}>
+          {thread.title}
+        </span>
       </button>
     );
   }
 
-  function Section({ label, items }: { label: string; items: AIThread[] }) {
-    if (!items.length) return null;
+  // ── Collapsed pill (Figma minimized state) ─────────────────────────
+  if (collapsed) {
     return (
-      <div className="mb-3">
-        <p className="px-2.5 py-1 text-[10px] font-medium uppercase tracking-widest" style={{ color: "var(--text-overline)" }}>{label}</p>
-        <div className="space-y-0.5">
-          {items.map(t => <ThreadRow key={t.id} thread={t} />)}
+      <aside className="relative" style={{ width: 0, flexShrink: 0, overflow: "visible" }}>
+        <div
+          className="absolute top-2 left-2 z-20 flex items-center gap-[2px] p-[6px] rounded-[16px] border"
+          style={{ background: "#2c2c2c", borderColor: "#4a403c" }}
+        >
+          <button
+            onClick={() => setCollapsed(false)}
+            title="Expand sidebar"
+            className="w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors hover:bg-white/10"
+          >
+            <PanelLeft className="size-4" style={{ color: "#C7B8B2" }} />
+          </button>
+          <button
+            onClick={() => { setCollapsed(false); setTimeout(() => setSearchOpen(true), 50); }}
+            title="Search threads"
+            className="w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors hover:bg-white/10"
+          >
+            <Search className="size-4" style={{ color: "#C7B8B2" }} />
+          </button>
+          <button
+            onClick={onNewThread}
+            title="New thread"
+            className="w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors hover:bg-white/10"
+          >
+            <SquarePen className="size-4" style={{ color: "#C7B8B2" }} />
+          </button>
         </div>
-      </div>
+      </aside>
     );
   }
 
   return (
-    <aside className="h-full flex flex-col bg-card border-r border-border" style={{ width: 248, flexShrink: 0 }}>
+    <aside
+      className="h-full flex flex-col bg-card border-r border-border transition-all duration-200"
+      style={{ width: 224, flexShrink: 0 }}
+    >
       {/* Header */}
-      <div className="flex-shrink-0 px-3 pt-3 pb-2 border-b border-border space-y-2">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <AIAvatar size={22} />
-            <span className="text-[13px] font-medium text-foreground">Rally AI</span>
-          </div>
-          <button onClick={onNewThread} title="New thread"
-            className="w-7 h-7 flex items-center justify-center rounded-[7px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
-            <Plus className="size-4" />
-          </button>
-        </div>
-        {/* Search */}
-        <div className={`flex items-center gap-2 px-2 py-1.5 rounded-[8px] border transition-colors bg-background ${searchFocused ? "border-[var(--rally-brand)]" : "border-border"}`}>
-          <Search className="size-3.5 text-muted-foreground flex-shrink-0" />
-          <input value={searchVal} onChange={e => setSearchVal(e.target.value)}
-            placeholder="Search threads…"
-            className="flex-1 bg-transparent text-[12px] text-foreground placeholder:text-muted-foreground outline-none"
-            onFocus={() => setSearchFocused(true)} onBlur={() => setSearchFocused(false)} />
-        </div>
-      </div>
-
-      {/* Inbox button */}
-      <div className="px-2 py-2 border-b border-[var(--border-subtle)] flex-shrink-0">
-        <button onClick={() => onSelect(null)}
-          className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[9px] transition-colors ${selectedId === null ? "bg-[var(--rally-brand-soft)] text-[var(--rally-brand-on)]" : "hover:bg-muted text-muted-foreground hover:text-foreground"}`}>
-          <Bot className="size-4 flex-shrink-0" />
-          <span className="text-[13px]">AI Home</span>
+      <div className="flex-shrink-0 flex items-center px-3 py-2 border-b border-border" style={{ height: 48 }}>
+        <button
+          onClick={() => setCollapsed(v => !v)}
+          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          className="w-7 h-7 flex items-center justify-center rounded-[7px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <PanelLeft className="size-4" />
         </button>
-      </div>
-
-      {/* Thread list */}
-      <div className="flex-1 overflow-y-auto py-2 px-1">
-        {filtered ? (
-          <div className="space-y-0.5">
-            {filtered.map(t => <ThreadRow key={t.id} thread={t} />)}
-            {filtered.length === 0 && (
-              <p className="text-[12px] text-muted-foreground px-3 py-4 text-center">No threads found</p>
-            )}
-          </div>
-        ) : (
+        {!collapsed && (
           <>
-            <Section label="Pinned" items={pinned} />
-            <Section label="Today" items={today_} />
-            <Section label="Earlier" items={older} />
+            <div className="flex-1" />
+            {searchOpen ? (
+              <div className="flex items-center gap-1.5 flex-1 mx-1 px-2 py-1 rounded-[7px] border border-[var(--rally-brand)] bg-background">
+                <Search className="size-3 text-muted-foreground flex-shrink-0" />
+                <input
+                  ref={searchRef}
+                  value={searchVal}
+                  onChange={e => setSearchVal(e.target.value)}
+                  placeholder="Search…"
+                  className="flex-1 bg-transparent text-[12px] text-foreground placeholder:text-muted-foreground outline-none min-w-0"
+                />
+                <button onClick={() => { setSearchOpen(false); setSearchVal(""); }}
+                  className="text-muted-foreground hover:text-foreground transition-colors">
+                  <X className="size-3" />
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => setSearchOpen(true)}
+                title="Search threads"
+                className="w-7 h-7 flex items-center justify-center rounded-[7px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Search className="size-4" />
+              </button>
+            )}
+            <button
+              onClick={onNewThread}
+              title="New thread"
+              className="w-7 h-7 flex items-center justify-center rounded-[7px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors ml-0.5"
+            >
+              <SquarePen className="size-4" />
+            </button>
           </>
         )}
       </div>
 
-      {/* Footer */}
-      <div className="flex-shrink-0 border-t border-[var(--border-subtle)] px-3 py-2.5 flex items-center justify-between">
-        <span className="text-[11px] text-muted-foreground">{threads.length} threads</span>
-        <button className="text-[11px] text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
-          <Bookmark className="size-3.5" /> Saved
-        </button>
-      </div>
-    </aside>
-  );
-}
-
-// ── Context Panel ─────────────────────────────────────────────────────────────
-
-function ContextPanel({
-  enabledSources, pendingActions, onConfirm, onDeny,
-}: {
-  enabledSources: SourceKey[];
-  pendingActions: ActionPreview[];
-  onConfirm: (id: string) => void;
-  onDeny: (id: string) => void;
-}) {
-  const sourceStatus: { key: SourceKey; label: string; meta: string; available: boolean }[] = [
-    { key: "team",     label: "Team knowledge",  meta: "Full access",       available: true },
-    { key: "files",    label: "Files",            meta: "34 files",          available: true },
-    { key: "tasks",    label: "Tasks",            meta: "12 open",           available: true },
-    { key: "calendar", label: "Calendar",         meta: "3 upcoming events", available: true },
-    { key: "chat",     label: "Chat",             meta: "Limited by admin",  available: false },
-    { key: "web",      label: "Web",              meta: "Disabled",          available: false },
-  ];
-
-  return (
-    <aside className="h-full flex flex-col bg-card border-l border-border overflow-y-auto" style={{ width: 228, flexShrink: 0 }}>
-      {/* Current context */}
-      <div className="p-4 border-b border-[var(--border-subtle)]">
-        <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Current Context</p>
-        <div className="space-y-2.5">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-[7px] flex items-center justify-center flex-shrink-0" style={{ background: "var(--info-soft)" }}>
-              <Users className="size-3.5" style={{ color: "var(--info-on)" }} />
+      {/* Thread list — hidden when collapsed */}
+      {!collapsed && (
+        <div className="flex-1 overflow-y-auto py-2">
+          {filtered ? (
+            <div className="px-2 space-y-0.5">
+              {filtered.map(t => <ThreadRow key={t.id} thread={t} />)}
+              {filtered.length === 0 && (
+                <p className="text-[12px] text-muted-foreground px-3 py-4 text-center">No threads found</p>
+              )}
             </div>
-            <div>
-              <p className="text-[11px] font-medium text-foreground">Design Team</p>
-              <p className="text-[10px] text-muted-foreground">Active workspace</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-[7px] flex items-center justify-center flex-shrink-0" style={{ background:"var(--rally-brand-soft)" }}>
-              <Sparkles className="size-3.5" style={{ color:"var(--rally-brand)" }} />
-            </div>
-            <div>
-              <p className="text-[11px] font-medium text-foreground">Rally AI</p>
-              <p className="text-[10px] text-muted-foreground">Default model</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Source access */}
-      <div className="p-4 border-b border-[var(--border-subtle)]">
-        <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Source Access</p>
-        <div className="space-y-2">
-          {sourceStatus.map(s => {
-            const isOn = enabledSources.includes(s.key);
-            return (
-              <div key={s.key} className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 text-[8px] text-white"
-                  style={{
-                    background: s.available && isOn
-                      ? "var(--status-active)"
-                      : s.available
-                      ? "var(--status-limited)"
-                      : "var(--status-disabled)",
-                  }}>
-                  {s.available && isOn ? "✓" : s.available ? "·" : "✕"}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-[11px] text-foreground">{s.label}</p>
-                  <p className="text-[10px] text-muted-foreground">{s.meta}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Pending actions */}
-      {pendingActions.length > 0 && (
-        <div className="p-4 border-b border-[var(--border-subtle)]">
-          <div className="flex items-center gap-2 mb-3">
-            <p className="text-[10px] font-medium uppercase tracking-widest" style={{ color: "var(--text-overline)" }}>Pending Actions</p>
-            <span className="w-4 h-4 rounded-full flex items-center justify-center text-white text-[10px] font-medium"
-              style={{ background:"var(--rally-brand)" }}>{pendingActions.length}</span>
-          </div>
-          <div className="space-y-2">
-            {pendingActions.map(a => (
-              <div key={a.id} className="p-2.5 rounded-[8px] border border-border bg-background">
-                <p className="text-[11px] font-medium text-foreground mb-0.5">{a.description}</p>
-                <p className="text-[10px] text-muted-foreground mb-2">{a.detail}</p>
-                <div className="flex gap-1.5">
-                  <button onClick={() => onConfirm(a.id)}
-                    className="flex-1 py-1 rounded-[6px] text-white text-[10px] font-medium" style={{ background:"var(--rally-brand)" }}>
-                    Confirm
+          ) : (
+            <>
+              {/* Pinned section */}
+              {pinned.length > 0 && (
+                <div className="mb-1">
+                  <button
+                    onClick={() => setPinnedOpen(v => !v)}
+                    className="w-full flex items-center gap-1.5 px-4 py-1.5 hover:bg-muted transition-colors group"
+                  >
+                    <Pin className="size-3 " style={{ color: "rgba(199,184,178,0.55)" }} />
+                    <span className="flex-1 text-[12px] text-muted-foreground text-left">Pinned</span>
+                    <ChevronDown
+                      className="size-3.5 text-muted-foreground transition-transform"
+                      style={{ transform: pinnedOpen ? "rotate(0deg)" : "rotate(-90deg)" }}
+                    />
                   </button>
-                  <button onClick={() => onDeny(a.id)}
-                    className="flex-1 py-1 rounded-[6px] border border-border text-muted-foreground text-[10px] hover:bg-muted transition-colors">
-                    Deny
-                  </button>
+                  {pinnedOpen && (
+                    <div className="px-2 space-y-0.5 mt-0.5">
+                      {pinned.map(t => <ThreadRow key={t.id} thread={t} />)}
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))}
-          </div>
+              )}
+
+              {/* Recents section */}
+              {recents.length > 0 && (
+                <div className="mt-2">
+                  <button
+                    onClick={() => setRecentsOpen(v => !v)}
+                    className="w-full flex items-center gap-1.5 px-4 py-1.5 hover:bg-muted transition-colors group"
+                  >
+                    <Clock className="size-3 " style={{ color: "rgba(199,184,178,0.55)" }} />
+                    <span className="flex-1 text-[12px] text-muted-foreground text-left">Recents</span>
+                    <ChevronDown
+                      className="size-3.5 text-muted-foreground transition-transform"
+                      style={{ transform: recentsOpen ? "rotate(0deg)" : "rotate(-90deg)" }}
+                    />
+                  </button>
+                  {recentsOpen && (
+                    <div className="px-2 space-y-0.5 mt-0.5">
+                      {recents.map(t => <ThreadRow key={t.id} thread={t} />)}
+                    </div>
+                  )}
+                </div>
+              )}
+            </>
+          )}
         </div>
       )}
-
-      {/* Related work */}
-      <div className="p-4 mt-auto">
-        <p className="text-[10px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Related Work</p>
-        <div className="space-y-1.5">
-          {[
-            { to: "/app/todo",     icon: <CheckSquare className="size-3.5" />, label: "Open tasks" },
-            { to: "/app/calendar", icon: <Calendar className="size-3.5" />,    label: "View calendar" },
-            { to: "/app/files",    icon: <FileText className="size-3.5" />,    label: "Browse files" },
-            { to: "/app/chat-v2",  icon: <MessageSquare className="size-3.5" />, label: "Go to chat" },
-          ].map(item => (
-            <Link key={item.to} to={item.to}
-              className="flex items-center gap-2 px-2.5 py-2 rounded-[8px] hover:bg-muted transition-colors text-muted-foreground hover:text-foreground">
-              {item.icon}
-              <span className="text-[12px]">{item.label}</span>
-              <ArrowRight className="size-3 ml-auto" />
-            </Link>
-          ))}
-        </div>
-      </div>
     </aside>
   );
 }
@@ -625,63 +542,38 @@ function Composer({
   }, [value]);
 
   return (
-    <div className={`rounded-[14px] border border-border bg-card shadow-sm focus-within:border-[var(--rally-brand)] transition-colors ${compact ? "" : "shadow-md"}`}>
-      {/* Source chips */}
-      {showSourceChips && (
-        <div className="flex items-center gap-1.5 px-3 pt-3 pb-1 flex-wrap">
-          {sourceDefs.map(s => {
-            const on = enabledSources.includes(s.key);
-            return (
-              <button key={s.key}
-                onClick={() => s.available && onToggleSource(s.key)}
-                disabled={!s.available}
-                className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] border transition-colors"
-                style={on
-                  ? { borderColor: "var(--rally-brand)", background: "var(--rally-brand-soft)", color: "var(--rally-brand-on)" }
-                  : s.available
-                  ? { borderColor: "var(--border-subtle)", background: "transparent", color: "var(--muted-foreground)" }
-                  : { borderColor: "var(--border-subtle)", background: "var(--badge-neutral-bg)", color: "var(--badge-neutral-text)" }}>
-                {s.icon} {s.label}
-                {!s.available && <span className="ml-0.5 opacity-50">✕</span>}
-              </button>
-            );
-          })}
-        </div>
-      )}
+    <div className={`rounded-[14px] border border-border bg-card transition-colors focus-within:border-[var(--rally-brand)] ${compact ? "" : "shadow-sm"}`}>
       {/* Input */}
-      <div className="px-4 py-2">
-        <textarea ref={taRef} value={value}
+      <div className="px-4 pt-3 pb-2">
+        <textarea
+          ref={taRef}
+          value={value}
           onChange={e => onChange(e.target.value)}
           onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); onSend(); } }}
           placeholder={placeholder ?? "Ask Rally AI anything…"}
-          rows={1} disabled={isStreaming}
+          rows={1}
+          disabled={isStreaming}
           className="w-full resize-none bg-transparent border-0 outline-none text-[13px] text-foreground placeholder:text-muted-foreground leading-relaxed"
         />
       </div>
       {/* Toolbar */}
       <div className="flex items-center gap-1 px-2 pb-2">
-        <button title="Attach file" className="w-8 h-8 flex items-center justify-center rounded-[8px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
-          <Paperclip className="size-4" />
-        </button>
-        <button title="Attach task" className="w-8 h-8 flex items-center justify-center rounded-[8px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
-          <CheckSquare className="size-4" />
-        </button>
-        <button title="Attach event" className="w-8 h-8 flex items-center justify-center rounded-[8px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
-          <Calendar className="size-4" />
-        </button>
-        <button title="Attach channel" className="w-8 h-8 flex items-center justify-center rounded-[8px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
-          <Hash className="size-4" />
+        <button title="Attach" className="w-8 h-8 flex items-center justify-center rounded-[8px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
+          <Plus className="size-4" />
         </button>
         <div className="flex-1" />
         <button title="Voice input" className="w-8 h-8 flex items-center justify-center rounded-[8px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
           <Mic className="size-4" />
         </button>
-        <button onClick={onSend} disabled={!value.trim() || isStreaming}
+        <button
+          onClick={onSend}
+          disabled={!value.trim() || isStreaming}
           className="w-8 h-8 flex items-center justify-center rounded-[8px] transition-colors"
           style={{
             background: value.trim() && !isStreaming ? "var(--rally-brand)" : "var(--disabled-bg)",
             color: value.trim() && !isStreaming ? "#ffffff" : "var(--disabled-text)",
-          }}>
+          }}
+        >
           <Send className="size-4" />
         </button>
       </div>
@@ -689,7 +581,7 @@ function Composer({
   );
 }
 
-// ── AI Home ───────────────────────────────────────────────────────────────────
+// ── AI Home ──────────────────────────────────────────────────────────────────
 
 function AIHome({
   user, input, onInputChange, onSend, isStreaming, enabledSources, onToggleSource, onPrompt,
@@ -707,97 +599,48 @@ function AIHome({
   const greeting  = getGreeting(firstName);
 
   return (
-    <div className="h-full overflow-y-auto">
-      <div className="max-w-2xl mx-auto px-5 py-8 space-y-8">
-
+    <div className="h-full flex flex-col items-center justify-center px-6">
+      <div className="w-full max-w-xl space-y-6">
         {/* Greeting */}
-        <div className="text-center">
-          <div className="flex items-center justify-center gap-2 mb-3">
-            <AIAvatar size={36} />
+        <div className="text-center space-y-2">
+          <div className="flex items-center justify-center mb-3">
+            <AIAvatar size={48} />
           </div>
-          <h1 className="text-[22px] font-medium text-foreground mb-1">{greeting}</h1>
+          <h1 className="text-[22px] font-medium text-foreground">{greeting}</h1>
           <p className="text-[13px] text-muted-foreground">Rally AI is ready. What would you like to do today?</p>
         </div>
 
         {/* Main input */}
         <Composer
-          value={input} onChange={onInputChange} onSend={onSend}
-          isStreaming={isStreaming} enabledSources={enabledSources}
+          value={input}
+          onChange={onInputChange}
+          onSend={onSend}
+          isStreaming={isStreaming}
+          enabledSources={enabledSources}
           onToggleSource={onToggleSource}
           placeholder="Ask anything — or pick a prompt below…"
-          showSourceChips
+          showSourceChips={false}
         />
 
-        {/* Today with AI strip */}
-        <section>
-          <p className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Today with AI</p>
-          <div className="grid grid-cols-2 gap-2">
-            {todayStrip.map((item, i) => (
-              <button key={i}
-                onClick={() => onPrompt(item.prompt)}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-[10px] border border-[var(--border-subtle)] bg-card hover:bg-muted transition-colors text-left">
-                <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0"
-                  style={{ background: item.bg, color: item.color }}>
-                  {item.icon}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-[12px] text-foreground truncate">{item.label}</p>
-                </div>
-                <span className="text-[10px] text-[var(--rally-brand)] flex-shrink-0 font-medium">{item.action}</span>
-              </button>
-            ))}
-          </div>
-        </section>
-
-        {/* Starter prompts */}
-        <section>
-          <p className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Starter Prompts</p>
-          <div className="grid grid-cols-2 gap-3">
-            {starterGroups.map(group => (
-              <div key={group.label} className="rounded-[12px] border border-[var(--border-subtle)] bg-card overflow-hidden">
-                <div className="px-3 py-2 border-b border-[var(--border-subtle)]"
-                  style={{ background: group.bg }}>
-                  <span className="text-[11px] font-medium" style={{ color: group.color }}>{group.label}</span>
-                </div>
-                <div className="py-1">
-                  {group.prompts.map((prompt, i) => (
-                    <button key={i} onClick={() => onPrompt(prompt)}
-                      className="w-full flex items-center gap-2 px-3 py-2 hover:bg-muted transition-colors text-left group">
-                      <span className="flex-1 text-[12px] text-foreground leading-snug">{prompt}</span>
-                      <ChevronRight className="size-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Quick action cards */}
-        <section>
-          <p className="text-[11px] font-medium uppercase tracking-widest mb-3" style={{ color: "var(--text-overline)" }}>Quick Actions</p>
-          <div className="grid grid-cols-2 gap-2">
-            {quickActions.map((action, i) => (
-              <button key={i} onClick={() => onPrompt(action.prompt)}
-                className="flex items-center gap-3 px-3 py-3 rounded-[10px] border border-[var(--border-subtle)] bg-card hover:bg-muted transition-colors text-left group">
-                <div className="w-8 h-8 rounded-[8px] flex items-center justify-center flex-shrink-0"
-                  style={{ background: action.bg }}>
-                  <div style={{ color: action.color }}>{action.icon}</div>
-                </div>
-                <span className="flex-1 text-[12px] text-foreground leading-snug">{action.label}</span>
-                <ArrowRight className="size-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
-              </button>
-            ))}
-          </div>
-        </section>
-
-        <div className="h-4" />
+        {/* Quick prompt chips */}
+        <div className="flex items-center gap-2 flex-wrap justify-center">
+          {homePromptChips.map((chip, i) => (
+            <button
+              key={i}
+              onClick={() => onPrompt(chip.prompt)}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-card hover:bg-muted hover:border-[var(--border)] transition-colors text-muted-foreground hover:text-foreground"
+            >
+              <span style={{ color: "#5f514b" }}>{chip.icon}</span>
+              <span className="text-[12px]">{chip.label}</span>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
 
-// ── Thread View ──────────────────────────────────────────────────────────���────
+// ── Thread View ───────────────────────────────────────────────────────────────
 
 function ThreadView({
   thread, user, input, onInputChange, onSend, isStreaming, enabledSources, onToggleSource, onFollowUp,
@@ -813,41 +656,276 @@ function ThreadView({
   onFollowUp: (prompt: string) => void;
 }) {
   const bottomRef = useRef<HTMLDivElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
+  const [resourcesTab, setResourcesTab] = useState<"files" | "mentions" | "sources">("files");
+
+  // Derived resources from thread messages
+  const allFiles = thread.messages.flatMap(m =>
+    (m.resultCards ?? []).filter(c => c.type === "files").flatMap(c => c.items ?? [])
+  );
+  const allSources: SourceKey[] = Array.from(
+    new Set(thread.messages.flatMap(m => m.sources ?? []))
+  );
+  const allMentions = thread.messages
+    .filter(m => m.role === "user" && m.content.includes("@"))
+    .map(m => ({ text: m.content, time: m.timestamp }));
+
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [thread.messages, isStreaming]);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    function handleClickOutside(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [menuOpen]);
+
   return (
     <div className="h-full flex flex-col overflow-hidden">
-      {/* Thread header */}
-      <div className="flex-shrink-0 flex items-center gap-3 px-4 py-3 border-b border-border bg-card">
-        <AIAvatar size={24} />
+      {/* Thread header — no background */}
+      <div className="flex-shrink-0 flex items-center gap-2 px-[16px] py-[10px]">
         <div className="flex-1 min-w-0">
-          <h2 className="text-[14px] font-medium text-foreground leading-none truncate">{thread.title}</h2>
-          <div className="flex items-center gap-1 mt-1 flex-wrap">
-            {thread.scopeBadges.map(b => <SourceBadge key={b} source={b} />)}
-          </div>
+          <h2 className="text-[14px] font-medium text-foreground leading-none truncate text-center">{thread.title}</h2>
         </div>
-        <div className="flex items-center gap-1 flex-shrink-0">
-          <button title="New thread from here"
-            className="flex items-center gap-1 px-2.5 h-7 rounded-[7px] border border-border text-muted-foreground hover:text-foreground hover:bg-muted transition-colors text-[11px]">
-            <Plus className="size-3.5" /> New from here
+
+        {/* Right pill: Folder + three-dots */}
+        <div
+          ref={menuRef}
+          className="flex items-center gap-[2px] p-[5px] rounded-[16px] border flex-shrink-0 relative"
+          style={{ background: "#2C2C2C", borderColor: "rgba(199,184,178,0.18)" }}
+        >
+          <button
+            title="Resources"
+            onClick={() => setResourcesOpen(v => !v)}
+            className="w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors hover:bg-[rgba(199,184,178,0.08)]"
+            style={{
+              background: resourcesOpen ? "rgba(199,184,178,0.14)" : "transparent",
+              color: "#C7B8B2",
+            }}
+          >
+            <Folder className="size-4" />
           </button>
-          <button title="Share thread"
-            className="w-7 h-7 flex items-center justify-center rounded-[7px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
-            <Share2 className="size-4" />
-          </button>
-          <button title="Clear context"
-            className="w-7 h-7 flex items-center justify-center rounded-[7px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
-            <RotateCcw className="size-4" />
-          </button>
-          <button title="More options"
-            className="w-7 h-7 flex items-center justify-center rounded-[7px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
+          <button
+            title="More options"
+            onClick={() => setMenuOpen(v => !v)}
+            className="w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors hover:bg-[rgba(199,184,178,0.08)]"
+            style={{
+              background: menuOpen ? "rgba(199,184,178,0.14)" : "transparent",
+              color: "#C7B8B2",
+            }}
+          >
             <MoreHorizontal className="size-4" />
           </button>
+
+          {/* Popup menu */}
+          {menuOpen && (
+            <div className="absolute top-full right-0 mt-1.5 w-[160px] rounded-[10px] border border-border bg-card shadow-lg z-30 py-1 overflow-hidden">
+              <button onClick={() => setMenuOpen(false)} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-foreground hover:bg-muted transition-colors">
+                <Pin className="size-3.5 " style={{ color: "rgba(199,184,178,0.55)" }} /> Pin
+              </button>
+              <button onClick={() => setMenuOpen(false)} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-foreground hover:bg-muted transition-colors">
+                <Share2 className="size-3.5 " style={{ color: "rgba(199,184,178,0.55)" }} /> Share
+              </button>
+              <button onClick={() => setMenuOpen(false)} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-foreground hover:bg-muted transition-colors">
+                <Edit2 className="size-3.5 " style={{ color: "rgba(199,184,178,0.55)" }} /> Rename
+              </button>
+              <div className="my-1 border-t border-[var(--border-subtle)]" />
+              <button onClick={() => setMenuOpen(false)} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] transition-colors hover:bg-muted" style={{ color: "var(--error-on)" }}>
+                <Trash2 className="size-3.5" style={{ color: "var(--error-on)" }} /> Delete
+              </button>
+            </div>
+          )}
+
+          {/* ── Resources pill — connected popover ── */}
+          {resourcesOpen && (
+            <>
+              {/* Connector bridging header pill and resources pill */}
+              <div
+                className="absolute z-30 pointer-events-none"
+                style={{
+                  top: "100%",
+                  right: 14,
+                  width: 28,
+                  height: 10,
+                  background: "#2C2C2C",
+                  borderLeft: "1px solid rgba(199,184,178,0.18)",
+                  borderRight: "1px solid rgba(199,184,178,0.18)",
+                  marginTop: -1,
+                }}
+              />
+              <div
+                className="absolute z-20 flex flex-col rounded-[16px] border overflow-hidden"
+                style={{
+                  top: "calc(100% + 9px)",
+                  right: 0,
+                  width: 300,
+                  background: "#2C2C2C",
+                  borderColor: "rgba(199,184,178,0.18)",
+                  boxShadow: "0 12px 40px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.08)",
+                }}
+              >
+                {/* Header */}
+                <div className="flex-shrink-0 flex items-center justify-between px-3 pt-3 pb-2.5">
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="w-[22px] h-[22px] rounded-[7px] flex items-center justify-center"
+                      style={{ background: "rgba(199,184,178,0.10)", border: "1px solid rgba(199,184,178,0.18)" }}
+                    >
+                      <Folder className="size-[11px]" style={{ color: "#C7B8B2" }} />
+                    </div>
+                    <span style={{ color: "#C7B8B2", fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                      Resources
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setResourcesOpen(false)}
+                    className="w-[22px] h-[22px] flex items-center justify-center rounded-[6px] transition-colors hover:bg-[rgba(199,184,178,0.08)]"
+                    style={{ color: "#C7B8B2" }}
+                  >
+                    <X className="size-[11px]" />
+                  </button>
+                </div>
+
+                {/* Tabs */}
+                <div className="flex-shrink-0 flex items-center gap-[3px] px-3 pb-2.5">
+                  {([
+                    { label: "Files",    key: "files",    Icon: FileText },
+                    { label: "Mentions", key: "mentions", Icon: Hash },
+                    { label: "Sources",  key: "sources",  Icon: Globe },
+                  ] as const).map(({ label, key, Icon }) => {
+                    const active = resourcesTab === key;
+                    return (
+                      <button
+                        key={key}
+                        onClick={() => setResourcesTab(key)}
+                        className="h-[26px] flex-1 rounded-[8px] flex items-center justify-center gap-[5px] transition-all"
+                        style={{
+                          background: active ? "rgba(199,184,178,0.14)" : "transparent",
+                          color: active ? "#C7B8B2" : "rgba(199,184,178,0.55)",
+                          fontWeight: 500,
+                          fontSize: 11,
+                          border: `1px solid ${active ? "rgba(199,184,178,0.30)" : "transparent"}`,
+                        }}
+                      >
+                        <Icon className="size-[10px]" />
+                        {label}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Divider */}
+                <div className="mx-3 mb-2" style={{ height: 1, background: "rgba(199,184,178,0.18)" }} />
+
+                {/* Body */}
+                <div className="overflow-y-auto px-2.5 pb-3 space-y-[2px] max-h-[260px]">
+                  {resourcesTab === "files" && (
+                    allFiles.length > 0 ? allFiles.map((f, i) => (
+                      <div
+                        key={i}
+                        className="group flex items-center gap-[9px] px-2 py-[6px] rounded-[9px] cursor-pointer transition-colors border border-transparent hover:border-[rgba(199,184,178,0.18)] hover:bg-[rgba(199,184,178,0.08)]"
+                      >
+                        <div
+                          className="rounded-[7px] flex items-center justify-center flex-shrink-0"
+                          style={{ width: 26, height: 26, background: "rgba(199,184,178,0.10)", border: "1px solid rgba(199,184,178,0.18)" }}
+                        >
+                          <FileText className="size-3" style={{ color: "#C7B8B2" }} />
+                        </div>
+                        <div className="min-w-0 flex-1 flex flex-col gap-[1px]">
+                          <p className="truncate" style={{ color: "#C7B8B2", fontSize: 12, lineHeight: "16px" }}>{f.name}</p>
+                          {f.meta && <p style={{ color: "rgba(199,184,178,0.55)", fontSize: 10, lineHeight: "14px" }}>{f.meta}</p>}
+                        </div>
+                        <ExternalLink className="size-[10px] flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity " style={{ color: "rgba(199,184,178,0.55)" }} />
+                      </div>
+                    )) : (
+                      <div className="flex flex-col items-center justify-center py-6 text-center gap-2">
+                        <div
+                          className="w-9 h-9 rounded-[11px] flex items-center justify-center"
+                          style={{ background: "rgba(199,184,178,0.10)", border: "1px solid rgba(199,184,178,0.18)" }}
+                        >
+                          <Folder className="size-4" style={{ color: "#C7B8B2", opacity: 0.7 }} />
+                        </div>
+                        <p style={{ color: "rgba(199,184,178,0.55)", fontSize: 11 }}>No files referenced yet</p>
+                      </div>
+                    )
+                  )}
+
+                  {resourcesTab === "mentions" && (
+                    allMentions.length > 0 ? allMentions.map((m, i) => (
+                      <div
+                        key={i}
+                        className="group flex items-start gap-[9px] px-2 py-[6px] rounded-[9px] cursor-pointer transition-colors border border-transparent hover:border-[rgba(199,184,178,0.18)] hover:bg-[rgba(199,184,178,0.08)]"
+                      >
+                        <div
+                          className="rounded-[7px] flex items-center justify-center flex-shrink-0 mt-[1px]"
+                          style={{ width: 26, height: 26, background: "rgba(199,184,178,0.10)", border: "1px solid rgba(199,184,178,0.18)" }}
+                        >
+                          <Hash className="size-3" style={{ color: "#C7B8B2" }} />
+                        </div>
+                        <div className="min-w-0 flex-1 flex flex-col gap-[1px]">
+                          <p className="line-clamp-1" style={{ color: "#C7B8B2", fontSize: 12, lineHeight: "16px" }}>{m.text}</p>
+                          <p style={{ color: "rgba(199,184,178,0.55)", fontSize: 10, lineHeight: "14px" }}>{timeLabel(m.time)}</p>
+                        </div>
+                      </div>
+                    )) : (
+                      <div className="flex flex-col items-center justify-center py-6 text-center gap-2">
+                        <div
+                          className="w-9 h-9 rounded-[11px] flex items-center justify-center"
+                          style={{ background: "rgba(199,184,178,0.10)", border: "1px solid rgba(199,184,178,0.18)" }}
+                        >
+                          <Hash className="size-4" style={{ color: "#C7B8B2", opacity: 0.7 }} />
+                        </div>
+                        <p style={{ color: "rgba(199,184,178,0.55)", fontSize: 11 }}>No @mentions in this thread</p>
+                      </div>
+                    )
+                  )}
+
+                  {resourcesTab === "sources" && (
+                    allSources.length > 0 ? allSources.map(s => {
+                      const def = sourceDefs.find(sd => sd.key === s);
+                      return (
+                        <div
+                          key={s}
+                          className="group flex items-center gap-[9px] px-2 py-[6px] rounded-[9px] cursor-pointer transition-colors border border-transparent hover:border-[rgba(199,184,178,0.18)] hover:bg-[rgba(199,184,178,0.08)]"
+                        >
+                          <div
+                            className="rounded-[7px] flex items-center justify-center flex-shrink-0"
+                            style={{ width: 26, height: 26, background: "rgba(199,184,178,0.10)", border: "1px solid rgba(199,184,178,0.18)" }}
+                          >
+                            <span className="flex" style={{ color: "#C7B8B2" }}>{def?.icon}</span>
+                          </div>
+                          <p className="capitalize flex-1" style={{ color: "#C7B8B2", fontSize: 12 }}>{s}</p>
+                          <ExternalLink className="size-[10px] flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity " style={{ color: "rgba(199,184,178,0.55)" }} />
+                        </div>
+                      );
+                    }) : (
+                      <div className="flex flex-col items-center justify-center py-6 text-center gap-2">
+                        <div
+                          className="w-9 h-9 rounded-[11px] flex items-center justify-center"
+                          style={{ background: "rgba(199,184,178,0.10)", border: "1px solid rgba(199,184,178,0.18)" }}
+                        >
+                          <Globe className="size-4" style={{ color: "#C7B8B2", opacity: 0.7 }} />
+                        </div>
+                        <p style={{ color: "rgba(199,184,178,0.55)", fontSize: 11 }}>No sources used yet</p>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
+      {/* Content area */}
+      <div className="flex-1 flex flex-col overflow-hidden">
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 py-5 space-y-5">
         {thread.messages.length === 0 ? (
@@ -864,9 +942,9 @@ function ThreadView({
                 {/* Message bubble */}
                 <div className={`px-4 py-3 rounded-[14px] text-[13px] leading-relaxed ${
                   msg.role === "user"
-                    ? "bg-foreground text-background rounded-br-sm"
-                    : "bg-muted text-foreground rounded-bl-sm"
-                }`}>
+                    ? "rounded-br-sm"
+                    : "rounded-bl-sm"
+                }`} style={{ backgroundColor: "#2C2C2C", color: "#FFF2ED" }}>
                   <p className="whitespace-pre-wrap">{msg.content}</p>
                 </div>
 
@@ -893,7 +971,7 @@ function ThreadView({
                     {msg.followUps.map((fu, i) => (
                       <button key={i} onClick={() => onFollowUp(fu.prompt)}
                         className="flex items-center gap-1 px-3 py-1 rounded-full border border-border bg-card hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft)] text-[11px] text-foreground transition-colors">
-                        {fu.label} <ChevronRight className="size-3 text-muted-foreground" />
+                        {fu.label} <ChevronRight className="size-3 " style={{ color: "rgba(199,184,178,0.55)" }} />
                       </button>
                     ))}
                   </div>
@@ -931,15 +1009,18 @@ function ThreadView({
       {/* Composer */}
       <div className="flex-shrink-0 px-4 pb-4 pt-2">
         <Composer
-          value={input} onChange={onInputChange} onSend={onSend}
-          isStreaming={isStreaming} enabledSources={enabledSources}
-          onToggleSource={onToggleSource} showSourceChips={false} compact
+          value={input}
+          onChange={onInputChange}
+          onSend={onSend}
+          isStreaming={isStreaming}
+          enabledSources={enabledSources}
+          onToggleSource={onToggleSource}
+          showSourceChips={false}
+          compact
           placeholder={`Ask about "${thread.title}"…`}
         />
-        <p className="text-[10px] text-muted-foreground mt-1.5 px-1">
-          <kbd className="px-1 py-0.5 rounded border border-border text-[10px]">Enter</kbd> to send · <kbd className="px-1 py-0.5 rounded border border-border text-[10px]">Shift+Enter</kbd> for new line
-        </p>
       </div>
+      </div>{/* end messages+composer col */}
     </div>
   );
 }
@@ -1087,10 +1168,8 @@ export function AIChatV2() {
   const [isStreaming, setIsStreaming] = useState(false);
   const [enabledSources, setEnabledSources] = useState<SourceKey[]>(["team","files","tasks","calendar"]);
   const [pendingActions, setPendingActions] = useState<ActionPreview[]>([]);
-  const [rightPanelOpen, setRightPanelOpen] = useState(true);
 
   const isViewer = userRole === "viewer";
-
   const selectedThread = threads.find(t => t.id === selectedId) ?? null;
 
   function toggleSource(key: SourceKey) {
@@ -1100,15 +1179,8 @@ export function AIChatV2() {
   }
 
   function handleNewThread() {
-    const id = `t-${Date.now()}`;
-    const newThread: AIThread = {
-      id, title: "New thread",
-      scopeBadges: enabledSources.slice(0, 2),
-      lastUpdated: new Date().toISOString(),
-      messages: [],
-    };
-    setThreads(prev => [newThread, ...prev]);
-    setSelectedId(id);
+    setSelectedId(null);
+    setInput("");
   }
 
   async function handleSend() {
@@ -1203,7 +1275,7 @@ export function AIChatV2() {
 
       {/* Main */}
       <main className="flex-1 min-w-0 overflow-hidden">
-        {selectedThread ? (
+        {selectedThread && selectedThread.messages.length > 0 ? (
           <ThreadView
             thread={selectedThread}
             user={user}
@@ -1213,7 +1285,7 @@ export function AIChatV2() {
             isStreaming={isStreaming}
             enabledSources={enabledSources}
             onToggleSource={toggleSource}
-            onFollowUp={prompt => { setInput(prompt); handleSend(); }}
+            onFollowUp={prompt => { handleFollowUp(prompt); }}
           />
         ) : (
           <AIHome
@@ -1224,20 +1296,10 @@ export function AIChatV2() {
             isStreaming={isStreaming}
             enabledSources={enabledSources}
             onToggleSource={toggleSource}
-            onPrompt={p => { setInput(p); }}
+            onPrompt={prompt => { setInput(prompt); }}
           />
         )}
       </main>
-
-      {/* Right panel */}
-      {rightPanelOpen && (
-        <ContextPanel
-          enabledSources={enabledSources}
-          pendingActions={pendingActions}
-          onConfirm={id => setPendingActions(prev => prev.filter(a => a.id !== id))}
-          onDeny={id => setPendingActions(prev => prev.filter(a => a.id !== id))}
-        />
-      )}
     </div>
   );
 }

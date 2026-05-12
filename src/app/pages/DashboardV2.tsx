@@ -53,7 +53,7 @@ function Badge({ label, variant }: { label: string; variant: "brand"|"success"|"
 
 function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`bg-card border border-border rounded-[14px] overflow-hidden h-full ${className}`}>
+    <div className={`bg-card rounded-[14px] overflow-hidden h-full ${className}`}>
       {children}
     </div>
   );
@@ -1175,6 +1175,20 @@ export function DashboardV2() {
   const { user } = useAuth();
   const greeting = useMemo(() => getGreeting(user?.name?.split(' ')[0]), [user?.name]);
 
+  // ── Remove the Layout <main> stroke ring on this route only ──
+  useEffect(() => {
+    const mainEl = document.querySelector('main') as HTMLElement | null;
+    if (!mainEl) return;
+    const prevShadow  = mainEl.style.boxShadow;
+    const prevRadius  = mainEl.style.borderRadius;
+    mainEl.style.boxShadow    = 'none';
+    mainEl.style.borderRadius = '0';
+    return () => {
+      mainEl.style.boxShadow    = prevShadow;
+      mainEl.style.borderRadius = prevRadius;
+    };
+  }, []);
+
   // ── Widget layout ──
   const [layout,    setLayout]    = useState(DEFAULT_LAYOUT);
   const [editMode,  setEditMode]  = useState(false);
@@ -1304,7 +1318,7 @@ export function DashboardV2() {
       <div className="flex flex-1 overflow-hidden">
 
         {/* Scrollable main content */}
-        <div className="flex-1 overflow-y-auto px-5 py-5 min-w-0">
+        <div className="flex-1 overflow-y-auto px-[19px] py-5 min-w-0">
 
           {/* Greeting + toolbar */}
           <div className="flex items-center justify-between mb-5">
