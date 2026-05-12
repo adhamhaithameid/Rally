@@ -11,7 +11,8 @@ import {
 } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import svgPaths from "../../imports/svg-gyowvurp60";
-import headerSvg from "../../imports/Header-1/svg-ozdcmjc97h";
+import topNavSvgPaths from "../../imports/TopNav/svg-p3anza2v63";
+import { imgGroup } from "../../imports/TopNav/svg-y9fwq";
 import { getGreeting } from "../utils/greetings";
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -157,14 +158,14 @@ function TaskStatusBadge({ status }: { status: string }) {
   return null;
 }
 
-// ── Top Navbar (Figma-matched) ─────────────────────────────────────────────────
+// ── Top Navbar (Figma-matched, responsive) ────────────────────────────────────
 
 function TopNav({
   notifActive,
   onNotifToggle,
 }: {
-  notifActive:    boolean;
-  onNotifToggle:  () => void;
+  notifActive:   boolean;
+  onNotifToggle: () => void;
 }) {
   const { user, currentTeam } = useAuth();
   const [teamOpen,      setTeamOpen]      = useState(false);
@@ -187,74 +188,103 @@ function TopNav({
   const unreadCount = 3;
 
   return (
-    /* Root — mirrors Figma's Header div:
-       bg-[#2c2c2c] border-b border-l border-r border-[#4a403c]
-       rounded-bl-[20px] rounded-br-[20px] relative size-full */
+    /* Figma: bg-[#2c2c2c] border border-[#4a403c] rounded-[20px] — full pill card */
     <div
-      className="flex-shrink-0 relative w-full"
+      className="flex-shrink-0 w-full flex items-center gap-3"
       style={{
-        height: 73,
+        height: 71,
         background: "#2c2c2c",
-        borderBottom: "1px solid #4a403c",
-        borderLeft:   "1px solid #4a403c",
-        borderRight:  "1px solid #4a403c",
-        borderBottomLeftRadius:  20,
-        borderBottomRightRadius: 20,
-      }}>
+        border: "1px solid #4a403c",
+        borderRadius: 20,
+        padding: "11px 14px 11px 11px",
+      }}
+    >
 
-      {/* ── Button (workspace) ── absolute left-[19px] top-[12px] h-[49px] w-[170.18px] */}
-      <div ref={teamRef} className="absolute" style={{ left: 19, top: 12 }}>
+      {/* ── Left: Workspace button ── */}
+      <div ref={teamRef} className="relative flex-shrink-0">
         <button
           onClick={() => setTeamOpen(o => !o)}
-          className="relative flex items-center gap-[10px] transition-opacity hover:opacity-80 active:opacity-60"
+          className="flex items-center gap-[10px] transition-opacity hover:opacity-80 active:opacity-60"
           style={{
             background: "#232323",
             border: "1px solid #4a403c",
             borderRadius: 10,
             height: 49,
             width: 170,
-            padding: "9px 13px",
-          }}>
-          {/* R icon — bg-[#ff4615] rounded-[6px] size-[24px] */}
-          <div className="flex-shrink-0 flex items-center justify-center"
-            style={{ width: 24, height: 24, background: "#ff4615", borderRadius: 6 }}>
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <g clipPath="url(#tnR)">
-                <path d={headerSvg.pca582c0} fill="white" />
-              </g>
-              <defs><clipPath id="tnR"><rect width="14" height="14" fill="white" /></clipPath></defs>
-            </svg>
+            padding: "10px 14px",
+          }}
+        >
+          {/* R icon — Figma: bg-[#ff4615] rounded-[6px] size-[24px] with mask clip */}
+          <div
+            className="flex-shrink-0 relative"
+            style={{ width: 24, height: 24, background: "#ff4615", borderRadius: 6 }}
+          >
+            <div
+              className="absolute"
+              style={{
+                inset: "2.26% 0.75% 3.01% 0",
+                maskImage: `url('${imgGroup}')`,
+                WebkitMaskImage: `url('${imgGroup}')`,
+                maskSize: "14px 14px",
+                WebkitMaskSize: "14px 14px",
+                maskPosition: "0px -0.316px",
+                WebkitMaskPosition: "0px -0.316px",
+                maskRepeat: "no-repeat",
+                WebkitMaskRepeat: "no-repeat",
+              }}
+            >
+              <svg
+                width="13.8947" height="13.2631"
+                viewBox="0 0 13.8947 13.2631"
+                fill="none"
+                className="absolute block inset-0 size-full"
+              >
+                <path d={topNavSvgPaths.p2a6aad00} fill="white" />
+              </svg>
+            </div>
           </div>
+
           {/* Team name + project */}
           <div className="flex flex-col gap-[2px] flex-1 min-w-0">
-            <span style={{ color: "#fff2ed", fontSize: 14, fontWeight: 500, lineHeight: "14px", display: "block" }}
-              className="whitespace-nowrap truncate">
+            <span
+              className="whitespace-nowrap truncate block"
+              style={{ color: "#fff2ed", fontSize: 14, fontWeight: 500, lineHeight: "14px" }}
+            >
               {currentTeam?.name ?? "Design Team"}
             </span>
-            <span style={{ color: "#c7b8b2", fontSize: 10, fontWeight: 500, lineHeight: "15px", display: "block" }}
-              className="whitespace-nowrap truncate">
+            <span
+              className="whitespace-nowrap truncate block"
+              style={{ color: "#c7b8b2", fontSize: 10, fontWeight: 500, lineHeight: "15px" }}
+            >
               {currentTeam?.projectName ?? "Website Redesign"}
             </span>
           </div>
-          {/* Chevron */}
+
+          {/* Chevron — Figma Icon1 */}
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="flex-shrink-0">
-            <path d="M3.5 5.25L7 8.75L10.5 5.25" stroke="#c7b8b2"
+            <path d="M3.5 5.25L7 8.75L10.5 5.25" stroke="#C7B8B2"
               strokeWidth="1.16667" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
 
         {/* Team dropdown */}
         {teamOpen && (
-          <div className="absolute top-full left-0 mt-2 w-64 rounded-[12px] shadow-2xl z-50 py-1.5 overflow-hidden"
-            style={{ background: "#232323", border: "1px solid #4a403c" }}>
+          <div
+            className="absolute top-full left-0 mt-2 w-64 rounded-[12px] shadow-2xl z-50 py-1.5 overflow-hidden"
+            style={{ background: "#232323", border: "1px solid #4a403c" }}
+          >
             <p className="text-[10px] font-medium uppercase tracking-widest px-3 py-2"
               style={{ color: "#c7b8b2" }}>Your teams</p>
             {teams.map(t => (
-              <button key={t.teamId}
+              <button
+                key={t.teamId}
                 className="w-full flex items-center gap-3 px-3 py-2.5 text-left transition-colors hover:bg-white/5"
-                onClick={() => setTeamOpen(false)}>
-                <div className="w-7 h-7 rounded-[6px] flex items-center justify-center text-white text-[11px] font-medium flex-shrink-0"
-                  style={{ background: "#ff4615" }}>{t.teamName.charAt(0)}</div>
+                onClick={() => setTeamOpen(false)}
+              >
+                <div
+                  className="w-7 h-7 rounded-[6px] flex items-center justify-center text-white text-[11px] font-medium flex-shrink-0"
+                  style={{ background: "#ff4615" }}
+                >{t.teamName.charAt(0)}</div>
                 <div className="flex-1 min-w-0">
                   <p style={{ color: "#fff2ed", fontSize: 14 }} className="truncate">{t.teamName}</p>
                   <p style={{ color: "#c7b8b2", fontSize: 11 }} className="truncate">{t.projectName}</p>
@@ -262,8 +292,10 @@ function TopNav({
               </button>
             ))}
             <div style={{ borderTop: "1px solid #4a403c", marginTop: 4, paddingTop: 4 }}>
-              <button className="w-full flex items-center gap-2 px-3 py-2 transition-colors hover:bg-white/5"
-                style={{ color: "#c7b8b2", fontSize: 14, fontWeight: 500 }}>
+              <button
+                className="w-full flex items-center gap-2 px-3 py-2 transition-colors hover:bg-white/5"
+                style={{ color: "#c7b8b2", fontSize: 14, fontWeight: 500 }}
+              >
                 <Plus className="size-4" /> Create or join team
               </button>
             </div>
@@ -271,58 +303,74 @@ function TopNav({
         )}
       </div>
 
-      {/* ── Container2 (search) ── absolute -translate-x-1/2 left-[calc(50%+23.5px)] top-[17px] w-[512px] h-[39px] */}
-      <div
-        className="absolute -translate-x-1/2 flex items-center gap-[8px] px-[13px]"
-        style={{
-          left:   "calc(50% + 23.5px)",
-          top:    17,
-          width:  512,
-          height: 39,
-          background: "#232323",
-          border: `1px solid ${searchFocused ? "#ff4615" : "#4a403c"}`,
-          borderRadius: 10,
-          transition:   "border-color 120ms",
-        }}>
-        {/* Search icon */}
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
-          <path d={headerSvg.p107a080} stroke="#c7b8b2" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M14 14L11.1333 11.1333" stroke="#c7b8b2" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-        {/* Text input */}
-        <input
-          type="text"
-          placeholder="Search people, tasks, files, channels..."
-          className="flex-1 bg-transparent outline-none text-[14px] min-w-0"
-          style={{ color: "#fff2ed" }}
-          onFocus={() => setSearchFocused(true)}
-          onBlur={()  => setSearchFocused(false)}
-        />
-        {/* ⌘K badge */}
-        <div className="flex-shrink-0 flex items-center px-[7px] rounded-[4px]"
-          style={{ background: "#262322", border: "1px solid #4a403c", height: 21 }}>
-          <span style={{ color: "#c7b8b2", fontSize: 10, lineHeight: "15px" }}>⌘K</span>
+      {/* ── Center: Search bar — Figma Container2 ── */}
+      <div className="flex-1 flex justify-center min-w-0">
+        <div
+          className="flex items-center gap-[8px] w-full"
+          style={{
+            maxWidth: 512,
+            height: 39,
+            background: "#232323",
+            border: `1px solid ${searchFocused ? "#ff4615" : "#4a403c"}`,
+            borderRadius: 10,
+            padding: "1px 14px",
+            transition: "border-color 120ms",
+          }}
+        >
+          {/* Search icon — Figma Icon2 */}
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
+            <path d={topNavSvgPaths.p107a080} stroke="#C7B8B2" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M14 14L11.1333 11.1333" stroke="#C7B8B2" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+
+          {/* Input — Figma TextInput */}
+          <input
+            type="text"
+            placeholder="Search people, tasks, files, channels..."
+            className="flex-1 bg-transparent outline-none min-w-0"
+            style={{ color: "#fff2ed", fontSize: 14, caretColor: "#ff4615" }}
+            onFocus={() => setSearchFocused(true)}
+            onBlur={()  => setSearchFocused(false)}
+          />
+
+          {/* ⌘K badge — Figma Container3 */}
+          <div
+            className="flex-shrink-0 flex items-center rounded-[4px]"
+            style={{
+              background: "#262322",
+              border: "1px solid #4a403c",
+              height: 21,
+              padding: "1px 8px",
+            }}
+          >
+            <span style={{ color: "#c7b8b2", fontSize: 10, lineHeight: "15px" }}>⌘K</span>
+          </div>
         </div>
       </div>
 
-      {/* ── Container3 (New + Bell) ── absolute right-[19px] top-[15px] */}
-      <div className="absolute flex items-center gap-[8px]" style={{ right: 19, top: 15 }}>
+      {/* ── Right: New + Bell — Figma Container4 ── */}
+      <div className="flex items-center gap-[8px] flex-shrink-0">
 
-        {/* Button1 — + New */}
+        {/* + New button — Figma Container5 */}
         <div ref={newRef} className="relative">
           <button
             onClick={() => setNewOpen(o => !o)}
             className="flex items-center gap-[6px] font-medium text-white transition-opacity hover:opacity-90 active:opacity-70"
-            style={{ background: "#ff4615", borderRadius: 10, height: 37, padding: "8px 12px", fontSize: 14 }}>
+            style={{ background: "#ff4615", borderRadius: 10, height: 37, padding: "8px 12px", fontSize: 14 }}
+          >
+            {/* Plus icon — Figma Icon3 */}
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
               <path d="M3.33333 8H12.6667" stroke="white" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round" />
               <path d="M8 3.33333V12.6667" stroke="white" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             <span>New</span>
           </button>
+
           {newOpen && (
-            <div className="absolute top-full right-0 mt-2 w-48 rounded-[12px] shadow-2xl z-50 py-1.5 overflow-hidden"
-              style={{ background: "#232323", border: "1px solid #4a403c" }}>
+            <div
+              className="absolute top-full right-0 mt-2 w-48 rounded-[12px] shadow-2xl z-50 py-1.5 overflow-hidden"
+              style={{ background: "#232323", border: "1px solid #4a403c" }}
+            >
               {[
                 { label: "Task",        icon: CheckSquare,   path: "/app/todo"     },
                 { label: "Event",       icon: Calendar,      path: "/app/calendar" },
@@ -330,10 +378,12 @@ function TopNav({
                 { label: "Upload file", icon: Upload,        path: "/app/files"    },
                 { label: "AI chat",     icon: Bot,           path: "/app/ai-chat"  },
               ].map(item => (
-                <button key={item.label}
+                <button
+                  key={item.label}
                   onClick={() => { setNewOpen(false); navigate(item.path); }}
                   className="w-full flex items-center gap-3 px-3 py-2.5 text-[14px] font-medium transition-colors hover:bg-white/5 text-left"
-                  style={{ color: "#fff2ed" }}>
+                  style={{ color: "#fff2ed" }}
+                >
                   <item.icon className="size-4 flex-shrink-0" style={{ color: "#c7b8b2" }} />
                   {item.label}
                 </button>
@@ -342,38 +392,43 @@ function TopNav({
           )}
         </div>
 
-        {/* Button2 — Bell: toggles the right notification sidebar */}
+        {/* Bell button — Figma Button1 */}
         <button
           onClick={onNotifToggle}
-          className="relative flex items-center justify-center transition-opacity hover:opacity-80 active:opacity-60"
+          className="relative flex items-center justify-center transition-all hover:opacity-80 active:opacity-60"
           style={{
             width: 38, height: 38,
-            background: notifActive ? "#ff4615" : "#232323",
-            border:     notifActive ? "1.028px solid #ff4615" : "1.028px solid #4a403c",
-            borderRadius: 10.278,
-            transition: "background 120ms, border-color 120ms",
-          }}>
-          {/* Bell SVG */}
+            background:   notifActive ? "#ff4615" : "#232323",
+            border:       notifActive ? "1px solid #ff4615" : "1px solid #4a403c",
+            borderRadius: 10,
+            transition:   "background 120ms, border-color 120ms",
+          }}
+        >
+          {/* Bell icon — Figma Icon4 */}
           <svg
-            width="16.444" height="16.444"
-            viewBox="0 0 16.4444 16.4444"
+            width="16.4375" height="16.4375"
+            viewBox="0 0 16.4375 16.4375"
             fill="none"
-            style={{ position: "absolute", left: 9.25, top: 9.25 }}>
-            <path d={headerSvg.p35a5e100} stroke="#FFF2ED" strokeWidth="1.37037" strokeLinecap="round" strokeLinejoin="round" />
-            <path d={headerSvg.p13ce8800} stroke="#FFF2ED" strokeWidth="1.37037" strokeLinecap="round" strokeLinejoin="round" />
+            className="absolute"
+            style={{ left: 9.25, top: 9.25 }}
+          >
+            <path d={topNavSvgPaths.p34e026a0} stroke="#FFF2ED" strokeWidth="1.36979" strokeLinecap="round" strokeLinejoin="round" />
+            <path d={topNavSvgPaths.p4c01700}  stroke="#FFF2ED" strokeWidth="1.36979" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          {/* Badge */}
+
+          {/* Badge — Figma Container6 */}
           {unreadCount > 0 && !notifActive && (
             <div
               className="absolute flex items-center justify-center text-white font-medium"
               style={{
                 left: 22.61, top: -4.11,
-                width: 16.444, height: 16.444,
+                width: 16.438, height: 16.438,
                 background: "#ff4615",
                 borderRadius: "50%",
                 fontSize: 10.278,
                 lineHeight: "15.417px",
-              }}>
+              }}
+            >
               {unreadCount}
             </div>
           )}
