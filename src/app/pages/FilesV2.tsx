@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import {
-  Search, Upload, Plus, Sparkles, X, Star, StarOff, Download,
+  Search, Upload, Plus, Zap, X, Star, StarOff, Download,
   Folder, FolderOpen, ChevronRight, ChevronDown, MoreHorizontal,
   FileText, MessageSquare, Calendar, CheckSquare, Clock, Users,
   ArrowUpRight, LayoutGrid, List, Pencil, Trash2, Move,
@@ -36,25 +36,25 @@ interface FolderItem {
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
-const EXT: Record<string, { color: string; bg: string; label: string }> = {
-  fig:  { color: "#8B5CF6", bg: "#f5f3ff", label: "Figma"   },
-  pdf:  { color: "#EF4444", bg: "#fff0f0", label: "PDF"     },
-  xlsx: { color: "#10B981", bg: "#ecfdf5", label: "Sheet"   },
-  md:   { color: "#3B82F6", bg: "#eff6ff", label: "Doc"     },
-  pptx: { color: "#F97316", bg: "#fff7ed", label: "Slides"  },
-  docx: { color: "#60A5FA", bg: "#eff6ff", label: "Doc"     },
-  png:  { color: "#14B8A6", bg: "#f0fdfa", label: "Image"   },
-  jpg:  { color: "#14B8A6", bg: "#f0fdfa", label: "Image"   },
-  zip:  { color: "#9CA3AF", bg: "#f9fafb", label: "Archive" },
-  mp4:  { color: "#EC4899", bg: "#fdf2f8", label: "Video"   },
+const EXT: Record<string, { color: string; label: string }> = {
+  fig:  { color: "#8B5CF6", label: "Figma"   },
+  pdf:  { color: "#EF4444", label: "PDF"     },
+  xlsx: { color: "#10B981", label: "Sheet"   },
+  md:   { color: "#3B82F6", label: "Doc"     },
+  pptx: { color: "#F97316", label: "Slides"  },
+  docx: { color: "#60A5FA", label: "Doc"     },
+  png:  { color: "#14B8A6", label: "Image"   },
+  jpg:  { color: "#14B8A6", label: "Image"   },
+  zip:  { color: "#9CA3AF", label: "Archive" },
+  mp4:  { color: "#EC4899", label: "Video"   },
 };
-const EXTS = (ext: string) => EXT[ext] ?? { color: "#6B7280", bg: "#f3f4f6", label: "File" };
+const EXTS = (ext: string) => EXT[ext] ?? { color: "#6B7280", label: "File" };
 
 const LINK_COLOR: Record<LinkKind, string> = {
   chat: "var(--info-on)", task: "var(--warning-on)", event: "var(--error-on)", ai: "var(--rally-brand-on)",
 };
 const LINK_ICON: Record<LinkKind, React.ElementType> = {
-  chat: MessageSquare, task: CheckSquare, event: Calendar, ai: Sparkles,
+  chat: MessageSquare, task: CheckSquare, event: Calendar, ai: Zap,
 };
 
 // ── Mock data ─────────────────────────────────────────────────────────────────
@@ -170,14 +170,6 @@ const RECENTLY_UPDATED: { fileId: string; who: string; when: string }[] = [
   { fileId: "f2",  who: "Sarah Johnson", when: "Yesterday" },
 ];
 const LINKED_IDS = ["f3", "f4", "f1", "f7", "f5"];
-const AI_ACTIONS  = [
-  "Summarize a document",
-  "Find latest version",
-  "Extract tasks from doc",
-  "Find files by topic",
-  "Find files from chat",
-  "Compare two versions",
-];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -204,7 +196,7 @@ function FileTypeIcon({ ext, size = 34 }: { ext: string; size?: number }) {
   const label = ext.slice(0, 4).toUpperCase();
   return (
     <div className="flex-shrink-0 rounded-[8px] flex items-center justify-center"
-      style={{ width: size, height: size, background: cfg.bg }}>
+      style={{ width: size, height: size, background: `${cfg.color}18` }}>
       <span className="font-medium" style={{ color: cfg.color, fontSize: size * 0.26 }}>{label}</span>
     </div>
   );
@@ -267,7 +259,7 @@ function FileRow({
           <span className="text-[13px] text-foreground truncate">{file.name}.{file.ext}</span>
           {file.version > 1 && (
             <span className="flex-shrink-0 text-[10px] px-1.5 py-0.5 rounded-full"
-              style={{ background: cfg.bg, color: cfg.color }}>
+              style={{ background: `${cfg.color}18`, color: cfg.color }}>
               v{file.version}
             </span>
           )}
@@ -363,7 +355,7 @@ function FileCard({
           <Av name={file.lastEditedBy} size={16} />
           <span className="text-[10px] text-muted-foreground flex-1 truncate">{file.lastEditedAt}</span>
           {file.version > 1 && (
-            <span className="text-[10px] px-1 py-0.5 rounded-full" style={{ background: cfg.bg, color: cfg.color }}>
+            <span className="text-[10px] px-1 py-0.5 rounded-full" style={{ background: `${cfg.color}18`, color: cfg.color }}>
               v{file.version}
             </span>
           )}
@@ -408,7 +400,7 @@ function ContinueCard({ file, onSelect }: { file: FileItem; onSelect: () => void
         <p className="text-[11px] font-medium text-foreground truncate">{file.name}</p>
         <p className="text-[10px] text-muted-foreground truncate">{file.lastEditedBy === "John Doe" ? "You" : file.lastEditedBy} · {file.lastEditedAt}</p>
         {file.version > 1 && (
-          <span className="inline-block mt-1 text-[10px] px-1.5 py-0.5 rounded-full" style={{ background: cfg.bg, color: cfg.color }}>
+          <span className="inline-block mt-1 text-[10px] px-1.5 py-0.5 rounded-full" style={{ background: `${cfg.color}18`, color: cfg.color }}>
             v{file.version}
           </span>
         )}
@@ -568,7 +560,7 @@ function FilesHome({
                 </div>
                 {file.version > 1 && (
                   <span className="flex-shrink-0 text-[10px] font-medium px-1.5 py-0.5 rounded-full"
-                    style={{ background: cfg.bg, color: cfg.color }}>
+                    style={{ background: `${cfg.color}18`, color: cfg.color }}>
                     v{file.version}
                   </span>
                 )}
@@ -780,7 +772,6 @@ function FileDetailPanel({
   file: FileItem; folders: FolderItem[];
   onClose: () => void; onStar: () => void; canEdit: boolean;
 }) {
-  const [showAI,      setShowAI]      = useState(false);
   const [showVersions, setShowVersions] = useState(false);
   const [showPerms,   setShowPerms]   = useState(false);
   const [editName,    setEditName]    = useState(file.name);
@@ -796,11 +787,6 @@ function FileDetailPanel({
       {/* Header */}
       <div className="flex-shrink-0 flex items-center gap-2 px-4 py-3 border-b border-[var(--border-subtle)]">
         <span className="flex-1 text-[12px] font-medium text-muted-foreground">File details</span>
-        <button onClick={() => setShowAI(v => !v)}
-          className={`w-7 h-7 flex items-center justify-center rounded-[7px] transition-colors ${showAI ? "bg-[var(--rally-brand-soft)]" : "hover:bg-muted text-muted-foreground"}`}
-          style={{ color: showAI ? "var(--rally-brand)" : undefined }}>
-          <Sparkles className="size-4" />
-        </button>
         <button onClick={onStar} className="w-7 h-7 flex items-center justify-center rounded-[7px] hover:bg-muted text-muted-foreground transition-colors">
           {file.starred
             ? <Star className="size-4 fill-current" style={{ color: "#F59E0B" }} />
@@ -813,23 +799,6 @@ function FileDetailPanel({
       </div>
 
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
-        {/* AI Assist */}
-        {showAI && (
-          <div className="p-3 rounded-[10px] border border-border" style={{ background: "var(--rally-brand-soft)" }}>
-            <div className="flex items-center gap-1.5 mb-2">
-              <Sparkles className="size-3.5" style={{ color: "var(--rally-brand)" }} />
-              <span className="text-[11px] font-medium" style={{ color: "var(--rally-brand)" }}>AI Assist</span>
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              {AI_ACTIONS.slice(0, 4).map(a => (
-                <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-card text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft)] transition-colors">
-                  {a}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* Preview */}
         <FilePreviewBlock file={file} />
 
@@ -1056,7 +1025,6 @@ export function FilesV2() {
   const [selected,  setSelected]  = useState<FileItem | null>(null);
   const [viewMode,  setViewMode]  = useState<ViewMode>("list");
   const [search,    setSearch]    = useState("");
-  const [showAIBar, setShowAIBar] = useState(false);
   const [newOpen,   setNewOpen]   = useState(false);
   const [isDragOver,setIsDragOver]= useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -1143,14 +1111,6 @@ export function FilesV2() {
               className="pl-8 pr-3 h-8 w-44 rounded-[8px] border border-border bg-background text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-[var(--rally-brand)] transition-colors" />
           </div>
 
-          {/* Ask AI */}
-          <button onClick={() => setShowAIBar(v => !v)}
-            className={`flex items-center gap-1.5 h-8 px-3 rounded-[8px] border border-border text-[12px] transition-colors ${
-              showAIBar ? "border-[var(--rally-brand)] bg-[var(--rally-brand-soft)] text-[var(--rally-brand-on)]" : "bg-background text-muted-foreground hover:bg-muted"
-            }`}>
-            <Sparkles className="size-3.5" style={{ color: "var(--rally-brand)" }} /> Ask AI
-          </button>
-
           {/* Upload */}
           {canEdit && (
             <>
@@ -1173,16 +1133,6 @@ export function FilesV2() {
           )}
         </div>
 
-        {/* AI bar */}
-        {showAIBar && (
-          <div className="mt-3 pt-3 border-t border-[var(--border-subtle)] flex flex-wrap gap-1.5">
-            {AI_ACTIONS.map(a => (
-              <button key={a} className="px-2.5 py-1 rounded-full border border-border bg-background text-[11px] text-foreground hover:border-[var(--rally-brand)] hover:bg-[var(--rally-brand-soft)] transition-colors">
-                {a}
-              </button>
-            ))}
-          </div>
-        )}
       </div>
 
       {/* Body */}

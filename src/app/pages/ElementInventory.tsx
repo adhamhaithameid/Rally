@@ -383,26 +383,26 @@ function IconCircle({ Icon, bg, color, size = 32 }: { Icon: React.ElementType; b
 
 // ── 17. File Extension Badges ─────────────────────────────────────────────────
 
-const EXT_CFG: Record<string, { color: string; bg: string; label: string }> = {
-  fig:  { color: "#8B5CF6", bg: "#f5f3ff", label: "Figma"   },
-  pdf:  { color: "#EF4444", bg: "#fff0f0", label: "PDF"     },
-  xlsx: { color: "#10B981", bg: "#ecfdf5", label: "Sheet"   },
-  md:   { color: "#3B82F6", bg: "#eff6ff", label: "Doc"     },
-  pptx: { color: "#F97316", bg: "#fff7ed", label: "Slides"  },
-  docx: { color: "#60A5FA", bg: "#eff6ff", label: "Doc"     },
-  png:  { color: "#14B8A6", bg: "#f0fdfa", label: "Image"   },
-  jpg:  { color: "#14B8A6", bg: "#f0fdfa", label: "Image"   },
-  zip:  { color: "#9CA3AF", bg: "#f9fafb", label: "Archive" },
-  mp4:  { color: "#EC4899", bg: "#fdf2f8", label: "Video"   },
-  json: { color: "#F59E0B", bg: "#fffbeb", label: "JSON"    },
+const EXT_CFG: Record<string, { color: string; label: string }> = {
+  fig:  { color: "#8B5CF6", label: "Figma"   },
+  pdf:  { color: "#EF4444", label: "PDF"     },
+  xlsx: { color: "#10B981", label: "Sheet"   },
+  md:   { color: "#3B82F6", label: "Doc"     },
+  pptx: { color: "#F97316", label: "Slides"  },
+  docx: { color: "#60A5FA", label: "Doc"     },
+  png:  { color: "#14B8A6", label: "Image"   },
+  jpg:  { color: "#14B8A6", label: "Image"   },
+  zip:  { color: "#9CA3AF", label: "Archive" },
+  mp4:  { color: "#EC4899", label: "Video"   },
+  json: { color: "#F59E0B", label: "JSON"    },
 };
 
 // Compact badge style (in-line label)
 function ExtBadge({ ext }: { ext: string }) {
-  const cfg = EXT_CFG[ext] ?? { color: "#6B7280", bg: "#f3f4f6", label: "File" };
+  const cfg = EXT_CFG[ext] ?? { color: "#6B7280", label: "File" };
   return (
     <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium uppercase tracking-wide"
-      style={{ background: cfg.bg, color: cfg.color }}>
+      style={{ background: `${cfg.color}18`, color: cfg.color }}>
       {ext}
     </span>
   );
@@ -410,11 +410,11 @@ function ExtBadge({ ext }: { ext: string }) {
 
 // Icon-block style (square with type label below)
 function FileIconBlock({ ext, size = 40 }: { ext: string; size?: number }) {
-  const cfg = EXT_CFG[ext] ?? { color: "#6B7280", bg: "#f3f4f6", label: "File" };
+  const cfg = EXT_CFG[ext] ?? { color: "#6B7280", label: "File" };
   return (
     <div className="flex flex-col items-center gap-1">
       <div className="rounded-[8px] flex items-center justify-center"
-        style={{ width: size, height: size, background: cfg.bg }}>
+        style={{ width: size, height: size, background: `${cfg.color}18` }}>
         <span className="text-[9px] font-medium uppercase tracking-wide" style={{ color: cfg.color }}>{ext}</span>
       </div>
       <span className="text-[9px] text-muted-foreground">{cfg.label}</span>
@@ -442,12 +442,12 @@ function FolderIconBlock({ name, color, fileCount, size = 40 }: { name: string; 
 // ── 19. File Attachment Chips ─────────────────────────────────────────────────
 
 function FileAttachChip({ name, ext, size }: { name: string; ext: string; size: string }) {
-  const cfg = EXT_CFG[ext] ?? { color: "#6B7280", bg: "#f3f4f6", label: "File" };
+  const cfg = EXT_CFG[ext] ?? { color: "#6B7280", label: "File" };
   return (
     <div className="inline-flex items-center gap-2 px-2.5 py-2 rounded-[8px] border border-border bg-card"
       style={{ maxWidth: 220 }}>
       <div className="w-7 h-7 rounded-[6px] flex items-center justify-center flex-shrink-0"
-        style={{ background: cfg.bg }}>
+        style={{ background: `${cfg.color}18` }}>
         <span className="text-[8px] font-medium uppercase" style={{ color: cfg.color }}>{ext}</span>
       </div>
       <div className="flex-1 min-w-0">
@@ -669,11 +669,11 @@ function MiniMemberCard({ name, role }: { name: string; role: keyof typeof ROLE_
 }
 
 function MiniFileRow({ name, ext, size, editor }: { name: string; ext: string; size: string; editor: string }) {
-  const cfg = EXT_CFG[ext] ?? { color: "#6B7280", bg: "#f3f4f6", label: "File" };
+  const cfg = EXT_CFG[ext] ?? { color: "#6B7280", label: "File" };
   return (
     <div className="flex items-center gap-2.5 px-3 py-2 rounded-[8px] border border-border bg-card" style={{ minWidth: 260 }}>
       <div className="w-7 h-7 rounded-[6px] flex items-center justify-center flex-shrink-0"
-        style={{ background: cfg.bg }}>
+        style={{ background: `${cfg.color}18` }}>
         <span className="text-[8px] font-medium uppercase" style={{ color: cfg.color }}>{ext}</span>
       </div>
       <div className="flex-1 min-w-0">
@@ -1336,7 +1336,7 @@ export function ElementInventory() {
           <Row label="Image attachment chip">
             <div className="inline-flex items-center gap-2 px-2.5 py-2 rounded-[8px] border border-border bg-card" style={{ maxWidth: 220 }}>
               <div className="w-7 h-7 rounded-[6px] flex items-center justify-center flex-shrink-0"
-                style={{ background: EXT_CFG["png"].bg }}>
+                style={{ background: `${EXT_CFG["png"].color}18` }}>
                 <span className="text-[8px] font-medium uppercase" style={{ color: EXT_CFG["png"].color }}>png</span>
               </div>
               <div className="flex-1 min-w-0">

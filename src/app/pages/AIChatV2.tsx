@@ -561,6 +561,24 @@ function Composer({
         <button title="Attach" className="w-8 h-8 flex items-center justify-center rounded-[8px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
           <Plus className="size-4" />
         </button>
+        <button
+          title="Commands"
+          onClick={() => { onChange((value.endsWith(" ") || value === "" ? value : value + " ") + "/"); setTimeout(() => taRef.current?.focus(), 0); }}
+          className="w-8 h-8 flex items-center justify-center rounded-[8px] hover:bg-muted transition-colors"
+          style={{ color: "var(--muted-foreground)" }}
+          onMouseEnter={e => (e.currentTarget.style.color = "var(--foreground)")}
+          onMouseLeave={e => (e.currentTarget.style.color = "var(--muted-foreground)")}
+        >
+          <span style={{
+            display: "inline-flex", alignItems: "center", justifyContent: "center",
+            width: 18, height: 18, borderRadius: "50%",
+            border: "1.5px solid currentColor",
+            fontSize: 11, fontWeight: 600, lineHeight: 1,
+            fontFamily: "monospace",
+          }}>
+            /
+          </span>
+        </button>
         <div className="flex-1" />
         <button title="Voice input" className="w-8 h-8 flex items-center justify-center rounded-[8px] hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
           <Mic className="size-4" />

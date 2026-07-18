@@ -17,6 +17,7 @@ import {
   Check,
   Layers,
   Boxes,
+  Settings,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useTheme } from "../contexts/ThemeContext";
@@ -275,11 +276,11 @@ function LayoutInner() {
     shortcut: "F",
   };
 
-  // Team nav item — version-aware
+  // Settings nav item — version-aware
   const teamNavItem: NavItem = {
     path: version === "v2" ? "/app/team-v2" : "/app/team",
-    label: "Team",
-    icon: Users,
+    label: "Settings",
+    icon: Settings,
     id: "nav-team",
     shortcut: "M",
   };
